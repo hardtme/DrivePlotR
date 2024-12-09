@@ -1,7 +1,6 @@
 #' Create a standalone map
 #'
 #' @importFrom crosstalk SharedData
-#' @importFrom sf st_buffer st_bbox st_as_sfc st_as_sf st_drop_geometry st_geometry st_crs
 #' @importFrom dplyr pull
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
