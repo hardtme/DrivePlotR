@@ -22,7 +22,7 @@
 #'   \item{speed_source}{character one of "gps" or "obd"}
 #'   \item{distance_miles}{numeric distance travelled during a drive (in miles)}
 #'   }
-#'   Measurements by the on-board gyroscope
+#' Measurements by the on-board gyroscope:
 #'   \describe{
 #'   \item{accel_x}{numeric, forward acceleration (in g)}
 #'   \item{accel_y}{numeric, sidewards acceleration (in g)}
