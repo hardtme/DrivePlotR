@@ -1,10 +1,5 @@
 #' Create a standalone map
 #'
-#' @importFrom crosstalk SharedData
-#' @importFrom dplyr pull
-#' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
 #' @param shareddata a SharedData object containing observations to be plotted
 #' @param lng the column of shareddata containing longitude (only required if shareddata does not have a geometry column)
 #' @param lat the column of shareddata containing latitude (only required if shareddata does not have a geometry column)
@@ -14,7 +9,26 @@
 #' @param fillOpacity the opacity of the fill (0 to 1)
 #' @param mapheight the height of the map in CSS units, e.g, "98vh"
 #' @returns leaflet map
+#' @importFrom crosstalk SharedData
+#' @importFrom dplyr pull filter `%>%`
+#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
+#' @importFrom viridisLite viridis
 #' @export
+#' @examples
+#' library(crosstalk)
+#' library(dplyr)
+#' data(nds_data)
+#' nds_sf7 <- nds_data %>%
+#'   filter(drive==7) %>%
+#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#'
+#' # basic map of one drive
+#' driveplot_map(nds_sf7_sd)
+#'
+#' # color drive points by direction of car
+#' driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")
 driveplot_map <- function(shareddata, lng = NULL, lat = NULL, label = NA,
                                                 colorvar = NULL, colorpalette = "#03F", fillOpacity = 1,
                                                 mapheight = "98vh"){

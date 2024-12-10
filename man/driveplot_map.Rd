@@ -38,3 +38,18 @@ leaflet map
 \description{
 Create a standalone map
 }
+\examples{
+library(crosstalk)
+library(dplyr)
+data(nds_data)
+nds_sf7 <- nds_data \%>\%
+  filter(drive==7) \%>\%
+  sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+nds_sf7_sd <- SharedData$new(nds_sf7)
+
+# basic map of one drive
+driveplot_map(nds_sf7_sd)
+
+# color drive points by direction of car
+driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")
+}
