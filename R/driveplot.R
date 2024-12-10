@@ -1,14 +1,5 @@
 #' Make a stack of companion graphs from shared drive data
 #'
-#' @importFrom crosstalk SharedData bscols
-#' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
-#' @importFrom sf st_drop_geometry
-#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
-#' @importFrom htmltools h1
 #' @param shareddata a SharedData object containing observations to be plotted
 #' @param lng the column of shareddata containing longitude (only required if shareddata does not have a geometry column)
 #' @param lat the column of shareddata containing latitude (only required if shareddata does not have a geometry column)
@@ -31,6 +22,15 @@
 #' @param plottitle the title for the plot map
 #' @param spacing value between 0 and 1 for the space between the graphs
 #' @returns linked plot map
+#' @importFrom crosstalk SharedData bscols
+#' @importFrom dplyr pull ungroup select
+#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
+#' @importFrom viridisLite viridis
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
+#' @importFrom sf st_drop_geometry
+#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
+#' @importFrom htmltools h1
 #' @export
 driveplot <- function(shareddata, lng = NULL, lat = NULL, maplabel = NA,
                       colorvar = NULL, colorpalette = "#03F", fillOpacity = 1,
