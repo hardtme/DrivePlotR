@@ -32,6 +32,22 @@
 #' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @importFrom htmltools h1
 #' @export
+#' @examples
+#' # example code
+#' library(crosstalk)
+#' library(dplyr)
+#' data(nds_data)
+#' nds_sf7 <- nds_data %>%
+#'   filter(drive==7) %>%
+#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#'
+#' driveplot(nds_sf7_sd, #lng = gps_long, lat = gps_lat,
+#'      colorvar=gyro_heading, colorpalette="viridis",
+#'      time = time_cst, timelabel="Time",
+#'      y1 = speed_mph, y1label = "Speed (mph)",
+#'      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
+#'      y3 = gps_heading, y3label = "GPS Heading (degree)")
 driveplot <- function(shareddata, lng = NULL, lat = NULL, maplabel = NA,
                       colorvar = NULL, colorpalette = "#03F", fillOpacity = 1,
                       time, y1, y2 = NULL, y3 = NULL, y4 = NULL, timelabel = NULL,

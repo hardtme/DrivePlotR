@@ -19,6 +19,20 @@
 #' @param legendtitle the title for the plot legend
 #' @returns plotly scatterplot
 #' @export
+#' @examples
+#' library(crosstalk)
+#' library(dplyr)
+#' data(nds_data)
+#' nds_sf7 <- nds_data %>%
+#'   filter(drive==7) %>%
+#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#'
+#' # Time series of speed
+#' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
+#'
+#' # color points by direction of car
+#' driveplot_companion(nds_sf7_sd, time_cst, speed_mph, colorvar=gyro_heading, colorpalette="viridis")
 driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                                 colorpalette = "#03F", xlab = NULL, ylab = NULL, showlegend = TRUE,
                                 legendtitle = NULL){

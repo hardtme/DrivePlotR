@@ -1,13 +1,5 @@
 #' Make a stack of companion graphs from shared drive data
 #'
-#' @importFrom crosstalk SharedData
-#' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
-#' @importFrom sf st_drop_geometry
-#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @param shareddata a SharedData object containing observations to be plotted
 #' @param time time variable from shareddata to be plotted on the horizontal axis
 #' @param y1 variable from shareddata to be plotted on the vertical axis for the first graph
@@ -26,7 +18,32 @@
 #' @param spacing value between 0 and 1 for the space between the graphs
 #' @param plotheight the height of the stack of companion graphs in CSS units, e.g, "98vh"
 #' @returns plotly scatterplot
+#' @importFrom crosstalk SharedData
+#' @importFrom dplyr pull ungroup select
+#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
+#' @importFrom viridisLite viridis
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
+#' @importFrom sf st_drop_geometry
+#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @export
+#' @examples
+#' library(crosstalk)
+#' library(dplyr)
+#' data(nds_data)
+#' nds_sf7 <- nds_data %>%
+#'   filter(drive==7) %>%
+#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
+#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#'
+#' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
+#' driveplot_companions(
+#'      nds_sf7_sd, time = time_cst, timelabel="Time",
+#'      y1 = speed_mph, y1label = "Speed (mph)",
+#'      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
+#'      y3 = gps_heading, y3label = "GPS Heading (degree)",
+#'      colorvar = gps_pdop, colorpalette = "viridis" )
+#'
 driveplot_companions <- function(shareddata, time, y1, y2 = NULL, y3 = NULL, y4 = NULL,
                                  timelabel = NULL, y1label = NULL, y2label = NULL, y3label = NULL,
                                  y4label = NULL, colorvar = NULL, colorpalette = "#03F", showlegend = TRUE,
