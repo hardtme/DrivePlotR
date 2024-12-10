@@ -1,8 +1,7 @@
 Package: DrivePlotR
-Title: What the Package Does (One Line, Title Case)
+Title: Linked Plot Maps for Multivariate High Resolution Spatio-Temporal Data
 Version: 0.0.0.9000
-Authors@R: 
-    person("Marie", "Hardt", "first.last@example.com", role = c("aut", "cre"),
+Authors@R: person("Marie", "Hardt", email = "hardtme@iastate.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-8548-9866"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
