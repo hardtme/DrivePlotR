@@ -15,6 +15,7 @@
 #' @param maplabel an optional label for the map points
 #' @param colorvar the variable in shareddata to which color should be mapped
 #' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
+#' @param fillOpacity the opacity of the fill (0 to 1)
 #' @param time time variable from shareddata to be plotted on the horizontal axis
 #' @param y1 variable from shareddata to be plotted on the vertical axis for the first graph
 #' @param y2 variable from shareddata to be plotted on the vertical axis for the second graph

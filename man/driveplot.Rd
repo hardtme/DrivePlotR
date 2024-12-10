@@ -41,6 +41,8 @@ driveplot(
 
 \item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
 
+\item{fillOpacity}{the opacity of the fill (0 to 1)}
+
 \item{time}{time variable from shareddata to be plotted on the horizontal axis}
 
 \item{y1}{variable from shareddata to be plotted on the vertical axis for the first graph}

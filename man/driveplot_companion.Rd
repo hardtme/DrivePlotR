@@ -27,6 +27,10 @@ driveplot_companion(
 
 \item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
 
+\item{xlab}{x-axis label}
+
+\item{ylab}{y-axis label}
+
 \item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
 
 \item{legendtitle}{the title for the plot legend}

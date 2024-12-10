@@ -5,7 +5,7 @@
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
 #' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs aes
 #' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides
 #' @param shareddata a SharedData object containing observations to be plotted
@@ -13,6 +13,8 @@
 #' @param y variable from shareddata to be plotted on the vertical axis
 #' @param colorvar the variable in shareddata to which color should be mapped
 #' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
+#' @param xlab x-axis label
+#' @param ylab y-axis label
 #' @param showlegend show the plot legend (TRUE) or not (FALSE)
 #' @param legendtitle the title for the plot legend
 #' @returns plotly scatterplot
