@@ -18,7 +18,7 @@ GPS based measurements for each observation:
 \item{gps_elevation}{numeric elevation above sea-level (in m)}
 \item{gps_heading}{numeric direction of the car (in degrees)}
 \item{gps_fix}{numeric }
-\item{gps_sats}{numeric}
+\item{gps_sats}{integer of the number of satellits covering a position.}
 \item{gps_pdop}{numeric total dilution of precision }
 \item{gps_hdop}{numeric horizontal dilution of precision}
 \item{gps_vdop}{numeric vertical dilution of precision}
@@ -36,7 +36,7 @@ Measurements by the on-board gyroscope:
 \item{gyro_x}{numeric, Angular rotation rate about the right-to-left axis (in degrees/sec).}
 \item{gyro_y}{numeric, Angular rotation rate about the forward-to-backward axis.}
 \item{gyro_z}{numeric, Angular rotation rate about the up-to-down axis.}
-\item{gyro_heading}{numeric, Calculated heading utilizing compass data and gyro data (in degrees).}
+\item{gyro_heading}{numeric, Calculated heading utilizing compass data and gyro data (in degrees). Note that we use non-standard congruence classes for continuity of consecutive values. Use modulo 360 (\verb{\%\% 360}) for }
 \item{grav_x}{numeric, lateral gravity (in g)}
 \item{grav_y}{numeric, longitudinal gravity}
 \item{grav_z}{numeric, gravity (up-down)}
@@ -46,7 +46,7 @@ Measurements by the on-board gyroscope:
 \item{engine_throttle}{numeric, percentage of engine throttle (0-100).}
 \item{cumulative_drive_dist_mi}{numeric}
 \item{gps_minute}{factor}
-\item{gps_heading_raw}{numeric}
+\item{gps_heading_raw}{numeric }
 \item{gps_heading_diff}{numeric}
 \item{gyro_heading_raw}{numeric}
 \item{gyro_heading_diff}{numeric}

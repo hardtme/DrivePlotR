@@ -26,8 +26,10 @@ nds_data <- nds_data %>%
   gyro_heading = cumsum(gyro_heading_diff)
 )
 
-nds_sf <- nds_data %>% st_as_sf(coords = c("gps_long", "gps_lat"),
+nds_sf <- nds_data %>% sf::st_as_sf(coords = c("gps_long", "gps_lat"),
                                   crs = "WGS84")
+
+nds_data <- nds_data %>% ungroup()
 
 usethis::use_data(nds_data, overwrite = TRUE)
 ## ------------------------------------------------------------------
