@@ -18,13 +18,13 @@ nds_data <- nds_data %>%
   gps_heading_diff = angle_dist(gps_heading, lag(gps_heading,1)),
   gps_heading_diff = ifelse(is.na(gps_heading_diff), 0, gps_heading_diff),
 #  gps_heading_diff_dampen = ifelse(between(gps_heading_diff,-20,20), gps_heading_diff, sign(gps_heading_diff)*20),
-  gps_heading = cumsum(gps_heading_diff),
+  gps_heading = cumsum(gps_heading_diff) + gps_heading_raw[1],
 #  gps_heading_corrected = cumsum(gps_heading_diff_dampen),
   gyro_heading_raw = gyro_heading,
   gyro_heading_diff = angle_dist(gyro_heading, lag(gyro_heading,1)),
   gyro_heading_diff = ifelse(is.na(gyro_heading_diff), 0, gyro_heading_diff),
-  gyro_heading = cumsum(gyro_heading_diff)
-)
+  gyro_heading = cumsum(gyro_heading_diff) + gyro_heading_raw[1]
+) %>% select(-gps_heading_diff, -gyro_heading_diff)
 
 nds_sf <- nds_data %>% sf::st_as_sf(coords = c("gps_long", "gps_lat"),
                                   crs = "WGS84")

@@ -32,7 +32,7 @@
 #'   \item{gyro_x}{numeric, Angular rotation rate about the right-to-left axis (in degrees/sec).}
 #'   \item{gyro_y}{numeric, Angular rotation rate about the forward-to-backward axis.}
 #'   \item{gyro_z}{numeric, Angular rotation rate about the up-to-down axis.}
-#'   \item{gyro_heading}{numeric, Calculated heading utilizing compass data and gyro data (in degrees). Note that we use non-standard congruence classes for continuity of consecutive values. Use modulo 360 (`%% 360`) for }
+#'   \item{gyro_heading}{numeric, Calculated heading utilizing compass data and gyro data (in degrees). Note that we use non-standard congruence classes for continuity of consecutive values. }
 #'   \item{grav_x}{numeric, lateral gravity (in g)}
 #'   \item{grav_y}{numeric, longitudinal gravity}
 #'   \item{grav_z}{numeric, gravity (up-down)}
@@ -42,9 +42,7 @@
 #'   \item{engine_throttle}{numeric, percentage of engine throttle (0-100).}
 #'   \item{cumulative_drive_dist_mi}{numeric}
 #'   \item{gps_minute}{factor}
-#'   \item{gps_heading_raw}{numeric }
-#'   \item{gps_heading_diff}{numeric}
-#'   \item{gyro_heading_raw}{numeric}
-#'   \item{gyro_heading_diff}{numeric}
+#'   \item{gps_heading_raw}{numeric, gps heading modulo 360 }
+#'   \item{gyro_heading_raw}{numeric, gyro heading modulo 360}
 #' }
 "nds_data"
