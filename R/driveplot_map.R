@@ -91,8 +91,9 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL, label = NA,
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
-        addCircleMarkers(lat = lat, lng = lng, stroke = T, weight = 2, color = "dimgray",
-                         label = ~(!!quolabel), fillColor = ~colorpal(!!colorarg), fillOpacity = fillOpacity)
+        addCircleMarkers(lat = ~(!!quolat), lng = ~(!!quolng), stroke = T, weight = 2, color = "dimgray",
+                         label = ~(!!quolabel), fillColor = ~colorpal(!!colorarg),
+                         fillOpacity = fillOpacity)
     })))
     return(plot_map)
   }
