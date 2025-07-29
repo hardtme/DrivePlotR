@@ -49,22 +49,77 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of DrivePlotR is to …</p>
+<p>The goal of DrivePlotR is to produce linked plot maps for multivariate high resolution spatio-temporal data such as data from naturalistic driving studies and connected vehicles.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of DrivePlotR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"hardtme/DrivePlotR"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"hardtme/DrivePlotR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>This example shows the basic workflow for making visualizations with <code>DrivePlotR</code>.</p>
+<!-- Examples borrowed from the DrivePlotR paper -->
+<ol style="list-style-type: decimal">
+<li>Load <code>DrivePlotR</code> and make drive data available in the <code>R</code> session. We have made non-sensitive drives from a naturalistic driving study available as part of the <code>DrivePlotR</code> package, but any other data with both geographic and temporal data would also be suitable.</li>
+</ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">DrivePlotR</span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nds_data"</span><span class="op">)</span></span>
+<span><span class="va">drive</span> <span class="op">&lt;-</span> <span class="va">nds_data</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">drive</span> <span class="op">==</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Establish the geographic variables and projection. The code below creates a simple feature variable <code>geometry</code> of all points. Setting the geographic projection to WGS84 ensures that points in the data line up with maps in Leaflet.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">drive</span> <span class="op">&lt;-</span> <span class="va">drive</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gps_long"</span>, <span class="st">"gps_lat"</span><span class="op">)</span>, </span>
+<span>               crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Convert the drive data into a shared data frame.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">shared_drive</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">crosstalk</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">SharedData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">drive</span><span class="op">)</span></span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Create visualizations.</li>
+</ol>
+<p>Although the main purpose of <code>DrivePlotR</code> is for users to create linked visualizations with a map and one to four companion graphs, users can also separately create maps or companion graphs.</p>
+<p>You can create a basic standalone map as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot_map.html">driveplot_map</a></span><span class="op">(</span>shareddata <span class="op">=</span> <span class="va">shared_drive</span><span class="op">)</span></span></code></pre></div>
+<p>You can also create a standalone companion graph as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot_companions.html">driveplot_companions</a></span><span class="op">(</span></span>
+<span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>, </span>
+<span>  time <span class="op">=</span> <span class="va">time_cst</span>, y1 <span class="op">=</span> <span class="va">speed_mph</span>, </span>
+<span>  timelabel <span class="op">=</span> <span class="st">"Time"</span>, </span>
+<span>  y1label <span class="op">=</span> <span class="st">"Speed (MPH)"</span><span class="op">)</span></span></code></pre></div>
+<p><code>DrivePlotR</code> offers many options for customization. For example, the following code creates a more complex linked plot map. First, we create a new variable to track each minute of the drive. We will use this variable to color the points to help us distinguish what happened during each minute of the drive.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">drive</span> <span class="op">&lt;-</span> <span class="va">drive</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>time_cst <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="va">time_cst</span>, tz <span class="op">=</span> <span class="st">"US/Central"</span><span class="op">)</span>,</span>
+<span>                gps_minute <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/minute.html" class="external-link">minute</a></span><span class="op">(</span><span class="va">time_cst</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">shared_drive</span> <span class="op">&lt;-</span> <span class="va">shared_drive</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">crosstalk</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">SharedData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">drive</span><span class="op">)</span></span></code></pre></div>
+<p>The companion graphs include speed, gyroscopic heading (the direction the vehicle is going), and GPS position dilution of precision (PDOP, which is a measure of the quality of the GPS location data). The points on both the map and the companion graphs are colored by the minute of the drive during which they occurred.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot.html">driveplot</a></span><span class="op">(</span></span>
+<span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>, </span>
+<span>  maplabel <span class="op">=</span> <span class="va">time_cst</span>, colorvar <span class="op">=</span> <span class="va">gps_minute</span>, </span>
+<span>  colorpalette <span class="op">=</span> <span class="st">"viridis"</span>, fillOpacity <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>  time <span class="op">=</span> <span class="va">time_cst</span>, y1 <span class="op">=</span> <span class="va">speed_mph</span>, </span>
+<span>  y2 <span class="op">=</span> <span class="va">gyro_heading</span>, y3 <span class="op">=</span> <span class="va">gps_pdop</span>, </span>
+<span>  timelabel <span class="op">=</span> <span class="st">"Time"</span>, y1label <span class="op">=</span> <span class="st">"Speed (MPH)"</span>, </span>
+<span>  y2label <span class="op">=</span> <span class="st">"Gyro Heading"</span>, </span>
+<span>  y3label <span class="op">=</span> <span class="st">"GPS PDOP"</span>, showlegend <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  legendtitle <span class="op">=</span> <span class="st">"Minute"</span>, </span>
+<span>  plottitle <span class="op">=</span> <span class="st">"A Drive in Omaha, NE"</span>, </span>
+<span>  spacing <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
@@ -86,7 +141,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Marie Hardt <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-8548-9866" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Marie Hardt <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-8548-9866" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -107,7 +163,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

@@ -68,7 +68,7 @@
 <dd><p>numeric</p></dd>
 
 <dt>gps_sats</dt>
-<dd><p>numeric</p></dd>
+<dd><p>integer of the number of satellits covering a position.</p></dd>
 
 <dt>gps_pdop</dt>
 <dd><p>numeric total dilution of precision</p></dd>
@@ -114,7 +114,7 @@
 <dd><p>numeric, Angular rotation rate about the up-to-down axis.</p></dd>
 
 <dt>gyro_heading</dt>
-<dd><p>numeric, Calculated heading utilizing compass data and gyro data (in degrees).</p></dd>
+<dd><p>numeric, Calculated heading utilizing compass data and gyro data (in degrees). Note that we use non-standard congruence classes for continuity of consecutive values.</p></dd>
 
 <dt>grav_x</dt>
 <dd><p>numeric, lateral gravity (in g)</p></dd>
@@ -144,16 +144,10 @@
 <dd><p>factor</p></dd>
 
 <dt>gps_heading_raw</dt>
-<dd><p>numeric</p></dd>
-
-<dt>gps_heading_diff</dt>
-<dd><p>numeric</p></dd>
+<dd><p>numeric, gps heading modulo 360</p></dd>
 
 <dt>gyro_heading_raw</dt>
-<dd><p>numeric</p></dd>
-
-<dt>gyro_heading_diff</dt>
-<dd><p>numeric</p></dd>
+<dd><p>numeric, gyro heading modulo 360</p></dd>
 
 
 </dl></div>
@@ -167,7 +161,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>
