@@ -4,10 +4,10 @@ Version: 0.0.0.9000
 Date: 2024-12-01
 Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-8548-9866")),
-           person("Guillermo", "Basulto-Elias", email = "basulto@iastate.edu", role = "ctb",
-           comment = c(ORCID = "0000-0002-5205-2190")),
            person("Heike", "Hofmann", email = "hhofmann4@unl.edu", role = "ctb",
-           comment = c(ORCID = "0000-0001-6216-5183")))
+           comment = c(ORCID = "0000-0001-6216-5183")),
+           person("Guillermo", "Basulto-Elias", email = "basulto@iastate.edu", role = "ctb",
+           comment = c(ORCID = "0000-0002-5205-2190")))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
