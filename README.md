@@ -34,7 +34,7 @@ This example shows the basic workflow for making visualizations with
 1.  Load `DrivePlotR` and make drive data available in the `R` session.
     We have made non-sensitive drives from a naturalistic driving study
     available as part of the `DrivePlotR` package, but any other data
-    with both geographic and temporal data would also be suitable.
+    with both geographic and temporal components would also be suitable.
 
 ``` r
 library(DrivePlotR)
