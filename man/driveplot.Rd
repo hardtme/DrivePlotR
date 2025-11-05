@@ -12,12 +12,12 @@ driveplot(
   colorvar = NULL,
   colorpalette = "#03F",
   fillOpacity = 1,
-  time,
+  x,
   y1,
   y2 = NULL,
   y3 = NULL,
   y4 = NULL,
-  timelabel = NULL,
+  xlabel = NULL,
   y1label = NULL,
   y2label = NULL,
   y3label = NULL,
@@ -43,7 +43,7 @@ driveplot(
 
 \item{fillOpacity}{the opacity of the fill (0 to 1)}
 
-\item{time}{time variable from shareddata to be plotted on the horizontal axis}
+\item{x}{variable from shareddata to be plotted on the horizontal axis}
 
 \item{y1}{variable from shareddata to be plotted on the vertical axis for the first graph}
 
@@ -53,7 +53,7 @@ driveplot(
 
 \item{y4}{variable from shareddata to be plotted on the vertical axis for the fourth graph}
 
-\item{timelabel}{the label for the time variable on the horizontal axis}
+\item{xlabel}{the label for the variable on the horizontal axis}
 
 \item{y1label}{the label for the variable on the vertical axis for the first graph}
 
@@ -89,7 +89,7 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 
 driveplot(nds_sf7_sd, #lng = gps_long, lat = gps_lat,
      colorvar=gyro_heading, colorpalette="viridis",
-     time = time_cst, timelabel="Time",
+     x = time_cst, xlabel="Time",
      y1 = speed_mph, y1label = "Speed (mph)",
      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
      y3 = gps_heading, y3label = "GPS Heading (degree)")

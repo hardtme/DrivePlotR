@@ -7,12 +7,12 @@
 #' @param colorvar the variable in shareddata to which color should be mapped
 #' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
 #' @param fillOpacity the opacity of the fill (0 to 1)
-#' @param time time variable from shareddata to be plotted on the horizontal axis
+#' @param x variable from shareddata to be plotted on the horizontal axis
 #' @param y1 variable from shareddata to be plotted on the vertical axis for the first graph
 #' @param y2 variable from shareddata to be plotted on the vertical axis for the second graph
 #' @param y3 variable from shareddata to be plotted on the vertical axis for the third graph
 #' @param y4 variable from shareddata to be plotted on the vertical axis for the fourth graph
-#' @param timelabel the label for the time variable on the horizontal axis
+#' @param xlabel the label for the variable on the horizontal axis
 #' @param y1label the label for the variable on the vertical axis for the first graph
 #' @param y2label the label for the variable on the vertical axis for the second graph
 #' @param y3label the label for the variable on the vertical axis for the third graph
@@ -44,13 +44,13 @@
 #'
 #' driveplot(nds_sf7_sd, #lng = gps_long, lat = gps_lat,
 #'      colorvar=gyro_heading, colorpalette="viridis",
-#'      time = time_cst, timelabel="Time",
+#'      x = time_cst, xlabel="Time",
 #'      y1 = speed_mph, y1label = "Speed (mph)",
 #'      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
 #'      y3 = gps_heading, y3label = "GPS Heading (degree)")
 driveplot <- function(shareddata, lng = NULL, lat = NULL, maplabel = NA,
                       colorvar = NULL, colorpalette = "#03F", fillOpacity = 1,
-                      time, y1, y2 = NULL, y3 = NULL, y4 = NULL, timelabel = NULL,
+                      x, y1, y2 = NULL, y3 = NULL, y4 = NULL, xlabel = NULL,
                       y1label = NULL, y2label = NULL, y3label = NULL,
                       y4label = NULL, showlegend = TRUE, legendtitle = NULL, plottitle = NULL,
                       spacing = 0.05){
@@ -67,9 +67,9 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL, maplabel = NA,
                             colorvar = {{ colorvar }}, colorpalette = colorpalette,
                             fillOpacity = fillOpacity, mapheight = height)
 
-  plot_graphs <- driveplot_companions(shareddata = shareddata, time = {{ time }},
+  plot_graphs <- driveplot_companions(shareddata = shareddata, x = {{ x }},
                                       y1 = {{ y1 }}, y2 = {{ y2 }}, y3 = {{ y3 }},
-                                      y4 = {{ y4 }}, timelabel = timelabel,
+                                      y4 = {{ y4 }}, xlabel = xlabel,
                                       y1label = y1label, y2label = y2label,
                                       y3label = y3label, y4label = y4label,
                                       colorvar = {{ colorvar }},
