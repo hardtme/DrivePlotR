@@ -45,8 +45,8 @@ Make a single plotly scatter plot from shared drive data
 library(crosstalk)
 library(dplyr)
 data(nds_data)
-nds_sf7 <- nds_data \%>\%
-  filter(drive==7) \%>\%
+nds_sf7 <- nds_data |>
+  filter(drive==7) |>
   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 nds_sf7_sd <- SharedData$new(nds_sf7)
 

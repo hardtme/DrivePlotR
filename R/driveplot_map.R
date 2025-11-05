@@ -10,7 +10,7 @@
 #' @param mapheight the height of the map in CSS units, e.g, "98vh"
 #' @returns leaflet map
 #' @importFrom crosstalk SharedData
-#' @importFrom dplyr pull filter `%>%`
+#' @importFrom dplyr pull filter
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
 #' @importFrom viridisLite viridis
@@ -19,8 +19,8 @@
 #' library(crosstalk)
 #' library(dplyr)
 #' data(nds_data)
-#' nds_sf7 <- nds_data %>%
-#'   filter(drive==7) %>%
+#' nds_sf7 <- nds_data |>
+#'   filter(drive==7) |>
 #'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 #' nds_sf7_sd <- SharedData$new(nds_sf7)
 #'
