@@ -77,8 +77,8 @@ You can also create a standalone companion graph as follows:
 ```{r companiongraph, eval = FALSE}
 driveplot_companions(
   shareddata = shared_drive, 
-  time = time_cst, y1 = speed_mph, 
-  timelabel = "Time", 
+  x = time_cst, y1 = speed_mph, 
+  xlabel = "Time", 
   y1label = "Speed (MPH)")
 ```
 
@@ -100,9 +100,9 @@ driveplot(
   shareddata = shared_drive, 
   maplabel = time_cst, colorvar = gps_minute, 
   colorpalette = "viridis", fillOpacity = 1, 
-  time = time_cst, y1 = speed_mph, 
+  x = time_cst, y1 = speed_mph, 
   y2 = gyro_heading, y3 = gps_pdop, 
-  timelabel = "Time", y1label = "Speed (MPH)", 
+  xlabel = "Time", y1label = "Speed (MPH)", 
   y2label = "Gyro Heading", 
   y3label = "GPS PDOP", showlegend = TRUE, 
   legendtitle = "Minute", 
