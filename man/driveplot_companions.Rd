@@ -6,12 +6,12 @@
 \usage{
 driveplot_companions(
   shareddata,
-  time,
+  x,
   y1,
   y2 = NULL,
   y3 = NULL,
   y4 = NULL,
-  timelabel = NULL,
+  xlabel = NULL,
   y1label = NULL,
   y2label = NULL,
   y3label = NULL,
@@ -27,7 +27,7 @@ driveplot_companions(
 \arguments{
 \item{shareddata}{a SharedData object containing observations to be plotted}
 
-\item{time}{time variable from shareddata to be plotted on the horizontal axis}
+\item{x}{variable from shareddata to be plotted on the horizontal axis}
 
 \item{y1}{variable from shareddata to be plotted on the vertical axis for the first graph}
 
@@ -37,7 +37,7 @@ driveplot_companions(
 
 \item{y4}{variable from shareddata to be plotted on the vertical axis for the fourth graph}
 
-\item{timelabel}{the label for the time variable on the horizontal axis}
+\item{xlabel}{the label for the variable on the horizontal axis}
 
 \item{y1label}{the label for the variable on the vertical axis for the first graph}
 
@@ -76,7 +76,7 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 
 # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 driveplot_companions(
-     nds_sf7_sd, time = time_cst, timelabel="Time",
+     nds_sf7_sd, x = time_cst, xlabel="Time",
      y1 = speed_mph, y1label = "Speed (mph)",
      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
      y3 = gps_heading, y3label = "GPS Heading (degree)",

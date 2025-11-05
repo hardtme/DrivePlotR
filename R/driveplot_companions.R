@@ -1,12 +1,12 @@
 #' Make a stack of companion graphs from shared drive data
 #'
 #' @param shareddata a SharedData object containing observations to be plotted
-#' @param time time variable from shareddata to be plotted on the horizontal axis
+#' @param x variable from shareddata to be plotted on the horizontal axis
 #' @param y1 variable from shareddata to be plotted on the vertical axis for the first graph
 #' @param y2 variable from shareddata to be plotted on the vertical axis for the second graph
 #' @param y3 variable from shareddata to be plotted on the vertical axis for the third graph
 #' @param y4 variable from shareddata to be plotted on the vertical axis for the fourth graph
-#' @param timelabel the label for the time variable on the horizontal axis
+#' @param xlabel the label for the variable on the horizontal axis
 #' @param y1label the label for the variable on the vertical axis for the first graph
 #' @param y2label the label for the variable on the vertical axis for the second graph
 #' @param y3label the label for the variable on the vertical axis for the third graph
@@ -38,14 +38,14 @@
 #'
 #' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 #' driveplot_companions(
-#'      nds_sf7_sd, time = time_cst, timelabel="Time",
+#'      nds_sf7_sd, x = time_cst, xlabel="Time",
 #'      y1 = speed_mph, y1label = "Speed (mph)",
 #'      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
 #'      y3 = gps_heading, y3label = "GPS Heading (degree)",
 #'      colorvar = gps_pdop, colorpalette = "viridis" )
 #'
-driveplot_companions <- function(shareddata, time, y1, y2 = NULL, y3 = NULL, y4 = NULL,
-                                 timelabel = NULL, y1label = NULL, y2label = NULL, y3label = NULL,
+driveplot_companions <- function(shareddata, x, y1, y2 = NULL, y3 = NULL, y4 = NULL,
+                                 xlabel = NULL, y1label = NULL, y2label = NULL, y3label = NULL,
                                  y4label = NULL, colorvar = NULL, colorpalette = "#03F", showlegend = TRUE,
                                  legendtitle = NULL, spacing = 0.05, plotheight = "98vh"){
   # Get original data from shareddata so we can check column existence and type
@@ -71,22 +71,22 @@ driveplot_companions <- function(shareddata, time, y1, y2 = NULL, y3 = NULL, y4 
     ncolors <- ogdata |> pull({{ colorvar }}) |> unique() |> length()
   }
   if(is.null(y2check) & is.null(y3check) & is.null(y4check)){
-    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y1 }},
+    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }}, colorpalette = colorpalette,
-                                 xlab = timelabel, ylab = y1label, showlegend = showlegend,
+                                 xlab = xlabel, ylab = y1label, showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot1 <- plot1 |> layout(font = list(family = "sans-serif"))
     plot1$sizingPolicy$defaultHeight <- plotheight
     plot1$sizingPolicy$defaultWidth <- "100%"
     return(plot1)
   }else if(!is.null(y2check) & is.null(y3check) & is.null(y4check)){
-    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y1 }},
+    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }}, colorpalette = colorpalette,
-                                 xlab = timelabel, ylab = y1label, showlegend = showlegend,
+                                 xlab = xlabel, ylab = y1label, showlegend = showlegend,
                                  legendtitle = legendtitle)
-    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y2 }},
+    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y2 }},
                                  colorvar = {{ colorvar }}, colorpalette = colorpalette,
-                                 xlab = timelabel, ylab = y2label, showlegend = FALSE,
+                                 xlab = xlabel, ylab = y2label, showlegend = FALSE,
                                  legendtitle = NULL)
     if(isTRUE(showlegend)){
       plotlysubplot <- subplot(plot1, plot2, nrows = 2, shareX = TRUE, titleY = TRUE,
@@ -105,13 +105,13 @@ driveplot_companions <- function(shareddata, time, y1, y2 = NULL, y3 = NULL, y4 
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
   }else if(!is.null(y2check) & !is.null(y3check) & is.null(y4check)){
-    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y1 }},
-                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = timelabel,
+    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
+                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = xlabel,
                                  ylab = y1label, showlegend = showlegend, legendtitle = legendtitle)
-    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y2 }},  xlab = timelabel,
+    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y2 }},  xlab = xlabel,
                                  colorvar = {{ colorvar }}, colorpalette = colorpalette, ylab = y2label,
                                  showlegend = FALSE, legendtitle = NULL)
-    plot3 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y3 }}, xlab = timelabel,
+    plot3 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y3 }}, xlab = xlabel,
                                  colorvar = {{ colorvar }}, colorpalette = colorpalette, ylab = y3label,
                                  showlegend = FALSE, legendtitle = NULL)
     if(isTRUE(showlegend)){
@@ -131,17 +131,17 @@ driveplot_companions <- function(shareddata, time, y1, y2 = NULL, y3 = NULL, y4 
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
   }else if(!is.null(y2check) & !is.null(y3check) & !is.null(y4check)){
-    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y1 }},
-                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = timelabel,
+    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
+                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = xlabel,
                                  ylab = y1label, showlegend = showlegend, legendtitle = legendtitle)
-    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y2 }},
-                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = timelabel,
+    plot2 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y2 }},
+                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = xlabel,
                                  ylab = y2label, showlegend = FALSE, legendtitle = NULL)
-    plot3 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y3 }},
-                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = timelabel,
+    plot3 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y3 }},
+                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = xlabel,
                                  ylab = y3label, showlegend = FALSE, legendtitle = NULL)
-    plot4 <- driveplot_companion(shareddata = shareddata, x = {{ time }}, y = {{ y4 }},
-                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = timelabel,
+    plot4 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y4 }},
+                                 colorvar = {{ colorvar }}, colorpalette = colorpalette, xlab = xlabel,
                                  ylab = y4label, showlegend = FALSE, legendtitle = NULL)
     if(isTRUE(showlegend)){
       plotlysubplot <- subplot(plot1, plot2, plot3, plot4, nrows = 4, shareX = TRUE, titleY = TRUE,
