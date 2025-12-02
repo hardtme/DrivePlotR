@@ -6,12 +6,12 @@
 #' @param y2 variable from shareddata to be plotted on the vertical axis for the second graph
 #' @param y3 variable from shareddata to be plotted on the vertical axis for the third graph
 #' @param y4 variable from shareddata to be plotted on the vertical axis for the fourth graph
+#' @param colorvar the variable in shareddata to which color should be mapped
 #' @param xlabel the label for the variable on the horizontal axis
 #' @param y1label the label for the variable on the vertical axis for the first graph
 #' @param y2label the label for the variable on the vertical axis for the second graph
 #' @param y3label the label for the variable on the vertical axis for the third graph
 #' @param y4label the label for the variable on the vertical axis for the fourth graph
-#' @param colorvar the variable in shareddata to which color should be mapped
 #' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
 #' @param showlegend show the plot legend (TRUE) or not (FALSE)
 #' @param legendtitle the title for the plot legend
@@ -38,15 +38,16 @@
 #'
 #' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 #' driveplot_companions(
-#'      nds_sf7_sd, x = time_cst, xlabel="Time",
-#'      y1 = speed_mph, y1label = "Speed (mph)",
-#'      y2 = gyro_heading, y2label = "Gyro Heading (degree)",
-#'      y3 = gps_heading, y3label = "GPS Heading (degree)",
-#'      colorvar = gps_pdop, colorpalette = "viridis" )
+#'      shareddata = nds_sf7_sd, x = time_cst, y1 = speed_mph,
+#'      y2 = gyro_heading, y3 = gps_heading, colorvar = gps_pdop,
+#'      xlabel = "Time", y1label = "Speed (mph)",
+#'      y2label = "Gyro Heading (degrees)",
+#'      y3label = "GPS Heading (degrees)",
+#'      colorpalette = "viridis")
 #'
-driveplot_companions <- function(shareddata, x, y1, y2 = NULL, y3 = NULL, y4 = NULL,
+driveplot_companions <- function(shareddata, x, y1, y2 = NULL, y3 = NULL, y4 = NULL, colorvar = NULL,
                                  xlabel = NULL, y1label = NULL, y2label = NULL, y3label = NULL,
-                                 y4label = NULL, colorvar = NULL, colorpalette = "#03F", showlegend = TRUE,
+                                 y4label = NULL, colorpalette = "#03F", showlegend = TRUE,
                                  legendtitle = NULL, spacing = 0.05, plotheight = "98vh"){
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object

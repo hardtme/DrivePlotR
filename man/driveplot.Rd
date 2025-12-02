@@ -8,15 +8,15 @@ driveplot(
   shareddata,
   lng = NULL,
   lat = NULL,
-  maplabel = NA,
-  colorvar = NULL,
-  colorpalette = "#03F",
-  fillOpacity = 1,
   x,
   y1,
   y2 = NULL,
   y3 = NULL,
   y4 = NULL,
+  colorvar = NULL,
+  maplabel = NA,
+  colorpalette = "#03F",
+  fillOpacity = 1,
   xlabel = NULL,
   y1label = NULL,
   y2label = NULL,
@@ -35,14 +35,6 @@ driveplot(
 
 \item{lat}{the column of shareddata containing latitude (only required if shareddata does not have a geometry column)}
 
-\item{maplabel}{an optional label for the map points}
-
-\item{colorvar}{the variable in shareddata to which color should be mapped}
-
-\item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
-
-\item{fillOpacity}{the opacity of the fill (0 to 1)}
-
 \item{x}{variable from shareddata to be plotted on the horizontal axis}
 
 \item{y1}{variable from shareddata to be plotted on the vertical axis for the first graph}
@@ -52,6 +44,14 @@ driveplot(
 \item{y3}{variable from shareddata to be plotted on the vertical axis for the third graph}
 
 \item{y4}{variable from shareddata to be plotted on the vertical axis for the fourth graph}
+
+\item{colorvar}{the variable in shareddata to which color should be mapped}
+
+\item{maplabel}{an optional label for the map points}
+
+\item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
+
+\item{fillOpacity}{the opacity of the fill (0 to 1)}
 
 \item{xlabel}{the label for the variable on the horizontal axis}
 
@@ -87,10 +87,10 @@ nds_sf7 <- nds_data |>
   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 nds_sf7_sd <- SharedData$new(nds_sf7)
 
-driveplot(nds_sf7_sd, #lng = gps_long, lat = gps_lat,
-     colorvar=gyro_heading, colorpalette="viridis",
-     x = time_cst, xlabel="Time",
-     y1 = speed_mph, y1label = "Speed (mph)",
-     y2 = gyro_heading, y2label = "Gyro Heading (degree)",
-     y3 = gps_heading, y3label = "GPS Heading (degree)")
+driveplot(shareddata = nds_sf7_sd, #lng = gps_long, lat = gps_lat,
+          x = time_cst, y1 = speed_mph, y2 = gyro_heading,
+          y3 = gps_heading, colorvar = gyro_heading,
+          maplabel = time_cst, colorpalette = "viridis", fillOpacity = 1,
+          xlabel = "Time", y1label = "Speed (mph)",
+          y2label = "Gyro Heading (degrees)", y3label = "GPS Heading (degrees)")
 }

@@ -11,12 +11,12 @@ driveplot_companions(
   y2 = NULL,
   y3 = NULL,
   y4 = NULL,
+  colorvar = NULL,
   xlabel = NULL,
   y1label = NULL,
   y2label = NULL,
   y3label = NULL,
   y4label = NULL,
-  colorvar = NULL,
   colorpalette = "#03F",
   showlegend = TRUE,
   legendtitle = NULL,
@@ -37,6 +37,8 @@ driveplot_companions(
 
 \item{y4}{variable from shareddata to be plotted on the vertical axis for the fourth graph}
 
+\item{colorvar}{the variable in shareddata to which color should be mapped}
+
 \item{xlabel}{the label for the variable on the horizontal axis}
 
 \item{y1label}{the label for the variable on the vertical axis for the first graph}
@@ -46,8 +48,6 @@ driveplot_companions(
 \item{y3label}{the label for the variable on the vertical axis for the third graph}
 
 \item{y4label}{the label for the variable on the vertical axis for the fourth graph}
-
-\item{colorvar}{the variable in shareddata to which color should be mapped}
 
 \item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
 
@@ -76,10 +76,11 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 
 # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 driveplot_companions(
-     nds_sf7_sd, x = time_cst, xlabel="Time",
-     y1 = speed_mph, y1label = "Speed (mph)",
-     y2 = gyro_heading, y2label = "Gyro Heading (degree)",
-     y3 = gps_heading, y3label = "GPS Heading (degree)",
-     colorvar = gps_pdop, colorpalette = "viridis" )
+     shareddata = nds_sf7_sd, x = time_cst, y1 = speed_mph,
+     y2 = gyro_heading, y3 = gps_heading, colorvar = gps_pdop,
+     xlabel = "Time", y1label = "Speed (mph)",
+     y2label = "Gyro Heading (degrees)",
+     y3label = "GPS Heading (degrees)",
+     colorpalette = "viridis")
 
 }

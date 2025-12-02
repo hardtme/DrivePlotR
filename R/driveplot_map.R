@@ -3,8 +3,8 @@
 #' @param shareddata a SharedData object containing observations to be plotted
 #' @param lng the column of shareddata containing longitude (only required if shareddata does not have a geometry column)
 #' @param lat the column of shareddata containing latitude (only required if shareddata does not have a geometry column)
-#' @param label an optional label for the map points
 #' @param colorvar the variable in shareddata to which color should be mapped
+#' @param label an optional label for the map points
 #' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
 #' @param fillOpacity the opacity of the fill (0 to 1)
 #' @param mapheight the height of the map in CSS units, e.g, "98vh"
@@ -29,9 +29,8 @@
 #'
 #' # color drive points by direction of car
 #' driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")
-driveplot_map <- function(shareddata, lng = NULL, lat = NULL, label = NA,
-                                                colorvar = NULL, colorpalette = "#03F", fillOpacity = 1,
-                                                mapheight = "98vh"){
+driveplot_map <- function(shareddata, lng = NULL, lat = NULL, colorvar = NULL, label = NA,
+                          colorpalette = "#03F", fillOpacity = 1, mapheight = "98vh"){
   # Get original data from shareddata so we can check the type of colorvar and set color palette domains
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()

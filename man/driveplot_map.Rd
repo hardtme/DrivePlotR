@@ -8,8 +8,8 @@ driveplot_map(
   shareddata,
   lng = NULL,
   lat = NULL,
-  label = NA,
   colorvar = NULL,
+  label = NA,
   colorpalette = "#03F",
   fillOpacity = 1,
   mapheight = "98vh"
@@ -22,9 +22,9 @@ driveplot_map(
 
 \item{lat}{the column of shareddata containing latitude (only required if shareddata does not have a geometry column)}
 
-\item{label}{an optional label for the map points}
-
 \item{colorvar}{the variable in shareddata to which color should be mapped}
+
+\item{label}{an optional label for the map points}
 
 \item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
 

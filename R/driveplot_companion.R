@@ -32,10 +32,11 @@
 #' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 #'
 #' # color points by direction of car
-#' driveplot_companion(nds_sf7_sd, time_cst, speed_mph, colorvar=gyro_heading, colorpalette="viridis")
+#' driveplot_companion(shareddata = nds_sf7_sd, x = time_cst, y = speed_mph,
+#'                     colorvar = gyro_heading, colorpalette = "viridis")
 driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
-                                colorpalette = "#03F", xlab = NULL, ylab = NULL, showlegend = TRUE,
-                                legendtitle = NULL){
+                                colorpalette = "#03F", xlab = NULL, ylab = NULL,
+                                showlegend = TRUE, legendtitle = NULL){
   # Get original data from shareddata so we can check the existence and type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()

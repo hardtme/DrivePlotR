@@ -98,14 +98,13 @@ The companion graphs include speed, gyroscopic heading (the direction the vehicl
 ```{r plotmap, eval = FALSE}
 driveplot(
   shareddata = shared_drive, 
-  maplabel = time_cst, colorvar = gps_minute, 
-  colorpalette = "viridis", fillOpacity = 1, 
   x = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading, y3 = gps_pdop, 
+  y2 = gyro_heading, y3 = gps_pdop,
+  colorvar = gps_minute, maplabel = time_cst, 
+  colorpalette = "viridis", fillOpacity = 1, 
   xlabel = "Time", y1label = "Speed (MPH)", 
-  y2label = "Gyro Heading", 
-  y3label = "GPS PDOP", showlegend = TRUE, 
-  legendtitle = "Minute", 
+  y2label = "Gyro Heading", y3label = "GPS PDOP", 
+  showlegend = TRUE, legendtitle = "Minute", 
   plottitle = "A Drive in Omaha, NE", 
   spacing = 0.05)
 ```
