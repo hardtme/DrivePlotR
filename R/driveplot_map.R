@@ -51,27 +51,27 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL, label = NA,
     # We need to make sure the same color is used on the map and the plots
     colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
                             domain = NULL,
-                            na.color = "#FFFFFF00") # Transparent fill
+                            na.color = "dimgray")
   }
   if(is.null(colorvarnumeric) & !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
     colorarg <- 0
     colorpal <- colorFactor(palette = colorpalette,
                             domain = NULL,
-                            na.color = "#FFFFFF00")
+                            na.color = "dimgray")
   }
 
   if(isTRUE(colorvarnumeric)){
     colorarg <- enquo(colorvar)
     colorpal <- colorNumeric(palette = colorpalette,
                              domain = ogdata |> pull({{ colorvar }}),
-                             na.color = "#FFFFFF00")
+                             na.color = "dimgray")
 
   }
   if(isFALSE(colorvarnumeric)){
     colorarg <- enquo(colorvar)
     colorpal <- colorFactor(palette = colorpalette,
                                      domain = ogdata |> pull({{ colorvar }}),
-                                     na.color = "#FFFFFF00")
+                                     na.color = "dimgray")
   }
   if(is.null(lngcheck) & is.null(latcheck)){
     lnglat <- derivePoints(shareddata)

@@ -66,13 +66,13 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     # {{ colorvar }} is a numeric column in ogdata and a viridis palette is specified
     gg <- ggplot(data = shareddata)+
       geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}), shape = 21, stroke = 0.05, color = "dimgray", show.legend = showlegend)+
-      scale_fill_viridis_c(option = colorpalette)+
+      scale_fill_viridis_c(option = colorpalette, na.value = "dimgray")+
       theme_bw()
   }else if(isFALSE(colorvarnumeric) & colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
     # {{ colorvar }} is a non-numeric column in ogdata and a viridis palette is specified
     gg <- ggplot(data = shareddata)+
       geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}), shape = 21, stroke = 0.05, color = "dimgray", show.legend = showlegend)+
-      scale_fill_viridis_d(option = colorpalette)+
+      scale_fill_viridis_d(option = colorpalette, na.value = "dimgray")+
       theme_bw()
   }
 
