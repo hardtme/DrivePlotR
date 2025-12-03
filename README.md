@@ -38,27 +38,19 @@ This example shows the basic workflow for making visualizations with
 
 ``` r
 library(DrivePlotR)
-
-data("nds_data")
-drive <- nds_data |> dplyr::filter(drive == 7)
+data("drive7")
 ```
 
 2.  Establish the geographic variables and projection. The code below
     creates a simple feature variable `geometry` of all points. Setting
     the geographic projection to WGS84 ensures that points in the data
-    line up with maps in Leaflet.
-
-``` r
-drive <- drive |> 
-  sf::st_as_sf(coords = c("gps_long", "gps_lat"), 
-               crs = "WGS84")
-```
+    line up with maps in Leaflet. This is already done for the example
+    dataset `drive7`.
 
 3.  Convert the drive data into a shared data frame.
 
 ``` r
-shared_drive <- 
-  crosstalk::SharedData$new(drive)
+shared_drive <- crosstalk::SharedData$new(drive7)
 ```
 
 4.  Create visualizations.
@@ -84,37 +76,22 @@ driveplot_companions(
 ```
 
 `DrivePlotR` offers many options for customization. For example, the
-following code creates a more complex linked plot map. First, we create
-a new variable to track each minute of the drive. We will use this
-variable to color the points to help us distinguish what happened during
-each minute of the drive.
-
-``` r
-drive <- drive |>
-  dplyr::mutate(time_cst = lubridate::ymd_hms(time_cst, tz = "US/Central"),
-                gps_minute = as.factor(lubridate::minute(time_cst)))
-
-shared_drive <- shared_drive <- 
-  crosstalk::SharedData$new(drive)
-```
-
-The companion graphs include speed, gyroscopic heading (the direction
-the vehicle is going), and GPS position dilution of precision (PDOP,
-which is a measure of the quality of the GPS location data). The points
-on both the map and the companion graphs are colored by the minute of
-the drive during which they occurred.
+following code creates a more complex linked plot map. The companion
+graphs include speed, gyroscopic heading (the direction the vehicle is
+going), and GPS position dilution of precision (PDOP, which is a measure
+of the quality of the GPS location data). The points on both the map and
+the companion graphs are colored by the minute of the drive during which
+they occurred.
 
 ``` r
 driveplot(
   shareddata = shared_drive, 
-  maplabel = time_cst, colorvar = gps_minute, 
-  colorpalette = "viridis", fillOpacity = 1, 
   x = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading, y3 = gps_pdop, 
+  y2 = gyro_heading, y3 = gps_pdop,
+  colorvar = gps_minute, maplabel = time_cst, 
+  colorpalette = "viridis", 
   xlabel = "Time", y1label = "Speed (MPH)", 
-  y2label = "Gyro Heading", 
-  y3label = "GPS PDOP", showlegend = TRUE, 
-  legendtitle = "Minute", 
-  plottitle = "A Drive in Omaha, NE", 
-  spacing = 0.05)
+  y2label = "Gyro Heading", y3label = "GPS PDOP", 
+  showlegend = TRUE, legendtitle = "Minute", 
+  plottitle = "A Drive in Omaha, NE")
 ```
