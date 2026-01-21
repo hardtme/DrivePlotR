@@ -17,7 +17,7 @@ driving studies and connected vehicles.
 ## Installation
 
 You can install the development version of DrivePlotR from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/hardtme/DrivePlotR) with:
 
 ``` r
 # install.packages("pak")
