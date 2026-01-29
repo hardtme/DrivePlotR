@@ -3,16 +3,19 @@
 #' @importFrom crosstalk SharedData
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
+#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles
+#' addCircleMarkers
 #' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs aes
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
+#' scale_fill_viridis_d ylab xlab labs aes
 #' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides
 #' @param shareddata a SharedData object containing observations to be plotted
 #' @param x variable from shareddata to be plotted on the horizontal axis
 #' @param y variable from shareddata to be plotted on the vertical axis
 #' @param colorvar the variable in shareddata to which color should be mapped
-#' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
+#' @param colorpalette either a single color (e.g., "red") or one of "viridis",
+#' "inferno", "magma", or "plasma"
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param showlegend show the plot legend (TRUE) or not (FALSE)
@@ -32,12 +35,15 @@
 #' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 #'
 #' # color points by direction of car
-#' driveplot_companion(shareddata = nds_sf7_sd, x = time_cst, y = speed_mph,
-#'                     colorvar = gyro_heading, colorpalette = "viridis")
+#' driveplot_companion(shareddata = nds_sf7_sd, x = time_cst,
+#'                     y = speed_mph, colorvar = gyro_heading,
+#'                     colorpalette = "viridis")
 driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
-                                colorpalette = "#03F", xlab = NULL, ylab = NULL,
-                                showlegend = TRUE, legendtitle = NULL){
-  # Get original data from shareddata so we can check the existence and type of colorvar
+                                colorpalette = "#03F", xlab = NULL,
+                                ylab = NULL, showlegend = TRUE,
+                                legendtitle = NULL){
+  # Get original data from shareddata so we can check the existence and
+  # type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   colorvarnumeric <- tryCatch(ogdata |> pull({{ colorvar }}) |> is.numeric(),
@@ -47,32 +53,53 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
 
-  # Use viridis color palettes allowed by leaflet: "viridis", "magma", "inferno", or "plasma"
-  if(is.null(colorvarnumeric)  & !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
-    # {{ colorvar }} isn't a column in ogdata and viridis palette isn't specified
+  # Use viridis color palettes allowed by leaflet:
+  # "viridis", "magma", "inferno", or "plasma"
+  if(is.null(colorvarnumeric)  &
+     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
+    # {{ colorvar }} isn't a column in ogdata and
+    # viridis palette isn't specified
     gg <- ggplot(data = shareddata)+
-      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05, fill = colorpalette, color = "dimgray", show.legend = showlegend)+
+      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05,
+                 fill = colorpalette, color = "dimgray",
+                 show.legend = showlegend)+
       theme_bw()
-  }else if(!is.null(colorvarnumeric) & !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
-    # {{ colorvar }} is a column in ogdata and a viridis palette isn't specified
+  }else if(!is.null(colorvarnumeric) &
+           !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
+    # {{ colorvar }} is a column in ogdata and
+    # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color scale
-    stop('When specifying colorvar, please use colorpalette = "viridis", "magma", "inferno", or "plasma".', call. = FALSE)
-  }else if(is.null(colorvarnumeric) & colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
-    # {{ colorvar }} is not a column in ogdata and a viridis palette is specified
+    stop('When specifying colorvar, please use
+         colorpalette = "viridis", "magma", "inferno", or "plasma".',
+         call. = FALSE)
+  }else if(is.null(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+    # {{ colorvar }} is not a column in ogdata and
+    # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- ggplot(data = shareddata)+
-      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05, fill = viridis(n = 1, option = colorpalette), color = "dimgray", show.legend = showlegend)+
+      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05,
+                 fill = viridis(n = 1, option = colorpalette),
+                 color = "dimgray", show.legend = showlegend)+
       theme_bw()
-  }else if(isTRUE(colorvarnumeric) & colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
-    # {{ colorvar }} is a numeric column in ogdata and a viridis palette is specified
+  }else if(isTRUE(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+    # {{ colorvar }} is a numeric column in ogdata and
+    # a viridis palette is specified
     gg <- ggplot(data = shareddata)+
-      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}), shape = 21, stroke = 0.05, color = "dimgray", show.legend = showlegend)+
+      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
+                 shape = 21, stroke = 0.05, color = "dimgray",
+                 show.legend = showlegend)+
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray")+
       theme_bw()
-  }else if(isFALSE(colorvarnumeric) & colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
-    # {{ colorvar }} is a non-numeric column in ogdata and a viridis palette is specified
+  }else if(isFALSE(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+    # {{ colorvar }} is a non-numeric column in ogdata and
+    # a viridis palette is specified
     gg <- ggplot(data = shareddata)+
-      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}), shape = 21, stroke = 0.05, color = "dimgray", show.legend = showlegend)+
+      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
+                 shape = 21, stroke = 0.05, color = "dimgray",
+                 show.legend = showlegend)+
       scale_fill_viridis_d(option = colorpalette, na.value = "dimgray")+
       theme_bw()
   }
@@ -89,7 +116,11 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
   }
 
   if(is.null(ylab)){
-    ylab <- ogdata |> ungroup() |> st_drop_geometry() |> select({{ y }}) |> colnames()
+    ylab <- ogdata |>
+      ungroup() |>
+      st_drop_geometry() |>
+      select({{ y }}) |>
+      colnames()
   }
 
   plot_annotations <- list(

@@ -31,37 +31,48 @@ driveplot(
 \arguments{
 \item{shareddata}{a SharedData object containing observations to be plotted}
 
-\item{lng}{the column of shareddata containing longitude (only required if shareddata does not have a geometry column)}
+\item{lng}{the column of shareddata containing longitude
+(only required if shareddata does not have a geometry column)}
 
-\item{lat}{the column of shareddata containing latitude (only required if shareddata does not have a geometry column)}
+\item{lat}{the column of shareddata containing latitude
+(only required if shareddata does not have a geometry column)}
 
 \item{x}{variable from shareddata to be plotted on the horizontal axis}
 
-\item{y1}{variable from shareddata to be plotted on the vertical axis for the first graph}
+\item{y1}{variable from shareddata to be plotted on the vertical axis
+for the first graph}
 
-\item{y2}{variable from shareddata to be plotted on the vertical axis for the second graph}
+\item{y2}{variable from shareddata to be plotted on the vertical axis
+for the second graph}
 
-\item{y3}{variable from shareddata to be plotted on the vertical axis for the third graph}
+\item{y3}{variable from shareddata to be plotted on the vertical axis
+for the third graph}
 
-\item{y4}{variable from shareddata to be plotted on the vertical axis for the fourth graph}
+\item{y4}{variable from shareddata to be plotted on the vertical axis
+for the fourth graph}
 
 \item{colorvar}{the variable in shareddata to which color should be mapped}
 
 \item{maplabel}{an optional label for the map points}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
+\item{colorpalette}{either a single color (e.g., "red") or one of
+"viridis", "inferno", "magma", or "plasma"}
 
 \item{fillOpacity}{the opacity of the fill (0 to 1)}
 
 \item{xlabel}{the label for the variable on the horizontal axis}
 
-\item{y1label}{the label for the variable on the vertical axis for the first graph}
+\item{y1label}{the label for the variable on the vertical axis
+for the first graph}
 
-\item{y2label}{the label for the variable on the vertical axis for the second graph}
+\item{y2label}{the label for the variable on the vertical axis
+for the second graph}
 
-\item{y3label}{the label for the variable on the vertical axis for the third graph}
+\item{y3label}{the label for the variable on the vertical axis
+for the third graph}
 
-\item{y4label}{the label for the variable on the vertical axis for the fourth graph}
+\item{y4label}{the label for the variable on the vertical axis
+for the fourth graph}
 
 \item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
 
@@ -92,5 +103,6 @@ driveplot(shareddata = nds_sf7_sd, #lng = gps_long, lat = gps_lat,
           y3 = gps_heading, colorvar = gyro_heading,
           maplabel = time_cst, colorpalette = "viridis", fillOpacity = 1,
           xlabel = "Time", y1label = "Speed (mph)",
-          y2label = "Gyro Heading (degrees)", y3label = "GPS Heading (degrees)")
+          y2label = "Gyro Heading (degrees)",
+          y3label = "GPS Heading (degrees)")
 }

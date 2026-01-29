@@ -18,15 +18,18 @@ driveplot_map(
 \arguments{
 \item{shareddata}{a SharedData object containing observations to be plotted}
 
-\item{lng}{the column of shareddata containing longitude (only required if shareddata does not have a geometry column)}
+\item{lng}{the column of shareddata containing longitude
+(only required if shareddata does not have a geometry column)}
 
-\item{lat}{the column of shareddata containing latitude (only required if shareddata does not have a geometry column)}
+\item{lat}{the column of shareddata containing latitude
+(only required if shareddata does not have a geometry column)}
 
 \item{colorvar}{the variable in shareddata to which color should be mapped}
 
 \item{label}{an optional label for the map points}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
+\item{colorpalette}{either a single color (e.g., "red") or one of
+"viridis", "inferno", "magma", or "plasma"}
 
 \item{fillOpacity}{the opacity of the fill (0 to 1)}
 

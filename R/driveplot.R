@@ -1,22 +1,33 @@
 #' Make a stack of companion graphs from shared drive data
 #'
 #' @param shareddata a SharedData object containing observations to be plotted
-#' @param lng the column of shareddata containing longitude (only required if shareddata does not have a geometry column)
-#' @param lat the column of shareddata containing latitude (only required if shareddata does not have a geometry column)
+#' @param lng the column of shareddata containing longitude
+#' (only required if shareddata does not have a geometry column)
+#' @param lat the column of shareddata containing latitude
+#' (only required if shareddata does not have a geometry column)
 #' @param x variable from shareddata to be plotted on the horizontal axis
-#' @param y1 variable from shareddata to be plotted on the vertical axis for the first graph
-#' @param y2 variable from shareddata to be plotted on the vertical axis for the second graph
-#' @param y3 variable from shareddata to be plotted on the vertical axis for the third graph
-#' @param y4 variable from shareddata to be plotted on the vertical axis for the fourth graph
+#' @param y1 variable from shareddata to be plotted on the vertical axis
+#' for the first graph
+#' @param y2 variable from shareddata to be plotted on the vertical axis
+#' for the second graph
+#' @param y3 variable from shareddata to be plotted on the vertical axis
+#' for the third graph
+#' @param y4 variable from shareddata to be plotted on the vertical axis
+#' for the fourth graph
 #' @param colorvar the variable in shareddata to which color should be mapped
 #' @param maplabel an optional label for the map points
-#' @param colorpalette either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"
+#' @param colorpalette either a single color (e.g., "red") or one of
+#' "viridis", "inferno", "magma", or "plasma"
 #' @param fillOpacity the opacity of the fill (0 to 1)
 #' @param xlabel the label for the variable on the horizontal axis
-#' @param y1label the label for the variable on the vertical axis for the first graph
-#' @param y2label the label for the variable on the vertical axis for the second graph
-#' @param y3label the label for the variable on the vertical axis for the third graph
-#' @param y4label the label for the variable on the vertical axis for the fourth graph
+#' @param y1label the label for the variable on the vertical axis
+#' for the first graph
+#' @param y2label the label for the variable on the vertical axis
+#' for the second graph
+#' @param y3label the label for the variable on the vertical axis
+#' for the third graph
+#' @param y4label the label for the variable on the vertical axis
+#' for the fourth graph
 #' @param showlegend show the plot legend (TRUE) or not (FALSE)
 #' @param legendtitle the title for the plot legend
 #' @param plottitle the title for the plot map
@@ -25,9 +36,11 @@
 #' @importFrom crosstalk SharedData bscols
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles addCircleMarkers
+#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
+#' addTiles addCircleMarkers
 #' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c scale_fill_viridis_d ylab xlab labs
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
+#' scale_fill_viridis_d ylab xlab labs
 #' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @importFrom htmltools h1
@@ -47,7 +60,8 @@
 #'           y3 = gps_heading, colorvar = gyro_heading,
 #'           maplabel = time_cst, colorpalette = "viridis", fillOpacity = 1,
 #'           xlabel = "Time", y1label = "Speed (mph)",
-#'           y2label = "Gyro Heading (degrees)", y3label = "GPS Heading (degrees)")
+#'           y2label = "Gyro Heading (degrees)",
+#'           y3label = "GPS Heading (degrees)")
 driveplot <- function(shareddata, lng = NULL, lat = NULL,
                       x, y1, y2 = NULL, y3 = NULL, y4 = NULL, colorvar = NULL,
                       maplabel = NA, colorpalette = "#03F", fillOpacity = 1,
@@ -70,20 +84,32 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL,
                             fillOpacity = fillOpacity, mapheight = height)
 
   plot_graphs <- driveplot_companions(shareddata = shareddata, x = {{ x }},
-                                      y1 = {{ y1 }}, y2 = {{ y2 }}, y3 = {{ y3 }},
-                                      y4 = {{ y4 }}, colorvar = {{ colorvar }},
+                                      y1 = {{ y1 }}, y2 = {{ y2 }},
+                                      y3 = {{ y3 }},y4 = {{ y4 }},
+                                      colorvar = {{ colorvar }},
                                       xlabel = xlabel, y1label = y1label,
                                       y2label = y2label, y3label = y3label,
-                                      y4label = y4label, colorpalette = colorpalette,
-                                      showlegend = showlegend, legendtitle = legendtitle,
+                                      y4label = y4label,
+                                      colorpalette = colorpalette,
+                                      showlegend = showlegend,
+                                      legendtitle = legendtitle,
                                       spacing = spacing, plotheight = height)
 
   if(isTRUE(notitle)){
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
   }
   else{
-    # suppressWarnings so we don't see bscols complain that the sum of the widths is greater than 12
-    final_viz <- suppressWarnings(bscols(h1(plottitle, .noWS = c("before", "after", "outside", "after-begin", "before-end"), align = "center", style="font-family: sans-serif; color:black"), plot_map, plot_graphs, widths = c(12, 6, 6)))
+    # suppressWarnings so we don't see bscols complain that
+    # the sum of the widths is greater than 12
+    final_viz <- suppressWarnings(
+      bscols(
+        h1(
+          plottitle,
+          .noWS = c("before", "after", "outside", "after-begin", "before-end"),
+          align = "center", style="font-family: sans-serif; color:black"),
+        plot_map, plot_graphs, widths = c(12, 6, 6)
+        )
+      )
   }
   return(final_viz)
 }
