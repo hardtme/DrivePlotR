@@ -52,7 +52,7 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
                               error = function(e){},
                               finally = NULL)
   # Create color palettes
-  if (is.null(colorvarnumeric) &
+  if (is.null(colorvarnumeric) &&
      colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     colorarg <- 0
     # We need to make sure the same color is used on the map and the plots
@@ -60,7 +60,7 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
                             domain = NULL,
                             na.color = "dimgray")
   }
-  if (is.null(colorvarnumeric) &
+  if (is.null(colorvarnumeric) &&
      !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     colorarg <- 0
     colorpal <- colorFactor(palette = colorpalette,
@@ -81,7 +81,7 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
                                      domain = ogdata |> pull({{ colorvar }}),
                                      na.color = "dimgray")
   }
-  if (is.null(lngcheck) & is.null(latcheck)) {
+  if (is.null(lngcheck) && is.null(latcheck)) {
     lnglat <- derivePoints(shareddata)
     lng <- lnglat$lng
     lat <- lnglat$lat

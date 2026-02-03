@@ -55,7 +55,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
 
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
-  if (is.null(colorvarnumeric)  &
+  if (is.null(colorvarnumeric)  &&
      !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
@@ -64,7 +64,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  fill = colorpalette, color = "dimgray",
                  show.legend = showlegend) +
       theme_bw()
-  }else if (!is.null(colorvarnumeric) &
+  }else if (!is.null(colorvarnumeric) &&
            !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     # {{ colorvar }} is a column in ogdata and
     # a viridis palette isn't specified
@@ -72,7 +72,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     stop('When specifying colorvar, please use
          colorpalette = "viridis", "magma", "inferno", or "plasma".',
          call. = FALSE)
-  }else if (is.null(colorvarnumeric) &
+  }else if (is.null(colorvarnumeric) &&
            colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is not a column in ogdata and
     # a viridis palette is specified
@@ -82,7 +82,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  fill = viridis(n = 1, option = colorpalette),
                  color = "dimgray", show.legend = showlegend) +
       theme_bw()
-  }else if (isTRUE(colorvarnumeric) &
+  }else if (isTRUE(colorvarnumeric) &&
            colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a numeric column in ogdata and
     # a viridis palette is specified
@@ -92,7 +92,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  show.legend = showlegend) +
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
-  }else if (isFALSE(colorvarnumeric) &
+  }else if (isFALSE(colorvarnumeric) &&
            colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a non-numeric column in ogdata and
     # a viridis palette is specified

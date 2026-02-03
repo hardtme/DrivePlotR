@@ -86,7 +86,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
   if (isFALSE(colorvarnumeric)) {
     ncolors <- ogdata |> pull({{ colorvar }}) |> unique() |> length()
   }
-  if (is.null(y2check) & is.null(y3check) & is.null(y4check)) {
+  if (is.null(y2check) && is.null(y3check) && is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
@@ -97,7 +97,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     plot1$sizingPolicy$defaultHeight <- plotheight
     plot1$sizingPolicy$defaultWidth <- "100%"
     return(plot1)
-  }else if (!is.null(y2check) & is.null(y3check) & is.null(y4check)) {
+  }else if (!is.null(y2check) && is.null(y3check) && is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }},
@@ -120,7 +120,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
       plotlysubplot <- subplot(plot1, plot2, nrows = 2, shareX = TRUE,
                                titleY = TRUE, margin = spacing)
     }
-    if (isFALSE(colorvarnumeric) & isTRUE(showlegend)) {
+    if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
       nplots <- 2
       plotlysubplot <- plotlysubplot |>
         style(showlegend = FALSE, traces = (ncolors + 1):(ncolors*nplots))
@@ -130,7 +130,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  }else if (!is.null(y2check) & !is.null(y3check) & is.null(y4check)) {
+  }else if (!is.null(y2check) && !is.null(y3check) && is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }},
@@ -159,7 +159,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
                                shareX = TRUE, titleY = TRUE,
                                margin = spacing)
     }
-    if (isFALSE(colorvarnumeric) & isTRUE(showlegend)) {
+    if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
       nplots <- 3
       plotlysubplot <- plotlysubplot |>
         style(showlegend = FALSE, traces = (ncolors + 1):(ncolors*nplots))
@@ -169,7 +169,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  }else if (!is.null(y2check) & !is.null(y3check) & !is.null(y4check)) {
+  }else if (!is.null(y2check) && !is.null(y3check) && !is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }}, y = {{ y1 }},
                                  colorvar = {{ colorvar }},
@@ -204,7 +204,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
                                shareX = TRUE, titleY = TRUE,
                                margin = spacing)
     }
-    if (isFALSE(colorvarnumeric) & isTRUE(showlegend)) {
+    if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
       nplots <- 4
       plotlysubplot <- plotlysubplot |>
         style(showlegend = FALSE, traces = (ncolors + 1):(ncolors*nplots))
