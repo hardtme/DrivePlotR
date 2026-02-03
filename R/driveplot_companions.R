@@ -63,7 +63,7 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
                                  y3label = NULL, y4label = NULL,
                                  colorpalette = "#03F", showlegend = TRUE,
                                  legendtitle = NULL, spacing = 0.05,
-                                 plotheight = "98vh"){
+                                 plotheight = "98vh") {
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()

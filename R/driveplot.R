@@ -68,7 +68,7 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL,
                       xlabel = NULL, y1label = NULL, y2label = NULL,
                       y3label = NULL, y4label = NULL,
                       showlegend = TRUE, legendtitle = NULL,
-                      plottitle = NULL, spacing = 0.05){
+                      plottitle = NULL, spacing = 0.05) {
   notitle <- is.null(plottitle)
 
   if (isTRUE(notitle)) {

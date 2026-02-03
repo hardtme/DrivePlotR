@@ -41,7 +41,7 @@
 driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                                 colorpalette = "#03F", xlab = NULL,
                                 ylab = NULL, showlegend = TRUE,
-                                legendtitle = NULL){
+                                legendtitle = NULL) {
   # Get original data from shareddata so we can check the existence and
   # type of colorvar
   # We can't directly access columns in a SharedData object

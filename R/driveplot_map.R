@@ -36,7 +36,7 @@
 driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
                           colorvar = NULL, label = NA,
                           colorpalette = "#03F", fillOpacity = 1,
-                          mapheight = "98vh"){
+                          mapheight = "98vh") {
   # Get original data from shareddata so we can check the type of colorvar
   # and set color palette domains
   # We can't directly access columns in a SharedData object
