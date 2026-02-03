@@ -71,7 +71,7 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL,
                       plottitle = NULL, spacing = 0.05){
   notitle <- is.null(plottitle)
 
-  if(isTRUE(notitle)){
+  if (isTRUE(notitle)) {
     height <- "98vh"
   }
   else{
@@ -95,7 +95,7 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL,
                                       legendtitle = legendtitle,
                                       spacing = spacing, plotheight = height)
 
-  if(isTRUE(notitle)){
+  if (isTRUE(notitle)) {
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
   }
   else{

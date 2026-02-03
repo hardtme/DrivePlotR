@@ -52,36 +52,36 @@ driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
                               error = function(e){},
                               finally = NULL)
   # Create color palettes
-  if(is.null(colorvarnumeric) &
-     colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+  if (is.null(colorvarnumeric) &
+     colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     colorarg <- 0
     # We need to make sure the same color is used on the map and the plots
     colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
                             domain = NULL,
                             na.color = "dimgray")
   }
-  if(is.null(colorvarnumeric) &
-     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
+  if (is.null(colorvarnumeric) &
+     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     colorarg <- 0
     colorpal <- colorFactor(palette = colorpalette,
                             domain = NULL,
                             na.color = "dimgray")
   }
 
-  if(isTRUE(colorvarnumeric)){
+  if (isTRUE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
     colorpal <- colorNumeric(palette = colorpalette,
                              domain = ogdata |> pull({{ colorvar }}),
                              na.color = "dimgray")
 
   }
-  if(isFALSE(colorvarnumeric)){
+  if (isFALSE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
     colorpal <- colorFactor(palette = colorpalette,
                                      domain = ogdata |> pull({{ colorvar }}),
                                      na.color = "dimgray")
   }
-  if(is.null(lngcheck) & is.null(latcheck)){
+  if (is.null(lngcheck) & is.null(latcheck)) {
     lnglat <- derivePoints(shareddata)
     lng <- lnglat$lng
     lat <- lnglat$lat

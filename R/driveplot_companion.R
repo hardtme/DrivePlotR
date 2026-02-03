@@ -55,8 +55,8 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
 
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
-  if(is.null(colorvarnumeric)  &
-     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
+  if (is.null(colorvarnumeric)  &
+     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata)+
@@ -64,16 +64,16 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  fill = colorpalette, color = "dimgray",
                  show.legend = showlegend)+
       theme_bw()
-  }else if(!is.null(colorvarnumeric) &
-           !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))){
+  }else if (!is.null(colorvarnumeric) &
+           !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     # {{ colorvar }} is a column in ogdata and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color scale
     stop('When specifying colorvar, please use
          colorpalette = "viridis", "magma", "inferno", or "plasma".',
          call. = FALSE)
-  }else if(is.null(colorvarnumeric) &
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+  }else if (is.null(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is not a column in ogdata and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
@@ -82,8 +82,8 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  fill = viridis(n = 1, option = colorpalette),
                  color = "dimgray", show.legend = showlegend)+
       theme_bw()
-  }else if(isTRUE(colorvarnumeric) &
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+  }else if (isTRUE(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata)+
@@ -92,8 +92,8 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
                  show.legend = showlegend)+
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray")+
       theme_bw()
-  }else if(isFALSE(colorvarnumeric) &
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")){
+  }else if (isFALSE(colorvarnumeric) &
+           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a non-numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata)+
@@ -107,15 +107,15 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
   # Remove the y-axis title because we will use a plotly annotation for it
   gg <- gg + ylab(NULL)
 
-  if(!is.null(xlab)){
+  if (!is.null(xlab)) {
     gg <- gg + xlab(xlab)
   }
 
-  if(!is.null(legendtitle)){
+  if (!is.null(legendtitle)) {
     gg <- gg + labs(fill = legendtitle)
   }
 
-  if(is.null(ylab)){
+  if (is.null(ylab)) {
     ylab <- ogdata |>
       ungroup() |>
       st_drop_geometry() |>
@@ -140,7 +140,7 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     layout(annotations = plot_annotations) |>
     highlight(on = "plotly_selected", off = "plotly_deselect", dynamic = FALSE)
 
-  if(isFALSE(showlegend)){
+  if (isFALSE(showlegend)) {
     scatterplotly <- scatterplotly |> hide_guides()
   }
 
