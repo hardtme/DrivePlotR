@@ -1,7 +1,6 @@
 Package: DrivePlotR
 Title: Linked Plot Maps for Multivariate High Resolution Spatio-Temporal Data
 Version: 0.0.0.9000
-Date: 2024-12-01
 Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu", 
            role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-8548-9866")),
