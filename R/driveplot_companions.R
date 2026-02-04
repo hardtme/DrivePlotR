@@ -50,19 +50,34 @@
 #'
 #' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 #' driveplot_companions(
-#'      shareddata = nds_sf7_sd, x = time_cst, y1 = speed_mph,
-#'      y2 = gyro_heading, y3 = gps_heading, colorvar = gps_pdop,
-#'      xlabel = "Time", y1label = "Speed (mph)",
+#'      shareddata = nds_sf7_sd,
+#'      x = time_cst,
+#'      y1 = speed_mph,
+#'      y2 = gyro_heading,
+#'      y3 = gps_heading,
+#'      colorvar = gps_pdop,
+#'      xlabel = "Time",
+#'      y1label = "Speed (mph)",
 #'      y2label = "Gyro Heading (degrees)",
 #'      y3label = "GPS Heading (degrees)",
 #'      colorpalette = "viridis")
 #'
-driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
-                                 y3 = NULL, y4 = NULL, colorvar = NULL,
-                                 xlabel = NULL, y1label = NULL, y2label = NULL,
-                                 y3label = NULL, y4label = NULL,
-                                 colorpalette = "#03F", showlegend = TRUE,
-                                 legendtitle = NULL, spacing = 0.05,
+driveplot_companions <- function(shareddata,
+                                 x,
+                                 y1,
+                                 y2 = NULL,
+                                 y3 = NULL,
+                                 y4 = NULL,
+                                 colorvar = NULL,
+                                 xlabel = NULL,
+                                 y1label = NULL,
+                                 y2label = NULL,
+                                 y3label = NULL,
+                                 y4label = NULL,
+                                 colorpalette = "#03F",
+                                 showlegend = TRUE,
+                                 legendtitle = NULL,
+                                 spacing = 0.05,
                                  plotheight = "98vh") {
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
@@ -87,29 +102,37 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     ncolors <- ogdata |> pull({{ colorvar }}) |> unique() |> length()
   }
   if (is.null(y2check) && is.null(y3check) && is.null(y4check)) {
-    plot1 <- driveplot_companion(shareddata = shareddata, x = {{ x }}, y = {{ y1 }},
+    plot1 <- driveplot_companion(shareddata = shareddata,
+                                 x = {{ x }},
+                                 y = {{ y1 }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
-                                 xlab = xlabel, ylab = y1label,
+                                 xlab = xlabel,
+                                 ylab = y1label,
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
-    plot1 <- plot1 |> layout(font = list(family = "sans-serif"))
+    plot1 <- plot1 |>
+      layout(font = list(family = "sans-serif"))
     plot1$sizingPolicy$defaultHeight <- plotheight
     plot1$sizingPolicy$defaultWidth <- "100%"
     return(plot1)
   }else if (!is.null(y2check) && is.null(y3check) && is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y1 }},
+                                 x = {{ x }},
+                                 y = {{ y1 }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
-                                 xlab = xlabel, ylab = y1label,
+                                 xlab = xlabel,
+                                 ylab = y1label,
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y2 }},
+                                 x = {{ x }},
+                                 y = {{ y2 }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
-                                 xlab = xlabel, ylab = y2label,
+                                 xlab = xlabel,
+                                 ylab = y2label,
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
@@ -132,31 +155,49 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     return(plotlysubplot)
   }else if (!is.null(y2check) && !is.null(y3check) && is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y1 }},
+                                 x = {{ x }},
+                                 y = {{ y1 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y1label, showlegend = showlegend,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y1label,
+                                 showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y2 }},
+                                 x = {{ x }},
+                                 y = {{ y2 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y2label, showlegend = FALSE,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y2label,
+                                 showlegend = FALSE,
                                  legendtitle = NULL)
     plot3 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y3 }},
+                                 x = {{ x }},
+                                 y = {{ y3 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y3label, showlegend = FALSE,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y3label,
+                                 showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
-      plotlysubplot <- subplot(plot1, plot2, plot3, nrows = 3,
-                               shareX = TRUE, titleY = TRUE,
-                               which_layout = 1, margin = spacing)
+      plotlysubplot <- subplot(plot1,
+                               plot2,
+                               plot3,
+                               nrows = 3,
+                               shareX = TRUE,
+                               titleY = TRUE,
+                               which_layout = 1,
+                               margin = spacing)
     }
     else{
-      plotlysubplot <- subplot(plot1, plot2, plot3, nrows = 3,
-                               shareX = TRUE, titleY = TRUE,
+      plotlysubplot <- subplot(plot1,
+                               plot2,
+                               plot3,
+                               nrows = 3,
+                               shareX = TRUE,
+                               titleY = TRUE,
                                margin = spacing)
     }
     if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
@@ -171,37 +212,60 @@ driveplot_companions <- function(shareddata, x, y1, y2 = NULL,
     return(plotlysubplot)
   }else if (!is.null(y2check) && !is.null(y3check) && !is.null(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y1 }},
+                                 x = {{ x }},
+                                 y = {{ y1 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y1label, showlegend = showlegend,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y1label,
+                                 showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y2 }},
+                                 x = {{ x }},
+                                 y = {{ y2 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y2label, showlegend = FALSE,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y2label,
+                                 showlegend = FALSE,
                                  legendtitle = NULL)
     plot3 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y3 }},
+                                 x = {{ x }},
+                                 y = {{ y3 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y3label, showlegend = FALSE,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y3label,
+                                 showlegend = FALSE,
                                  legendtitle = NULL)
     plot4 <- driveplot_companion(shareddata = shareddata,
-                                 x = {{ x }}, y = {{ y4 }},
+                                 x = {{ x }},
+                                 y = {{ y4 }},
                                  colorvar = {{ colorvar }},
-                                 colorpalette = colorpalette, xlab = xlabel,
-                                 ylab = y4label, showlegend = FALSE,
+                                 colorpalette = colorpalette,
+                                 xlab = xlabel,
+                                 ylab = y4label,
+                                 showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
-      plotlysubplot <- subplot(plot1, plot2, plot3, plot4, nrows = 4,
-                               shareX = TRUE, titleY = TRUE,
-                               which_layout = 1, margin = spacing)
+      plotlysubplot <- subplot(plot1,
+                               plot2,
+                               plot3,
+                               plot4,
+                               nrows = 4,
+                               shareX = TRUE,
+                               titleY = TRUE,
+                               which_layout = 1,
+                               margin = spacing)
     }
     else{
-      plotlysubplot <- subplot(plot1, plot2, plot3, plot4, nrows = 4,
-                               shareX = TRUE, titleY = TRUE,
+      plotlysubplot <- subplot(plot1,
+                               plot2,
+                               plot3,
+                               plot4,
+                               nrows = 4,
+                               shareX = TRUE,
+                               titleY = TRUE,
                                margin = spacing)
     }
     if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {

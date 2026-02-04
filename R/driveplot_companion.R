@@ -35,12 +35,19 @@
 #' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 #'
 #' # color points by direction of car
-#' driveplot_companion(shareddata = nds_sf7_sd, x = time_cst,
-#'                     y = speed_mph, colorvar = gyro_heading,
+#' driveplot_companion(shareddata = nds_sf7_sd,
+#'                     x = time_cst,
+#'                     y = speed_mph,
+#'                     colorvar = gyro_heading,
 #'                     colorpalette = "viridis")
-driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
-                                colorpalette = "#03F", xlab = NULL,
-                                ylab = NULL, showlegend = TRUE,
+driveplot_companion <- function(shareddata,
+                                x,
+                                y,
+                                colorvar = NULL,
+                                colorpalette = "#03F",
+                                xlab = NULL,
+                                ylab = NULL,
+                                showlegend = TRUE,
                                 legendtitle = NULL) {
   # Get original data from shareddata so we can check the existence and
   # type of colorvar
@@ -60,8 +67,11 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05,
-                 fill = colorpalette, color = "dimgray",
+      geom_point(aes(x = {{ x }}, y = {{ y }}),
+                 shape = 21,
+                 stroke = 0.05,
+                 fill = colorpalette,
+                 color = "dimgray",
                  show.legend = showlegend) +
       theme_bw()
   }else if (!is.null(colorvarnumeric) &&
@@ -78,9 +88,12 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}), shape = 21, stroke = 0.05,
+      geom_point(aes(x = {{ x }}, y = {{ y }}),
+                 shape = 21,
+                 stroke = 0.05,
                  fill = viridis(n = 1, option = colorpalette),
-                 color = "dimgray", show.legend = showlegend) +
+                 color = "dimgray",
+                 show.legend = showlegend) +
       theme_bw()
   }else if (isTRUE(colorvarnumeric) &&
            colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
@@ -88,7 +101,9 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
-                 shape = 21, stroke = 0.05, color = "dimgray",
+                 shape = 21,
+                 stroke = 0.05,
+                 color = "dimgray",
                  show.legend = showlegend) +
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
@@ -98,7 +113,9 @@ driveplot_companion <- function(shareddata, x, y, colorvar = NULL,
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
-                 shape = 21, stroke = 0.05, color = "dimgray",
+                 shape = 21,
+                 stroke = 0.05,
+                 color = "dimgray",
                  show.legend = showlegend) +
       scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
       theme_bw()

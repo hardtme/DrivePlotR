@@ -55,7 +55,9 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 
 # color points by direction of car
-driveplot_companion(shareddata = nds_sf7_sd, x = time_cst,
-                    y = speed_mph, colorvar = gyro_heading,
+driveplot_companion(shareddata = nds_sf7_sd,
+                    x = time_cst,
+                    y = speed_mph,
+                    colorvar = gyro_heading,
                     colorpalette = "viridis")
 }

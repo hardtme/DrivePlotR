@@ -55,20 +55,40 @@
 #'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 #' nds_sf7_sd <- SharedData$new(nds_sf7)
 #'
-#' driveplot(shareddata = nds_sf7_sd, #lng = gps_long, lat = gps_lat,
-#'           x = time_cst, y1 = speed_mph, y2 = gyro_heading,
-#'           y3 = gps_heading, colorvar = gyro_heading,
-#'           maplabel = time_cst, colorpalette = "viridis", fillOpacity = 1,
-#'           xlabel = "Time", y1label = "Speed (mph)",
+#' driveplot(shareddata = nds_sf7_sd,
+#'           x = time_cst,
+#'           y1 = speed_mph,
+#'           y2 = gyro_heading,
+#'           y3 = gps_heading,
+#'           colorvar = gyro_heading,
+#'           maplabel = time_cst,
+#'           colorpalette = "viridis",
+#'           fillOpacity = 1,
+#'           xlabel = "Time",
+#'           y1label = "Speed (mph)",
 #'           y2label = "Gyro Heading (degrees)",
 #'           y3label = "GPS Heading (degrees)")
-driveplot <- function(shareddata, lng = NULL, lat = NULL,
-                      x, y1, y2 = NULL, y3 = NULL, y4 = NULL, colorvar = NULL,
-                      maplabel = NA, colorpalette = "#03F", fillOpacity = 1,
-                      xlabel = NULL, y1label = NULL, y2label = NULL,
-                      y3label = NULL, y4label = NULL,
-                      showlegend = TRUE, legendtitle = NULL,
-                      plottitle = NULL, spacing = 0.05) {
+driveplot <- function(shareddata,
+                      lng = NULL,
+                      lat = NULL,
+                      x,
+                      y1,
+                      y2 = NULL,
+                      y3 = NULL,
+                      y4 = NULL,
+                      colorvar = NULL,
+                      maplabel = NA,
+                      colorpalette = "#03F",
+                      fillOpacity = 1,
+                      xlabel = NULL,
+                      y1label = NULL,
+                      y2label = NULL,
+                      y3label = NULL,
+                      y4label = NULL,
+                      showlegend = TRUE,
+                      legendtitle = NULL,
+                      plottitle = NULL,
+                      spacing = 0.05) {
   notitle <- is.null(plottitle)
 
   if (isTRUE(notitle)) {
@@ -77,23 +97,32 @@ driveplot <- function(shareddata, lng = NULL, lat = NULL,
   else{
     height <- "85vh" # Leave more space for the title
   }
-  plot_map <- driveplot_map(shareddata = shareddata, lng = {{ lng }},
-                            lat = {{ lat }}, colorvar = {{ colorvar }},
+  plot_map <- driveplot_map(shareddata = shareddata,
+                            lng = {{ lng }},
+                            lat = {{ lat }},
+                            colorvar = {{ colorvar }},
                             label = {{ maplabel }},
                             colorpalette = colorpalette,
-                            fillOpacity = fillOpacity, mapheight = height)
+                            fillOpacity = fillOpacity,
+                            mapheight = height)
 
-  plot_graphs <- driveplot_companions(shareddata = shareddata, x = {{ x }},
-                                      y1 = {{ y1 }}, y2 = {{ y2 }},
-                                      y3 = {{ y3 }},y4 = {{ y4 }},
+  plot_graphs <- driveplot_companions(shareddata = shareddata,
+                                      x = {{ x }},
+                                      y1 = {{ y1 }},
+                                      y2 = {{ y2 }},
+                                      y3 = {{ y3 }},
+                                      y4 = {{ y4 }},
                                       colorvar = {{ colorvar }},
-                                      xlabel = xlabel, y1label = y1label,
-                                      y2label = y2label, y3label = y3label,
+                                      xlabel = xlabel,
+                                      y1label = y1label,
+                                      y2label = y2label,
+                                      y3label = y3label,
                                       y4label = y4label,
                                       colorpalette = colorpalette,
                                       showlegend = showlegend,
                                       legendtitle = legendtitle,
-                                      spacing = spacing, plotheight = height)
+                                      spacing = spacing,
+                                      plotheight = height)
 
   if (isTRUE(notitle)) {
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))

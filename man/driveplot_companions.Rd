@@ -86,9 +86,14 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 
 # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 driveplot_companions(
-     shareddata = nds_sf7_sd, x = time_cst, y1 = speed_mph,
-     y2 = gyro_heading, y3 = gps_heading, colorvar = gps_pdop,
-     xlabel = "Time", y1label = "Speed (mph)",
+     shareddata = nds_sf7_sd,
+     x = time_cst,
+     y1 = speed_mph,
+     y2 = gyro_heading,
+     y3 = gps_heading,
+     colorvar = gps_pdop,
+     xlabel = "Time",
+     y1label = "Speed (mph)",
      y2label = "Gyro Heading (degrees)",
      y3label = "GPS Heading (degrees)",
      colorpalette = "viridis")

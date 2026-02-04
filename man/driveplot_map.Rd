@@ -51,7 +51,7 @@ nds_sf7 <- nds_data |>
 nds_sf7_sd <- SharedData$new(nds_sf7)
 
 # basic map of one drive
-driveplot_map(nds_sf7_sd)
+driveplot_map(shareddata = nds_sf7_sd)
 
 # color drive points by direction of car
 driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")

@@ -98,11 +98,17 @@ nds_sf7 <- nds_data |>
   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
 nds_sf7_sd <- SharedData$new(nds_sf7)
 
-driveplot(shareddata = nds_sf7_sd, #lng = gps_long, lat = gps_lat,
-          x = time_cst, y1 = speed_mph, y2 = gyro_heading,
-          y3 = gps_heading, colorvar = gyro_heading,
-          maplabel = time_cst, colorpalette = "viridis", fillOpacity = 1,
-          xlabel = "Time", y1label = "Speed (mph)",
+driveplot(shareddata = nds_sf7_sd,
+          x = time_cst,
+          y1 = speed_mph,
+          y2 = gyro_heading,
+          y3 = gps_heading,
+          colorvar = gyro_heading,
+          maplabel = time_cst,
+          colorpalette = "viridis",
+          fillOpacity = 1,
+          xlabel = "Time",
+          y1label = "Speed (mph)",
           y2label = "Gyro Heading (degrees)",
           y3label = "GPS Heading (degrees)")
 }

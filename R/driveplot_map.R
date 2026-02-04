@@ -29,13 +29,17 @@
 #' nds_sf7_sd <- SharedData$new(nds_sf7)
 #'
 #' # basic map of one drive
-#' driveplot_map(nds_sf7_sd)
+#' driveplot_map(shareddata = nds_sf7_sd)
 #'
 #' # color drive points by direction of car
 #' driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")
-driveplot_map <- function(shareddata, lng = NULL, lat = NULL,
-                          colorvar = NULL, label = NA,
-                          colorpalette = "#03F", fillOpacity = 1,
+driveplot_map <- function(shareddata,
+                          lng = NULL,
+                          lat = NULL,
+                          colorvar = NULL,
+                          label = NA,
+                          colorpalette = "#03F",
+                          fillOpacity = 1,
                           mapheight = "98vh") {
   # Get original data from shareddata so we can check the type of colorvar
   # and set color palette domains
