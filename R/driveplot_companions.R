@@ -1,33 +1,34 @@
 #' Make a stack of companion graphs from shared drive data
 #'
-#' @param shareddata a SharedData object containing observations to be plotted
-#' @param x variable from shareddata to be plotted on the horizontal axis
-#' @param y1 variable from shareddata to be plotted on the vertical axis
-#' for the first graph
-#' @param y2 variable from shareddata to be plotted on the vertical axis
-#' for the second graph
-#' @param y3 variable from shareddata to be plotted on the vertical axis
-#' for the third graph
-#' @param y4 variable from shareddata to be plotted on the vertical axis
-#' for the fourth graph
-#' @param colorvar the variable in shareddata to which color should be mapped
-#' @param xlabel the label for the variable on the horizontal axis
-#' @param y1label the label for the variable on the vertical axis
-#' for the first graph
-#' @param y2label the label for the variable on the vertical axis
-#' for the second graph
-#' @param y3label the label for the variable on the vertical axis
-#' for the third graph
-#' @param y4label the label for the variable on the vertical axis
-#' for the fourth graph
-#' @param colorpalette either a single color (e.g., "red") or one of
-#' "viridis", "inferno", "magma", or "plasma"
-#' @param showlegend show the plot legend (TRUE) or not (FALSE)
-#' @param legendtitle the title for the plot legend
-#' @param spacing value between 0 and 1 for the space between the graphs
-#' @param plotheight the height of the stack of companion graphs in CSS units,
-#' e.g, "98vh"
-#' @returns plotly scatterplot
+#' @param shareddata A SharedData object containing observations to be plotted.
+#' @param x The variable from shareddata to be plotted on the horizontal axis.
+#' @param y1 The variable from shareddata to be plotted on the vertical axis
+#'   for the first graph.
+#' @param y2 The variable from shareddata to be plotted on the vertical axis
+#'   for the second graph.
+#' @param y3 The variable from shareddata to be plotted on the vertical axis
+#'   for the third graph.
+#' @param y4 The variable from shareddata to be plotted on the vertical axis
+#'   for the fourth graph.
+#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param xlabel The label for the variable on the horizontal axis.
+#' @param y1label The label for the variable on the vertical axis
+#'   for the first graph.
+#' @param y2label The label for the variable on the vertical axis
+#'   for the second graph.
+#' @param y3label The label for the variable on the vertical axis
+#'   for the third graph.
+#' @param y4label The label for the variable on the vertical axis
+#'   for the fourth graph.
+#' @param colorpalette The color palette for the plot map; either a single
+#'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param showlegend Show the plot legend (TRUE) or not (FALSE).
+#' @param legendtitle The title for the plot legend.
+#' @param spacing A value between 0 and 1 for the space between the
+#'   companion graphs.
+#' @param plotheight The height of the stack of companion graphs in CSS units,
+#'   e.g, "98vh"
+#' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo
@@ -82,19 +83,32 @@ driveplot_companions <- function(shareddata,
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  y2check <- tryCatch(ogdata |> pull({{ y2 }}),
-                      error = function(e){},
-                      finally = NULL)
-  y3check <- tryCatch(ogdata |> pull({{ y3 }}),
-                      error = function(e){},
-                      finally = NULL)
-  y4check <- tryCatch(ogdata |> pull({{ y4 }}),
-                      error = function(e){},
-                      finally = NULL)
+  y2check <- tryCatch(
+    ogdata |>
+      pull({{ y2 }}),
+    error = function(e){},
+    finally = NULL
+  )
+  y3check <- tryCatch(
+    ogdata |>
+      pull({{ y3 }}),
+    error = function(e){},
+    finally = NULL
+  )
+  y4check <- tryCatch(
+    ogdata |>
+      pull({{ y4 }}),
+    error = function(e){},
+    finally = NULL
+  )
 
-  colorvarnumeric <- tryCatch(ogdata |> pull({{ colorvar }}) |> is.numeric(),
-                              error = function(e){},
-                              finally = NULL)
+  colorvarnumeric <- tryCatch(
+    ogdata |>
+      pull({{ colorvar }}) |>
+      is.numeric(),
+    error = function(e){},
+    finally = NULL
+  )
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata

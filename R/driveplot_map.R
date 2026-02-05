@@ -1,17 +1,17 @@
 #' Create a standalone map
 #'
-#' @param shareddata a SharedData object containing observations to be plotted
-#' @param lng the column of shareddata containing longitude
-#' (only required if shareddata does not have a geometry column)
+#' @param shareddata A SharedData object containing observations to be plotted.
+#' @param lng The column of shareddata containing longitude
+#'   (only required if shareddata does not have a geometry column).
 #' @param lat the column of shareddata containing latitude
-#' (only required if shareddata does not have a geometry column)
-#' @param colorvar the variable in shareddata to which color should be mapped
-#' @param label an optional label for the map points
-#' @param colorpalette either a single color (e.g., "red") or one of
-#' "viridis", "inferno", "magma", or "plasma"
-#' @param fillOpacity the opacity of the fill (0 to 1)
-#' @param mapheight the height of the map in CSS units, e.g, "98vh"
-#' @returns leaflet map
+#'   (only required if shareddata does not have a geometry column).
+#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param label An optional label for the map points.
+#' @param colorpalette The color palette for the map; either a single color
+#'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param fillOpacity The opacity of the fill of the map points (0 to 1).
+#' @param mapheight The height of the map in CSS units, e.g, "98vh".
+#' @returns A leaflet map.
 #' @importFrom crosstalk SharedData
 #' @importFrom dplyr pull filter
 #' @importFrom rlang enquo eval_tidy quo_squash quo
@@ -45,16 +45,26 @@ driveplot_map <- function(shareddata,
   # and set color palette domains
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  lngcheck <- tryCatch(ogdata |> pull({{ lng }}),
-                       error = function(e){},
-                       finally = NULL)
-  latcheck <- tryCatch(ogdata |> pull({{ lat }}),
-                       error = function(e){},
-                       finally = NULL)
+  lngcheck <- tryCatch(
+    ogdata |>
+      pull({{ lng }}),
+    error = function(e){},
+    finally = NULL
+  )
+  latcheck <- tryCatch(
+    ogdata |>
+      pull({{ lat }}),
+    error = function(e){},
+    finally = NULL
+  )
   quolabel <- enquo(label)
-  colorvarnumeric <- tryCatch(ogdata |> pull({{ colorvar }}) |> is.numeric(),
-                              error = function(e){},
-                              finally = NULL)
+  colorvarnumeric <- tryCatch(
+    ogdata |>
+      pull({{ colorvar }}) |>
+      is.numeric(),
+    error = function(e){},
+    finally = NULL
+  )
   # Create color palettes
   if (is.null(colorvarnumeric) &&
      colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
@@ -82,8 +92,8 @@ driveplot_map <- function(shareddata,
   if (isFALSE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
     colorpal <- colorFactor(palette = colorpalette,
-                                     domain = ogdata |> pull({{ colorvar }}),
-                                     na.color = "dimgray")
+                            domain = ogdata |> pull({{ colorvar }}),
+                            na.color = "dimgray")
   }
   if (is.null(lngcheck) && is.null(latcheck)) {
     lnglat <- derivePoints(shareddata)

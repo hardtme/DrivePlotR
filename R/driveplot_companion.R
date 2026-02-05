@@ -10,17 +10,17 @@
 #' scale_fill_viridis_d ylab xlab labs aes
 #' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides
-#' @param shareddata a SharedData object containing observations to be plotted
-#' @param x variable from shareddata to be plotted on the horizontal axis
-#' @param y variable from shareddata to be plotted on the vertical axis
-#' @param colorvar the variable in shareddata to which color should be mapped
-#' @param colorpalette either a single color (e.g., "red") or one of "viridis",
-#' "inferno", "magma", or "plasma"
-#' @param xlab x-axis label
-#' @param ylab y-axis label
-#' @param showlegend show the plot legend (TRUE) or not (FALSE)
-#' @param legendtitle the title for the plot legend
-#' @returns plotly scatterplot
+#' @param shareddata A SharedData object containing observations to be plotted.
+#' @param x The variable from shareddata to be plotted on the horizontal axis.
+#' @param y The variable from shareddata to be plotted on the vertical axis.
+#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param colorpalette The color palette for the plot; either a single
+#'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param xlab The label for the variable on the horizontal axis.
+#' @param ylab The label for the variable on the vertical axis.
+#' @param showlegend Show the plot legend (TRUE) or not (FALSE).
+#' @param legendtitle The title for the plot legend.
+#' @returns A plotly scatterplot.
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -34,7 +34,7 @@
 #' # Time series of speed
 #' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 #'
-#' # color points by direction of car
+#' # Color points by direction of car
 #' driveplot_companion(shareddata = nds_sf7_sd,
 #'                     x = time_cst,
 #'                     y = speed_mph,
@@ -53,9 +53,13 @@ driveplot_companion <- function(shareddata,
   # type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  colorvarnumeric <- tryCatch(ogdata |> pull({{ colorvar }}) |> is.numeric(),
-                              error = function(e){},
-                              finally = NULL)
+  colorvarnumeric <- tryCatch(
+    ogdata |>
+      pull({{ colorvar }}) |>
+      is.numeric(),
+    error = function(e){},
+    finally = NULL
+  )
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata

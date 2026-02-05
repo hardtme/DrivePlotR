@@ -31,7 +31,7 @@ driveplot(
 \arguments{
 \item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{lng}{The column of shareddata containing longitude.
+\item{lng}{The column of shareddata containing longitude
 (only required if shareddata does not have a geometry column).}
 
 \item{lat}{The column of shareddata containing latitude
@@ -55,24 +55,24 @@ for the fourth graph.}
 
 \item{maplabel}{An optional label for the map points.}
 
-\item{colorpalette}{Color palette for the plot map; either a single color
-(e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
+\item{colorpalette}{The color palette for the plot map; either a single
+color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
 \item{fillOpacity}{The opacity of the fill of the map points (0 to 1).}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
 \item{y1label}{The label for the variable on the vertical axis
-for the first graph.}
+for the first companion graph.}
 
 \item{y2label}{The label for the variable on the vertical axis
-for the second graph.}
+for the second companion graph.}
 
 \item{y3label}{The label for the variable on the vertical axis
-for the third graph.}
+for the third companion graph.}
 
 \item{y4label}{The label for the variable on the vertical axis
-for the fourth graph.}
+for the fourth companion graph.}
 
 \item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
@@ -80,10 +80,11 @@ for the fourth graph.}
 
 \item{plottitle}{The title for the plot map.}
 
-\item{spacing}{A value between 0 and 1 for the space between the graphs.}
+\item{spacing}{A value between 0 and 1 for the space between the
+companion graphs.}
 }
 \value{
-linked plot map
+A linked plot map.
 }
 \description{
 Create a vehicle trajectory plot map

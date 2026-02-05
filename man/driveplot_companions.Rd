@@ -25,52 +25,53 @@ driveplot_companions(
 )
 }
 \arguments{
-\item{shareddata}{a SharedData object containing observations to be plotted}
+\item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{x}{variable from shareddata to be plotted on the horizontal axis}
+\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
 
-\item{y1}{variable from shareddata to be plotted on the vertical axis
-for the first graph}
+\item{y1}{The variable from shareddata to be plotted on the vertical axis
+for the first graph.}
 
-\item{y2}{variable from shareddata to be plotted on the vertical axis
-for the second graph}
+\item{y2}{The variable from shareddata to be plotted on the vertical axis
+for the second graph.}
 
-\item{y3}{variable from shareddata to be plotted on the vertical axis
-for the third graph}
+\item{y3}{The variable from shareddata to be plotted on the vertical axis
+for the third graph.}
 
-\item{y4}{variable from shareddata to be plotted on the vertical axis
-for the fourth graph}
+\item{y4}{The variable from shareddata to be plotted on the vertical axis
+for the fourth graph.}
 
-\item{colorvar}{the variable in shareddata to which color should be mapped}
+\item{colorvar}{The variable in shareddata to which color should be mapped.}
 
-\item{xlabel}{the label for the variable on the horizontal axis}
+\item{xlabel}{The label for the variable on the horizontal axis.}
 
-\item{y1label}{the label for the variable on the vertical axis
-for the first graph}
+\item{y1label}{The label for the variable on the vertical axis
+for the first graph.}
 
-\item{y2label}{the label for the variable on the vertical axis
-for the second graph}
+\item{y2label}{The label for the variable on the vertical axis
+for the second graph.}
 
-\item{y3label}{the label for the variable on the vertical axis
-for the third graph}
+\item{y3label}{The label for the variable on the vertical axis
+for the third graph.}
 
-\item{y4label}{the label for the variable on the vertical axis
-for the fourth graph}
+\item{y4label}{The label for the variable on the vertical axis
+for the fourth graph.}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of
-"viridis", "inferno", "magma", or "plasma"}
+\item{colorpalette}{The color palette for the plot map; either a single
+color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
+\item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
-\item{legendtitle}{the title for the plot legend}
+\item{legendtitle}{The title for the plot legend.}
 
-\item{spacing}{value between 0 and 1 for the space between the graphs}
+\item{spacing}{A value between 0 and 1 for the space between the
+companion graphs.}
 
-\item{plotheight}{the height of the stack of companion graphs in CSS units,
+\item{plotheight}{The height of the stack of companion graphs in CSS units,
 e.g, "98vh"}
 }
 \value{
-plotly scatterplot
+A stack of plotly scatterplots.
 }
 \description{
 Make a stack of companion graphs from shared drive data

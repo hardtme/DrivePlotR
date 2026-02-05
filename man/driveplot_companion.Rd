@@ -17,27 +17,27 @@ driveplot_companion(
 )
 }
 \arguments{
-\item{shareddata}{a SharedData object containing observations to be plotted}
+\item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{x}{variable from shareddata to be plotted on the horizontal axis}
+\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
 
-\item{y}{variable from shareddata to be plotted on the vertical axis}
+\item{y}{The variable from shareddata to be plotted on the vertical axis.}
 
-\item{colorvar}{the variable in shareddata to which color should be mapped}
+\item{colorvar}{The variable in shareddata to which color should be mapped.}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of "viridis",
-"inferno", "magma", or "plasma"}
+\item{colorpalette}{The color palette for the plot; either a single
+color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{xlab}{x-axis label}
+\item{xlab}{The label for the variable on the horizontal axis.}
 
-\item{ylab}{y-axis label}
+\item{ylab}{The label for the variable on the vertical axis.}
 
-\item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
+\item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
-\item{legendtitle}{the title for the plot legend}
+\item{legendtitle}{The title for the plot legend.}
 }
 \value{
-plotly scatterplot
+A plotly scatterplot.
 }
 \description{
 Make a single plotly scatter plot from shared drive data
@@ -54,7 +54,7 @@ nds_sf7_sd <- SharedData$new(nds_sf7)
 # Time series of speed
 driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
 
-# color points by direction of car
+# Color points by direction of car
 driveplot_companion(shareddata = nds_sf7_sd,
                     x = time_cst,
                     y = speed_mph,

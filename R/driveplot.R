@@ -1,7 +1,7 @@
 #' Create a vehicle trajectory plot map
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
-#' @param lng The column of shareddata containing longitude.
+#' @param lng The column of shareddata containing longitude
 #'   (only required if shareddata does not have a geometry column).
 #' @param lat The column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column)
@@ -16,23 +16,24 @@
 #'   for the fourth graph.
 #' @param colorvar The variable in shareddata to which color should be mapped.
 #' @param maplabel An optional label for the map points.
-#' @param colorpalette Color palette for the plot map; either a single color
-#'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param colorpalette The color palette for the plot map; either a single
+#'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param fillOpacity The opacity of the fill of the map points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param y1label The label for the variable on the vertical axis
-#'   for the first graph.
+#'   for the first companion graph.
 #' @param y2label The label for the variable on the vertical axis
-#'   for the second graph.
+#'   for the second companion graph.
 #' @param y3label The label for the variable on the vertical axis
-#'   for the third graph.
+#'   for the third companion graph.
 #' @param y4label The label for the variable on the vertical axis
-#'   for the fourth graph.
+#'   for the fourth companion graph.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param plottitle The title for the plot map.
-#' @param spacing A value between 0 and 1 for the space between the graphs.
-#' @returns linked plot map
+#' @param spacing A value between 0 and 1 for the space between the
+#'   companion graphs.
+#' @returns A linked plot map.
 #' @importFrom crosstalk SharedData bscols
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo
@@ -128,7 +129,7 @@ driveplot <- function(shareddata,
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
   }
   else{
-    # suppressWarnings so we don't see bscols complain that
+    # suppressWarnings so we don't see bscols warn that
     # the sum of the widths is greater than 12
     final_viz <- suppressWarnings(
       bscols(
