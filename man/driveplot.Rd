@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot.R
 \name{driveplot}
 \alias{driveplot}
-\title{Make a stack of companion graphs from shared drive data}
+\title{Create a vehicle trajectory plot map}
 \usage{
 driveplot(
   shareddata,
@@ -29,64 +29,64 @@ driveplot(
 )
 }
 \arguments{
-\item{shareddata}{a SharedData object containing observations to be plotted}
+\item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{lng}{the column of shareddata containing longitude
+\item{lng}{The column of shareddata containing longitude.
+(only required if shareddata does not have a geometry column).}
+
+\item{lat}{The column of shareddata containing latitude
 (only required if shareddata does not have a geometry column)}
 
-\item{lat}{the column of shareddata containing latitude
-(only required if shareddata does not have a geometry column)}
+\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
 
-\item{x}{variable from shareddata to be plotted on the horizontal axis}
+\item{y1}{The variable from shareddata to be plotted on the vertical axis
+for the first graph.}
 
-\item{y1}{variable from shareddata to be plotted on the vertical axis
-for the first graph}
+\item{y2}{The variable from shareddata to be plotted on the vertical axis
+for the second graph.}
 
-\item{y2}{variable from shareddata to be plotted on the vertical axis
-for the second graph}
+\item{y3}{The variable from shareddata to be plotted on the vertical axis
+for the third graph.}
 
-\item{y3}{variable from shareddata to be plotted on the vertical axis
-for the third graph}
+\item{y4}{The variable from shareddata to be plotted on the vertical axis
+for the fourth graph.}
 
-\item{y4}{variable from shareddata to be plotted on the vertical axis
-for the fourth graph}
+\item{colorvar}{The variable in shareddata to which color should be mapped.}
 
-\item{colorvar}{the variable in shareddata to which color should be mapped}
+\item{maplabel}{An optional label for the map points.}
 
-\item{maplabel}{an optional label for the map points}
+\item{colorpalette}{Color palette for the plot map; either a single color
+(e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of
-"viridis", "inferno", "magma", or "plasma"}
+\item{fillOpacity}{The opacity of the fill of the map points (0 to 1).}
 
-\item{fillOpacity}{the opacity of the fill (0 to 1)}
+\item{xlabel}{The label for the variable on the horizontal axis.}
 
-\item{xlabel}{the label for the variable on the horizontal axis}
+\item{y1label}{The label for the variable on the vertical axis
+for the first graph.}
 
-\item{y1label}{the label for the variable on the vertical axis
-for the first graph}
+\item{y2label}{The label for the variable on the vertical axis
+for the second graph.}
 
-\item{y2label}{the label for the variable on the vertical axis
-for the second graph}
+\item{y3label}{The label for the variable on the vertical axis
+for the third graph.}
 
-\item{y3label}{the label for the variable on the vertical axis
-for the third graph}
+\item{y4label}{The label for the variable on the vertical axis
+for the fourth graph.}
 
-\item{y4label}{the label for the variable on the vertical axis
-for the fourth graph}
+\item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
-\item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
+\item{legendtitle}{The title for the plot legend.}
 
-\item{legendtitle}{the title for the plot legend}
+\item{plottitle}{The title for the plot map.}
 
-\item{plottitle}{the title for the plot map}
-
-\item{spacing}{value between 0 and 1 for the space between the graphs}
+\item{spacing}{A value between 0 and 1 for the space between the graphs.}
 }
 \value{
 linked plot map
 }
 \description{
-Make a stack of companion graphs from shared drive data
+Create a vehicle trajectory plot map
 }
 \examples{
 # example code

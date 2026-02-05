@@ -1,37 +1,37 @@
-#' Make a stack of companion graphs from shared drive data
+#' Create a vehicle trajectory plot map
 #'
-#' @param shareddata a SharedData object containing observations to be plotted
-#' @param lng the column of shareddata containing longitude
-#' (only required if shareddata does not have a geometry column)
-#' @param lat the column of shareddata containing latitude
-#' (only required if shareddata does not have a geometry column)
-#' @param x variable from shareddata to be plotted on the horizontal axis
-#' @param y1 variable from shareddata to be plotted on the vertical axis
-#' for the first graph
-#' @param y2 variable from shareddata to be plotted on the vertical axis
-#' for the second graph
-#' @param y3 variable from shareddata to be plotted on the vertical axis
-#' for the third graph
-#' @param y4 variable from shareddata to be plotted on the vertical axis
-#' for the fourth graph
-#' @param colorvar the variable in shareddata to which color should be mapped
-#' @param maplabel an optional label for the map points
-#' @param colorpalette either a single color (e.g., "red") or one of
-#' "viridis", "inferno", "magma", or "plasma"
-#' @param fillOpacity the opacity of the fill (0 to 1)
-#' @param xlabel the label for the variable on the horizontal axis
-#' @param y1label the label for the variable on the vertical axis
-#' for the first graph
-#' @param y2label the label for the variable on the vertical axis
-#' for the second graph
-#' @param y3label the label for the variable on the vertical axis
-#' for the third graph
-#' @param y4label the label for the variable on the vertical axis
-#' for the fourth graph
-#' @param showlegend show the plot legend (TRUE) or not (FALSE)
-#' @param legendtitle the title for the plot legend
-#' @param plottitle the title for the plot map
-#' @param spacing value between 0 and 1 for the space between the graphs
+#' @param shareddata A SharedData object containing observations to be plotted.
+#' @param lng The column of shareddata containing longitude.
+#'   (only required if shareddata does not have a geometry column).
+#' @param lat The column of shareddata containing latitude
+#'   (only required if shareddata does not have a geometry column)
+#' @param x The variable from shareddata to be plotted on the horizontal axis.
+#' @param y1 The variable from shareddata to be plotted on the vertical axis
+#'   for the first graph.
+#' @param y2 The variable from shareddata to be plotted on the vertical axis
+#'   for the second graph.
+#' @param y3 The variable from shareddata to be plotted on the vertical axis
+#'   for the third graph.
+#' @param y4 The variable from shareddata to be plotted on the vertical axis
+#'   for the fourth graph.
+#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param maplabel An optional label for the map points.
+#' @param colorpalette Color palette for the plot map; either a single color
+#'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param fillOpacity The opacity of the fill of the map points (0 to 1).
+#' @param xlabel The label for the variable on the horizontal axis.
+#' @param y1label The label for the variable on the vertical axis
+#'   for the first graph.
+#' @param y2label The label for the variable on the vertical axis
+#'   for the second graph.
+#' @param y3label The label for the variable on the vertical axis
+#'   for the third graph.
+#' @param y4label The label for the variable on the vertical axis
+#'   for the fourth graph.
+#' @param showlegend Show the plot legend (TRUE) or not (FALSE).
+#' @param legendtitle The title for the plot legend.
+#' @param plottitle The title for the plot map.
+#' @param spacing A value between 0 and 1 for the space between the graphs.
 #' @returns linked plot map
 #' @importFrom crosstalk SharedData bscols
 #' @importFrom dplyr pull ungroup select
