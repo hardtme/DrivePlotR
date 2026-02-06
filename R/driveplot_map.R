@@ -91,7 +91,13 @@ driveplot_map <- function(shareddata,
   }
   if (isFALSE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
-    colorpal <- colorFactor(palette = colorpalette,
+    ncolors <- ogdata |>
+      pull({{ colorvar }}) |>
+      na.omit() |>
+      unique() |>
+      length()
+    colorpal <- colorFactor(palette = viridis(n = ncolors,
+                                              option = colorpalette),
                             domain = ogdata |> pull({{ colorvar }}),
                             na.color = "dimgray")
   }
