@@ -62,7 +62,9 @@ also separately create maps or companion graphs.
 You can create a basic standalone map as follows:
 
 ``` r
-driveplot_map(shareddata = shared_drive)
+driveplot_map(
+  shareddata = shared_drive
+  )
 ```
 
 You can also create a standalone companion graph as follows:
@@ -70,9 +72,11 @@ You can also create a standalone companion graph as follows:
 ``` r
 driveplot_companions(
   shareddata = shared_drive, 
-  x = time_cst, y1 = speed_mph, 
+  x = time_cst, 
+  y1 = speed_mph, 
   xlabel = "Time", 
-  y1label = "Speed (MPH)")
+  y1label = "Speed (MPH)"
+  )
 ```
 
 `DrivePlotR` offers many options for customization. For example, the
@@ -86,12 +90,19 @@ they occurred.
 ``` r
 driveplot(
   shareddata = shared_drive, 
-  x = time_cst, y1 = speed_mph, 
-  y2 = gyro_heading, y3 = gps_pdop,
-  colorvar = gps_minute, maplabel = time_cst, 
+  x = time_cst, 
+  y1 = speed_mph, 
+  y2 = gyro_heading, 
+  y3 = gps_pdop,
+  colorvar = gps_minute, 
+  maplabel = time_cst, 
   colorpalette = "viridis", 
-  xlabel = "Time", y1label = "Speed (MPH)", 
-  y2label = "Gyro Heading", y3label = "GPS PDOP", 
-  showlegend = TRUE, legendtitle = "Minute", 
-  plottitle = "A Drive in Omaha, NE")
+  xlabel = "Time", 
+  y1label = "Speed (MPH)", 
+  y2label = "Gyro Heading", 
+  y3label = "GPS PDOP", 
+  showlegend = TRUE, 
+  legendtitle = "Minute", 
+  plottitle = "A Drive in Omaha, NE"
+  )
 ```
