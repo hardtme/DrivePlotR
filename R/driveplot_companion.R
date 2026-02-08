@@ -16,8 +16,8 @@
 #' @param colorvar The variable in shareddata to which color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
-#' @param xlab The label for the variable on the horizontal axis.
-#' @param ylab The label for the variable on the vertical axis.
+#' @param xlabel The label for the variable on the horizontal axis.
+#' @param ylabel The label for the variable on the vertical axis.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @returns A plotly scatterplot.
@@ -32,7 +32,9 @@
 #' nds_sf7_sd <- SharedData$new(nds_sf7)
 #'
 #' # Time series of speed
-#' driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
+#' driveplot_companion(shareddata = nds_sf7_sd,
+#'                     x = time_cst,
+#'                     y = speed_mph)
 #'
 #' # Color points by direction of car
 #' driveplot_companion(shareddata = nds_sf7_sd,
@@ -45,8 +47,8 @@ driveplot_companion <- function(shareddata,
                                 y,
                                 colorvar = NULL,
                                 colorpalette = "#03F",
-                                xlab = NULL,
-                                ylab = NULL,
+                                xlabel = NULL,
+                                ylabel = NULL,
                                 showlegend = TRUE,
                                 legendtitle = NULL) {
   # Get original data from shareddata so we can check the existence and
@@ -128,9 +130,9 @@ driveplot_companion <- function(shareddata,
   # Remove the y-axis title because we will use a plotly annotation for it
   gg <- gg + ylab(NULL)
 
-  if (!is.null(xlab)) {
+  if (!is.null(xlabel)) {
     gg <- gg +
-      xlab(xlab)
+      xlab(xlabel)
   }
 
   if (!is.null(legendtitle)) {
@@ -138,8 +140,8 @@ driveplot_companion <- function(shareddata,
       labs(fill = legendtitle)
   }
 
-  if (is.null(ylab)) {
-    ylab <- ogdata |>
+  if (is.null(ylabel)) {
+    ylabel <- ogdata |>
       ungroup() |>
       st_drop_geometry() |>
       select({{ y }}) |>
@@ -147,7 +149,7 @@ driveplot_companion <- function(shareddata,
   }
 
   plot_annotations <- list(
-    text = ylab,
+    text = ylabel,
     xref = "paper",
     yref = "paper",
     yanchor = "bottom",

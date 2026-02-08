@@ -10,8 +10,8 @@ driveplot_companion(
   y,
   colorvar = NULL,
   colorpalette = "#03F",
-  xlab = NULL,
-  ylab = NULL,
+  xlabel = NULL,
+  ylabel = NULL,
   showlegend = TRUE,
   legendtitle = NULL
 )
@@ -28,9 +28,9 @@ driveplot_companion(
 \item{colorpalette}{The color palette for the plot; either a single
 color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{xlab}{The label for the variable on the horizontal axis.}
+\item{xlabel}{The label for the variable on the horizontal axis.}
 
-\item{ylab}{The label for the variable on the vertical axis.}
+\item{ylabel}{The label for the variable on the vertical axis.}
 
 \item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
@@ -52,7 +52,9 @@ nds_sf7 <- nds_data |>
 nds_sf7_sd <- SharedData$new(nds_sf7)
 
 # Time series of speed
-driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
+driveplot_companion(shareddata = nds_sf7_sd,
+                    x = time_cst,
+                    y = speed_mph)
 
 # Color points by direction of car
 driveplot_companion(shareddata = nds_sf7_sd,
