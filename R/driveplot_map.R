@@ -92,8 +92,8 @@ driveplot_map <- function(shareddata,
   if (isFALSE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
     ncolors <- ogdata |>
+      filter(!is.na({{ colorvar }})) |>
       pull({{ colorvar }}) |>
-      na.omit() |>
       unique() |>
       length()
     colorpal <- colorFactor(palette = viridis(n = ncolors,
