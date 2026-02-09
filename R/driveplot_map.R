@@ -12,7 +12,7 @@
 #' @param fillOpacity The opacity of the fill of the map points (0 to 1).
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
-#' @importFrom crosstalk SharedData
+#' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull filter
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
@@ -41,6 +41,10 @@ driveplot_map <- function(shareddata,
                           colorpalette = "#03F",
                           fillOpacity = 1,
                           mapheight = "98vh") {
+
+  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+    stop("`shareddata` must be a SharedData object.")
+  }
   # Get original data from shareddata so we can check the type of colorvar
   # and set color palette domains
   # We can't directly access columns in a SharedData object

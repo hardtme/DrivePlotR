@@ -51,6 +51,10 @@ driveplot_companion <- function(shareddata,
                                 ylabel = NULL,
                                 showlegend = TRUE,
                                 legendtitle = NULL) {
+
+  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+    stop("`shareddata` must be a SharedData object.")
+  }
   # Get original data from shareddata so we can check the existence and
   # type of colorvar
   # We can't directly access columns in a SharedData object

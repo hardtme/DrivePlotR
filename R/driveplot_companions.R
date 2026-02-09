@@ -29,7 +29,7 @@
 #' @param plotheight The height of the stack of companion graphs in CSS units,
 #'   e.g, "98vh"
 #' @returns A stack of plotly scatterplots.
-#' @importFrom crosstalk SharedData
+#' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
@@ -80,6 +80,10 @@ driveplot_companions <- function(shareddata,
                                  legendtitle = NULL,
                                  spacing = 0.05,
                                  plotheight = "98vh") {
+
+  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+    stop("`shareddata` must be a SharedData object.")
+  }
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
