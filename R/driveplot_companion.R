@@ -53,12 +53,25 @@ driveplot_companion <- function(shareddata,
                                 legendtitle = NULL) {
 
   if (isFALSE(crosstalk::is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.")
+    stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
-  # Get original data from shareddata so we can check the existence and
-  # type of colorvar
+
+  # Get original data from shareddata so we can check the existence of
+  # x, y, and colorvar along with the type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
+  tryCatch(
+    ogdata |> select({{ x }}),
+    error = function(e){
+      stop("Can't find column `x` in `shareddata`.", call. = FALSE)
+      }
+  )
+  tryCatch(
+    ogdata |> select({{ y }}),
+    error = function(e){
+      stop("Can't find column `y` in `shareddata`.", call. = FALSE)
+    }
+  )
   colorvarnumeric <- tryCatch(
     ogdata |>
       pull({{ colorvar }}) |>
