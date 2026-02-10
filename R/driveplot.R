@@ -92,7 +92,7 @@ driveplot <- function(shareddata,
                       spacing = 0.05) {
 
   if (isFALSE(crosstalk::is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.")
+    stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
   notitle <- is.null(plottitle)

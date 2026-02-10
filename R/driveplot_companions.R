@@ -82,7 +82,7 @@ driveplot_companions <- function(shareddata,
                                  plotheight = "98vh") {
 
   if (isFALSE(crosstalk::is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.")
+    stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
