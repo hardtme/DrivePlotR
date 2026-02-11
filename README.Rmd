@@ -68,12 +68,12 @@ driveplot_map(
 You can also create a standalone companion graph as follows:
 
 ```{r companiongraph, eval = FALSE}
-driveplot_companions(
+driveplot_companion(
   shareddata = shared_drive, 
   x = time_cst, 
-  y1 = speed_mph, 
+  y = speed_mph, 
   xlabel = "Time", 
-  y1label = "Speed (MPH)"
+  ylabel = "Speed (MPH)"
 )
 ```
 

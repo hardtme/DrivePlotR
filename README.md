@@ -64,19 +64,19 @@ You can create a basic standalone map as follows:
 ``` r
 driveplot_map(
   shareddata = shared_drive
-  )
+)
 ```
 
 You can also create a standalone companion graph as follows:
 
 ``` r
-driveplot_companions(
+driveplot_companion(
   shareddata = shared_drive, 
   x = time_cst, 
-  y1 = speed_mph, 
+  y = speed_mph, 
   xlabel = "Time", 
-  y1label = "Speed (MPH)"
-  )
+  ylabel = "Speed (MPH)"
+)
 ```
 
 `DrivePlotR` offers many options for customization. For example, the
@@ -104,5 +104,5 @@ driveplot(
   showlegend = TRUE, 
   legendtitle = "Minute", 
   plottitle = "A Drive in Omaha, NE"
-  )
+)
 ```
