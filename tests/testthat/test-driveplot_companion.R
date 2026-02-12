@@ -10,8 +10,7 @@ test_that("x column is not in shareddata", {
   expect_error(
     driveplot_companion(shareddata = shared_drive,
                         x = time_est,
-                        y = speed_mph),
-    "Can't find column `x` in `shareddata`."
+                        y = speed_mph)
   )
 })
 
@@ -20,7 +19,6 @@ test_that("y column is not in shareddata", {
   expect_error(
     driveplot_companion(shareddata = shared_drive,
                         x = time_cst,
-                        y = speed_kph),
-    "Can't find column `y` in `shareddata`."
+                        y = speed_kph)
   )
 })

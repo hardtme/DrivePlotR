@@ -2,7 +2,7 @@
 #'
 #' @importFrom crosstalk SharedData
 #' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom rlang enquo eval_tidy quo_squash quo as_label
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles
 #' addCircleMarkers
 #' @importFrom viridisLite viridis
@@ -60,18 +60,17 @@ driveplot_companion <- function(shareddata,
   # x, y, and colorvar along with the type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  tryCatch(
-    ogdata |> select({{ x }}),
-    error = function(e){
-      stop("Can't find column `x` in `shareddata`.", call. = FALSE)
-      }
-  )
-  tryCatch(
-    ogdata |> select({{ y }}),
-    error = function(e){
-      stop("Can't find column `y` in `shareddata`.", call. = FALSE)
-    }
-  )
+  xname <- as_label(enquo(x))
+  yname <- as_label(enquo(y))
+
+  if (!(xname %in% colnames(ogdata))) {
+    stop(paste0("Can't find column `", xname, "` in `shareddata`."),
+         call. = FALSE)
+  } else if (!(yname %in% colnames(ogdata))) {
+    stop(paste0("Can't find column `", yname, "` in `shareddata`."),
+         call. = FALSE)
+  }
+
   colorvarnumeric <- tryCatch(
     ogdata |>
       pull({{ colorvar }}) |>
