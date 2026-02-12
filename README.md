@@ -27,14 +27,14 @@ pak::pak("hardtme/DrivePlotR")
 ## Example
 
 This example shows the basic workflow for making visualizations with
-`DrivePlotR`.
+DrivePlotR.
 
 <!-- Examples borrowed from the DrivePlotR paper -->
 
-1.  Load `DrivePlotR` and make drive data available in the `R` session.
-    We have made non-sensitive drives from a naturalistic driving study
-    available as part of the `DrivePlotR` package, but any other data
-    with both geographic and temporal components would also be suitable.
+1.  Load DrivePlotR and make drive data available in the R session. We
+    have made non-sensitive drives from a naturalistic driving study
+    available as part of the DrivePlotR package, but any other data with
+    both geographic and temporal components would also be suitable.
 
 ``` r
 library(DrivePlotR)
@@ -45,7 +45,7 @@ data("drive7")
     creates a simple feature variable `geometry` of all points. Setting
     the geographic projection to WGS84 ensures that points in the data
     line up with maps in Leaflet. This is already done for the example
-    dataset `drive7`.
+    dataset `drive7` included with the package.
 
 3.  Convert the drive data into a shared data frame.
 
@@ -55,11 +55,11 @@ shared_drive <- crosstalk::SharedData$new(drive7)
 
 4.  Create visualizations.
 
-Although the main purpose of `DrivePlotR` is for users to create linked
+Although the main purpose of DrivePlotR is for users to create linked
 visualizations with a map and one to four companion graphs, users can
 also separately create maps or companion graphs.
 
-You can create a basic standalone map as follows:
+You can create a basic standalone map with the following code:
 
 ``` r
 driveplot_map(
@@ -79,7 +79,7 @@ driveplot_companion(
 )
 ```
 
-`DrivePlotR` offers many options for customization. For example, the
+DrivePlotR offers many options for customization. For example, the
 following code creates a more complex linked plot map. The companion
 graphs include speed, gyroscopic heading (the direction the vehicle is
 going), and GPS position dilution of precision (PDOP, which is a measure
