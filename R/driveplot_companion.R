@@ -60,13 +60,14 @@ driveplot_companion <- function(shareddata,
   # x, y, and colorvar along with the type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
+  columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
   yname <- as_label(enquo(y))
 
-  if (!(xname %in% colnames(ogdata))) {
+  if (!(xname %in% columns)) {
     stop(paste0("Can't find column `", xname, "` in `shareddata`."),
          call. = FALSE)
-  } else if (!(yname %in% colnames(ogdata))) {
+  } else if (!(yname %in% columns)) {
     stop(paste0("Can't find column `", yname, "` in `shareddata`."),
          call. = FALSE)
   }
