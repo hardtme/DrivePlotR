@@ -16,7 +16,7 @@
 #' @importFrom dplyr pull filter
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
-#' addTiles addCircleMarkers
+#'    addTiles addCircleMarkers
 #' @importFrom viridisLite viridis
 #' @export
 #' @examples
@@ -49,18 +49,28 @@ driveplot_map <- function(shareddata,
   # and set color palette domains
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  lngcheck <- tryCatch(
-    ogdata |>
-      pull({{ lng }}),
-    error = function(e){},
-    finally = NULL
-  )
-  latcheck <- tryCatch(
-    ogdata |>
-      pull({{ lat }}),
-    error = function(e){},
-    finally = NULL
-  )
+  columns <- colnames(ogdata)
+  lngname <- as_label(enquo(lng))
+  latname <- as_label(enquo(lat))
+
+  lngcheck <- if (lngname == "NULL") FALSE else TRUE
+  latcheck <- if (latname == "NULL") FALSE else TRUE
+  if ((isFALSE(lngcheck) && isTRUE(latcheck)) ||
+      (isTRUE(lngcheck) && isFALSE(latcheck))) {
+    stop("If providing `lng` and `lat`, must provide both.",
+         call. = FALSE)
+  }
+
+  if (isTRUE(lngcheck) && !(lngname) %in% columns) {
+    stop(paste0("Can't find column `", lngname, "` in `shareddata`."),
+         call. = FALSE)
+  }
+
+  if (isTRUE(latcheck) && !(latname) %in% columns) {
+    stop(paste0("Can't find column `", latname, "` in `shareddata`."),
+         call. = FALSE)
+  }
+
   quolabel <- enquo(label)
   colorvarnumeric <- tryCatch(
     ogdata |>
@@ -105,8 +115,20 @@ driveplot_map <- function(shareddata,
                             domain = ogdata |> pull({{ colorvar }}),
                             na.color = "dimgray")
   }
-  if (is.null(lngcheck) && is.null(latcheck)) {
-    lnglat <- derivePoints(shareddata)
+  if (isFALSE(lngcheck) && isFALSE(latcheck)) {
+    sfgeomcheck <- attr(ogdata, "sf_column")
+    if (is.null(sfgeomcheck)) {
+      stop("Can't find a geometry column and `lng` and `lat` not provided.",
+           call. = FALSE)
+    }
+
+    lnglat <- tryCatch(
+      derivePoints(shareddata),
+      error = function(e) {
+        stop("Geometry column must have type POINT.",
+             call. = FALSE)
+        }
+    )
     lng <- lnglat$lng
     lat <- lnglat$lat
     plot_map <- eval_tidy(quo_squash(quo({
