@@ -87,24 +87,43 @@ driveplot_companions <- function(shareddata,
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  y2check <- tryCatch(
-    ogdata |>
-      pull({{ y2 }}),
-    error = function(e){},
-    finally = NULL
-  )
-  y3check <- tryCatch(
-    ogdata |>
-      pull({{ y3 }}),
-    error = function(e){},
-    finally = NULL
-  )
-  y4check <- tryCatch(
-    ogdata |>
-      pull({{ y4 }}),
-    error = function(e){},
-    finally = NULL
-  )
+  columns <- colnames(ogdata)
+  xname <- as_label(enquo(x))
+  y1name <- as_label(enquo(y1))
+  y2name <- as_label(enquo(y2))
+  y3name <- as_label(enquo(y3))
+  y4name <- as_label(enquo(y4))
+
+  if (!(xname %in% colnames(ogdata))) {
+    stop(paste0("Can't find column `", xname, "` in `shareddata`."),
+         call. = FALSE)
+  } else if (!(y1name %in% colnames(ogdata))) {
+    stop(paste0("Can't find column `", y1name, "` in `shareddata`."),
+         call. = FALSE)
+  }
+
+  if (y2name == "NULL" && (y3name != "NULL" || y4name != "NULL")) {
+    stop("Must provide `y2` before providing `y3` or `y4`.",
+         call. = FALSE)
+  } else if (y2name != "NULL" && y3name == "NULL" && y4name != "NULL") {
+    stop("Must provide `y3` before providing `y4`.")
+  }
+
+  y2check <- ifelse(y2name == "NULL", FALSE, TRUE)
+  if (isTRUE(y2check) && !(y2name) %in% columns) {
+    stop(paste0("Can't find column `", y2name, "` in `shareddata`."),
+         call. = FALSE)
+  }
+  y3check <- ifelse(y3name == "NULL", FALSE, TRUE)
+  if (isTRUE(y3check) && !(y3name) %in% columns) {
+    stop(paste0("Can't find column `", y3name, "` in `shareddata`."),
+         call. = FALSE)
+  }
+  y4check <- ifelse(y4name == "NULL", FALSE, TRUE)
+  if (isTRUE(y4check) && !(y4name) %in% columns) {
+    stop(paste0("Can't find column `", y4name, "` in `shareddata`."),
+         call. = FALSE)
+  }
 
   colorvarnumeric <- tryCatch(
     ogdata |>
@@ -117,9 +136,12 @@ driveplot_companions <- function(shareddata,
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
   if (isFALSE(colorvarnumeric)) {
-    ncolors <- ogdata |> pull({{ colorvar }}) |> unique() |> length()
+    ncolors <- ogdata |>
+      pull({{ colorvar }}) |>
+      unique() |>
+      length()
   }
-  if (is.null(y2check) && is.null(y3check) && is.null(y4check)) {
+  if (isFALSE(y2check) && isFALSE(y3check) && isFALSE(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
                                  y = {{ y1 }},
@@ -134,7 +156,7 @@ driveplot_companions <- function(shareddata,
     plot1$sizingPolicy$defaultHeight <- plotheight
     plot1$sizingPolicy$defaultWidth <- "100%"
     return(plot1)
-  }else if (!is.null(y2check) && is.null(y3check) && is.null(y4check)) {
+  } else if (isTRUE(y2check) && isFALSE(y3check) && isFALSE(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
                                  y = {{ y1 }},
@@ -156,8 +178,7 @@ driveplot_companions <- function(shareddata,
     if (isTRUE(showlegend)) {
       plotlysubplot <- subplot(plot1, plot2, nrows = 2, shareX = TRUE,
                                titleY = TRUE, which_layout = 1, margin = spacing)
-    }
-    else{
+    } else {
       plotlysubplot <- subplot(plot1, plot2, nrows = 2, shareX = TRUE,
                                titleY = TRUE, margin = spacing)
     }
@@ -171,7 +192,7 @@ driveplot_companions <- function(shareddata,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  }else if (!is.null(y2check) && !is.null(y3check) && is.null(y4check)) {
+  } else if (isTRUE(y2check) && isTRUE(y3check) && isFALSE(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
                                  y = {{ y1 }},
@@ -208,8 +229,7 @@ driveplot_companions <- function(shareddata,
                                titleY = TRUE,
                                which_layout = 1,
                                margin = spacing)
-    }
-    else{
+    } else{
       plotlysubplot <- subplot(plot1,
                                plot2,
                                plot3,
@@ -228,7 +248,7 @@ driveplot_companions <- function(shareddata,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  }else if (!is.null(y2check) && !is.null(y3check) && !is.null(y4check)) {
+  } else if (isTRUE(y2check) && isTRUE(y3check) && isTRUE(y4check)) {
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
                                  y = {{ y1 }},
@@ -275,8 +295,7 @@ driveplot_companions <- function(shareddata,
                                titleY = TRUE,
                                which_layout = 1,
                                margin = spacing)
-    }
-    else{
+    } else {
       plotlysubplot <- subplot(plot1,
                                plot2,
                                plot3,
