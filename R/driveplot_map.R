@@ -71,6 +71,10 @@ driveplot_map <- function(shareddata,
          call. = FALSE)
   }
 
+  if (isFALSE(grepl("vh", mapheight))) {
+    stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
+  }
+
   quolabel <- enquo(label)
   colorvarnumeric <- tryCatch(
     ogdata |>

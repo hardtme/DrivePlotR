@@ -65,3 +65,19 @@ test_that("throw error when geometry type isn't POINT", {
     "Geometry column must have type POINT."
   )
 })
+
+test_that("mapheight is in CSS units", {
+  drive1 <- nds_data |>
+    dplyr::filter(drive == 1)
+  drive1shared <- crosstalk::SharedData$new(drive1)
+  expect_error(
+    driveplot_map(shareddata = drive1shared,
+                  mapheight = "100"),
+    "Must specify `mapheight` in CSS units, e.g., '98vh'"
+  )
+  expect_error(
+    driveplot_map(shareddata = drive1shared,
+                  mapheight = 100),
+    "Must specify `mapheight` in CSS units, e.g., '98vh'"
+  )
+})
