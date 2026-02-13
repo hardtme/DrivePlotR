@@ -4,11 +4,10 @@
 #' @importFrom dplyr pull ungroup select
 #' @importFrom rlang enquo eval_tidy quo_squash quo as_label
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles
-#' addCircleMarkers
+#'   addCircleMarkers
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#' scale_fill_viridis_d ylab xlab labs aes
-#' @importFrom sf st_drop_geometry
+#'   scale_fill_viridis_d ylab xlab labs aes
 #' @importFrom plotly ggplotly layout highlight hide_guides
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param x The variable from shareddata to be plotted on the horizontal axis.
@@ -158,11 +157,7 @@ driveplot_companion <- function(shareddata,
   }
 
   if (is.null(ylabel)) {
-    ylabel <- ogdata |>
-      ungroup() |>
-      st_drop_geometry() |>
-      select({{ y }}) |>
-      colnames()
+    ylabel <- yname
   }
 
   plot_annotations <- list(
