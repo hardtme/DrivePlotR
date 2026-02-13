@@ -42,7 +42,6 @@
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #' scale_fill_viridis_d ylab xlab labs
-#' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @importFrom htmltools h1
 #' @export

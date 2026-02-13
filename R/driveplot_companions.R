@@ -37,7 +37,6 @@
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #' scale_fill_viridis_d ylab xlab labs
-#' @importFrom sf st_drop_geometry
 #' @importFrom plotly ggplotly layout highlight hide_guides subplot style
 #' @export
 #' @examples
@@ -109,17 +108,17 @@ driveplot_companions <- function(shareddata,
     stop("Must provide `y3` before providing `y4`.")
   }
 
-  y2check <- ifelse(y2name == "NULL", FALSE, TRUE)
+  y2check <- if (y2name == "NULL") FALSE else TRUE
   if (isTRUE(y2check) && !(y2name) %in% columns) {
     stop(paste0("Can't find column `", y2name, "` in `shareddata`."),
          call. = FALSE)
   }
-  y3check <- ifelse(y3name == "NULL", FALSE, TRUE)
+  y3check <- if (y3name == "NULL") FALSE else TRUE
   if (isTRUE(y3check) && !(y3name) %in% columns) {
     stop(paste0("Can't find column `", y3name, "` in `shareddata`."),
          call. = FALSE)
   }
-  y4check <- ifelse(y4name == "NULL", FALSE, TRUE)
+  y4check <- if (y4name == "NULL") FALSE else TRUE
   if (isTRUE(y4check) && !(y4name) %in% columns) {
     stop(paste0("Can't find column `", y4name, "` in `shareddata`."),
          call. = FALSE)

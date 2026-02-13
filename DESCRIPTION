@@ -26,12 +26,12 @@ Imports:
     ggplot2,
     htmltools,
     rlang,
-    sf,
     viridisLite
 Depends: 
     R (>= 3.5)
 LazyData: true
 URL: https://hardtme.github.io/DrivePlotR/
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    sf
 Config/testthat/edition: 3
