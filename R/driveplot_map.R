@@ -30,7 +30,7 @@
 #' # Color drive points by direction of car
 #' driveplot_map(shareddata = shared_drive,
 #'               colorvar = gyro_heading,
-#'               colorpalette="viridis")
+#'               colorpalette = "viridis")
 driveplot_map <- function(shareddata,
                           lng = NULL,
                           lat = NULL,

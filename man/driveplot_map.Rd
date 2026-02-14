@@ -52,5 +52,5 @@ driveplot_map(shareddata = shared_drive)
 # Color drive points by direction of car
 driveplot_map(shareddata = shared_drive,
               colorvar = gyro_heading,
-              colorpalette="viridis")
+              colorpalette = "viridis")
 }
