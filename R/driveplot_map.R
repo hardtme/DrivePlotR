@@ -21,18 +21,16 @@
 #' @export
 #' @examples
 #' library(crosstalk)
-#' library(dplyr)
-#' data(nds_data)
-#' nds_sf7 <- nds_data |>
-#'   filter(drive==7) |>
-#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
-#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#' data(drive7)
+#' shared_drive <- SharedData$new(drive7)
 #'
-#' # basic map of one drive
-#' driveplot_map(shareddata = nds_sf7_sd)
+#' # Basic map of one drive
+#' driveplot_map(shareddata = shared_drive)
 #'
-#' # color drive points by direction of car
-#' driveplot_map(nds_sf7_sd, colorvar=gyro_heading, colorpalette="viridis")
+#' # Color drive points by direction of car
+#' driveplot_map(shareddata = shared_drive,
+#'               colorvar = gyro_heading,
+#'               colorpalette="viridis")
 driveplot_map <- function(shareddata,
                           lng = NULL,
                           lat = NULL,

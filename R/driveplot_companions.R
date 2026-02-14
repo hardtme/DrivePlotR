@@ -41,16 +41,12 @@
 #' @export
 #' @examples
 #' library(crosstalk)
-#' library(dplyr)
-#' data(nds_data)
-#' nds_sf7 <- nds_data |>
-#'   filter(drive==7) |>
-#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
-#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#' data(drive7)
+#' shared_drive <- SharedData$new(drive7)
 #'
 #' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 #' driveplot_companions(
-#'      shareddata = nds_sf7_sd,
+#'      shareddata = shared_drive,
 #'      x = time_cst,
 #'      y1 = speed_mph,
 #'      y2 = gyro_heading,

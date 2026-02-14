@@ -46,16 +46,11 @@
 #' @importFrom htmltools h1
 #' @export
 #' @examples
-#' # example code
 #' library(crosstalk)
-#' library(dplyr)
-#' data(nds_data)
-#' nds_sf7 <- nds_data |>
-#'   filter(drive==7) |>
-#'   sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
-#' nds_sf7_sd <- SharedData$new(nds_sf7)
+#' data(drive7)
+#' shared_drive <- SharedData$new(drive7)
 #'
-#' driveplot(shareddata = nds_sf7_sd,
+#' driveplot(shareddata = shared_drive,
 #'           x = time_cst,
 #'           y1 = speed_mph,
 #'           y2 = gyro_heading,
