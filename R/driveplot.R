@@ -130,10 +130,10 @@ driveplot <- function(shareddata,
   else{
     # suppressWarnings so we don't see bscols warn that
     # the sum of the widths is greater than 12
+    # We need this behavior to put the title on its own line
     final_viz <- suppressWarnings(
       bscols(
-        h1(
-          plottitle,
+        h1(plottitle,
           .noWS = c("before", "after", "outside", "after-begin", "before-end"),
           align = "center", style="font-family: sans-serif; color:black"),
         plot_map, plot_graphs, widths = c(12, 6, 6)
