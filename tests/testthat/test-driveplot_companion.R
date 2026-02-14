@@ -89,6 +89,7 @@ test_that("throw error when colorvar is specified, but incorrect colorpalette", 
 })
 
 test_that("no error when colorpalette is specified without colorvar", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
   # Specify a single color
   expect_no_error(
     driveplot_companion(shareddata = shared_drive,
