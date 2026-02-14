@@ -43,7 +43,8 @@
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A tibble with 321 rows and 34 columns</p><dl><dt>drive</dt>
-<dd><p>integer, identifier for a drive; a drive is defined as the time between starting the car and turning it off again</p></dd>
+<dd><p>integer, identifier for a drive; a drive is defined as the
+time between starting the car and turning it off again</p></dd>
 
 <dt>time_utc</dt>
 <dd><p>POSIXct time stamp for each observation in UTC</p></dd>
@@ -80,7 +81,8 @@
 <dd><p>character, one of "gps" or "obd"</p></dd>
 
 <dt>distance_miles</dt>
-<dd><p>numeric, distance travelled during a drive (in miles)</p></dd>
+<dd><p>numeric, distance travelled during a drive
+(in miles)</p></dd>
 
 
 </dl><p>Measurements by the on-board gyroscope:</p><dl><dt>accel_x</dt>
@@ -96,19 +98,24 @@
 <dd><p>binary, did an acceleration event occur? 0/1</p></dd>
 
 <dt>accel_event_cat</dt>
-<dd><p>character, categorization of acceleration event in low, medium, and high</p></dd>
+<dd><p>character, categorization of acceleration event in
+low, medium, and high</p></dd>
 
 <dt>gyro_x</dt>
-<dd><p>numeric, angular rotation rate about the right-to-left axis (in degrees/sec)</p></dd>
+<dd><p>numeric, angular rotation rate about the right-to-left
+axis (in degrees/sec)</p></dd>
 
 <dt>gyro_y</dt>
-<dd><p>numeric, angular rotation rate about the forward-to-backward axis.</p></dd>
+<dd><p>numeric, angular rotation rate about the
+forward-to-backward axis.</p></dd>
 
 <dt>gyro_z</dt>
 <dd><p>numeric, angular rotation rate about the up-to-down axis.</p></dd>
 
 <dt>gyro_heading</dt>
-<dd><p>numeric, calculated heading utilizing compass data and gyro data (in degrees). Note that we use non-standard congruence classes for continuity of consecutive values.</p></dd>
+<dd><p>numeric, calculated heading utilizing compass data
+and gyro data (in degrees). Note that we use non-standard congruence
+classes for continuity of consecutive values.</p></dd>
 
 <dt>grav_x</dt>
 <dd><p>numeric, lateral gravity (in g)</p></dd>
@@ -120,10 +127,12 @@
 <dd><p>numeric, gravity (up-down)</p></dd>
 
 <dt>roll</dt>
-<dd><p>numeric, angle about the forward-to-backward axis. 0 = level, positive = tilted to the left</p></dd>
+<dd><p>numeric, angle about the forward-to-backward axis.
+0 = level, positive = tilted to the left</p></dd>
 
 <dt>pitch</dt>
-<dd><p>numeric, angle about the left-to-right axis. 0 = level, positive = tilted downward (i.e., vehicle going downhill)</p></dd>
+<dd><p>numeric, angle about the left-to-right axis.
+0 = level, positive = tilted downward (i.e., vehicle going downhill)</p></dd>
 
 <dt>engine_rpm</dt>
 <dd><p>numeric, current engine revolutions per minute value</p></dd>
@@ -145,7 +154,8 @@
 
 
 </dl><p>GPS coordinates in a simple features column:</p><dl><dt>geometry</dt>
-<dd><p>list-column, simple features geometry column with geometry type POINT</p></dd>
+<dd><p>list-column, simple features geometry column with
+geometry type POINT</p></dd>
 
 
 </dl></div>
