@@ -58,12 +58,16 @@ driveplot_companion <- function(shareddata,
   columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
   yname <- as_label(enquo(y))
+  colorvarname <- as_label(enquo(colorvar))
 
   if (!(xname %in% columns)) {
     stop(paste0("Can't find column `", xname, "` in `shareddata`."),
          call. = FALSE)
   } else if (!(yname %in% columns)) {
     stop(paste0("Can't find column `", yname, "` in `shareddata`."),
+         call. = FALSE)
+  } else if (colorvarname != "NULL" && !(colorvarname %in% columns)) {
+    stop(paste0("Can't find column `", colorvarname, "` in `shareddata`."),
          call. = FALSE)
   }
 
@@ -96,7 +100,7 @@ driveplot_companion <- function(shareddata,
            !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     # {{ colorvar }} is a column in ogdata and
     # a viridis palette isn't specified
-    # Throw an error if a color variable is specified, but not a color scale
+    # Throw an error if a color variable is specified, but not a color palette
     stop('When specifying colorvar, please use
          colorpalette = "viridis", "magma", "inferno", or "plasma".',
          call. = FALSE)
