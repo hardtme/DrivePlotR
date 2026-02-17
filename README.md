@@ -106,3 +106,85 @@ driveplot(
   plottitle = "A Drive in Omaha, NE"
 )
 ```
+
+<!-- 2. Establish geographic variables and projection. The code below creates a simple feature variable `geometry` of all points. Setting the geographic projection to WGS84 ensures that points in the data line up with maps in Leaflet. -->
+
+<!-- ```{r} -->
+
+<!-- drive <- drive %>%  -->
+
+<!--   sf::st_as_sf(coords = c("gps_long", "gps_lat"),  -->
+
+<!--                crs = "WGS84") -->
+
+<!-- ``` -->
+
+<!-- 3. Convert data into a shared data frame. -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: true -->
+
+<!-- shared_drive_data <-  -->
+
+<!--   crosstalk::SharedData$new(drive) -->
+
+<!-- ``` -->
+
+<!-- 4. Create visualizations. -->
+
+<!-- Although the main purpose of \thetool is for users to create linked visualizations with a map and one to four companion graphs, users can also separately create maps or companion graphs.  -->
+
+<!-- ```{r} -->
+
+<!-- driveplot( -->
+
+<!--   shareddata = shared_drive_data,  -->
+
+<!--   maplabel = time_cst, colorvar = gps_minute,  -->
+
+<!--   colorpalette = "viridis", fillOpacity = 1,  -->
+
+<!--   time = time_cst, y1 = speed_mph,  -->
+
+<!--   y2 = gyro_heading, y3 = gps_pdop,  -->
+
+<!--   timelabel = "Time", y1label = "Speed (MPH)",  -->
+
+<!--   y2label = "Gyro Heading",  -->
+
+<!--   y3label = "GPS PDOP", showlegend = TRUE,  -->
+
+<!--   legendtitle = "Minute",  -->
+
+<!--   plottitle = "A Drive in Omaha, NE",  -->
+
+<!--   spacing = 0.05) -->
+
+<!-- ``` -->
+
+<!-- A basic standalone map: -->
+
+<!-- ```{r eval=FALSE} -->
+
+<!-- #| echo: true -->
+
+<!-- driveplot_map(shareddata = shared_drive_data) -->
+
+<!-- ``` -->
+
+<!-- Standalone companion graphs: -->
+
+<!-- ```{r} -->
+
+<!-- driveplot_companions( -->
+
+<!--   shareddata = shared_drive_data,  -->
+
+<!--   time = time_cst, y1 = speed_mph,  -->
+
+<!--   timelabel = "Time",  -->
+
+<!--   y1label = "Speed (mph)") -->
+
+<!-- ``` -->
