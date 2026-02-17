@@ -10,49 +10,52 @@ driveplot_companion(
   y,
   colorvar = NULL,
   colorpalette = "#03F",
-  xlab = NULL,
-  ylab = NULL,
+  xlabel = NULL,
+  ylabel = NULL,
   showlegend = TRUE,
   legendtitle = NULL
 )
 }
 \arguments{
-\item{shareddata}{a SharedData object containing observations to be plotted}
+\item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{x}{variable from shareddata to be plotted on the horizontal axis}
+\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
 
-\item{y}{variable from shareddata to be plotted on the vertical axis}
+\item{y}{The variable from shareddata to be plotted on the vertical axis.}
 
-\item{colorvar}{the variable in shareddata to which color should be mapped}
+\item{colorvar}{The variable in shareddata to which color should be mapped.}
 
-\item{colorpalette}{either a single color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma"}
+\item{colorpalette}{The color palette for the plot; either a single
+color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{xlab}{x-axis label}
+\item{xlabel}{The label for the variable on the horizontal axis.}
 
-\item{ylab}{y-axis label}
+\item{ylabel}{The label for the variable on the vertical axis.}
 
-\item{showlegend}{show the plot legend (TRUE) or not (FALSE)}
+\item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
-\item{legendtitle}{the title for the plot legend}
+\item{legendtitle}{The title for the plot legend.}
 }
 \value{
-plotly scatterplot
+A plotly scatterplot.
 }
 \description{
 Make a single plotly scatter plot from shared drive data
 }
 \examples{
 library(crosstalk)
-library(dplyr)
-data(nds_data)
-nds_sf7 <- nds_data \%>\%
-  filter(drive==7) \%>\%
-  sf::st_as_sf(coords = c("gps_long", "gps_lat"), crs = "WGS84")
-nds_sf7_sd <- SharedData$new(nds_sf7)
+data(drive7)
+shared_drive <- SharedData$new(drive7)
 
 # Time series of speed
-driveplot_companion(nds_sf7_sd, time_cst, speed_mph)
+driveplot_companion(shareddata = shared_drive,
+                    x = time_cst,
+                    y = speed_mph)
 
-# color points by direction of car
-driveplot_companion(nds_sf7_sd, time_cst, speed_mph, colorvar=gyro_heading, colorpalette="viridis")
+# Color points by direction of car
+driveplot_companion(shareddata = shared_drive,
+                    x = time_cst,
+                    y = speed_mph,
+                    colorvar = gyro_heading,
+                    colorpalette = "viridis")
 }

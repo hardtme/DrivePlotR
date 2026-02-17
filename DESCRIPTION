@@ -1,14 +1,19 @@
 Package: DrivePlotR
 Title: Linked Plot Maps for Multivariate High Resolution Spatio-Temporal Data
 Version: 0.0.0.9000
-Date: 2024-12-01
-Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu", role = c("aut", "cre"),
+Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu", 
+           role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-8548-9866")),
-           person("Guillermo", "Basulto-Elias", email = "basulto@iastate.edu", role = "ctb",
-           comment = c(ORCID = "0000-0002-5205-2190")),
-           person("Heike", "Hofmann", email = "hhofmann4@unl.edu", role = "ctb",
-           comment = c(ORCID = "0000-0001-6216-5183")))
-Description: What the package does (one paragraph).
+           person("Heike", "Hofmann", email = "hhofmann4@unl.edu", 
+           role = "ctb",
+           comment = c(ORCID = "0000-0001-6216-5183")),
+           person("Guillermo", "Basulto-Elias", email = "basulto@iastate.edu", 
+           role = "ctb",
+           comment = c(ORCID = "0000-0002-5205-2190")))
+Description: A tool to create interactive, linked plot maps for multivariate 
+    high-resolution spatio-temporal data, such as vehicle trajectories. 
+    You can explore the spatial, temporal, and multivariate aspects 
+    of the data simultaneously.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -21,8 +26,12 @@ Imports:
     ggplot2,
     htmltools,
     rlang,
-    sf,
     viridisLite
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 LazyData: true
+URL: https://hardtme.github.io/DrivePlotR/
+Suggests: 
+    testthat (>= 3.0.0),
+    sf
+Config/testthat/edition: 3
