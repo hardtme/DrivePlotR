@@ -1,14 +1,5 @@
 #' Make a single plotly scatter plot from shared drive data
 #'
-#' @importFrom crosstalk SharedData
-#' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo as_label
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet addTiles
-#'   addCircleMarkers
-#' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#'   scale_fill_viridis_d ylab xlab labs aes
-#' @importFrom plotly ggplotly layout highlight hide_guides
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param x The variable from shareddata to be plotted on the horizontal axis.
 #' @param y The variable from shareddata to be plotted on the vertical axis.
@@ -20,6 +11,13 @@
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @returns A plotly scatterplot.
+#' @importFrom crosstalk SharedData is.SharedData
+#' @importFrom dplyr pull
+#' @importFrom rlang enquo as_label
+#' @importFrom viridisLite viridis
+#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
+#'   scale_fill_viridis_d ylab xlab labs aes
+#' @importFrom plotly ggplotly layout highlight hide_guides
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -47,7 +45,7 @@ driveplot_companion <- function(shareddata,
                                 showlegend = TRUE,
                                 legendtitle = NULL) {
 
-  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+  if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
@@ -178,7 +176,8 @@ driveplot_companion <- function(shareddata,
     highlight(on = "plotly_selected", off = "plotly_deselect", dynamic = FALSE)
 
   if (isFALSE(showlegend)) {
-    scatterplotly <- scatterplotly |> hide_guides()
+    scatterplotly <- scatterplotly |>
+      hide_guides()
   }
 
   return(scatterplotly)

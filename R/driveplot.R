@@ -34,15 +34,7 @@
 #' @param spacing A value between 0 and 1 for the space between the
 #'   companion graphs.
 #' @returns A linked plot map.
-#' @importFrom crosstalk SharedData bscols
-#' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
-#' addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#' scale_fill_viridis_d ylab xlab labs
-#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
+#' @importFrom crosstalk SharedData is.SharedData bscols
 #' @importFrom htmltools h1
 #' @export
 #' @examples
@@ -85,7 +77,7 @@ driveplot <- function(shareddata,
                       plottitle = NULL,
                       spacing = 0.05) {
 
-  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+  if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 

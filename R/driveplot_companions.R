@@ -30,14 +30,9 @@
 #'   e.g, "98vh"
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom dplyr pull ungroup select
-#' @importFrom rlang enquo eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
-#' addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
-#' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#' scale_fill_viridis_d ylab xlab labs
-#' @importFrom plotly ggplotly layout highlight hide_guides subplot style
+#' @importFrom dplyr pull
+#' @importFrom rlang enquo
+#' @importFrom plotly layout subplot style
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -76,7 +71,7 @@ driveplot_companions <- function(shareddata,
                                  spacing = 0.05,
                                  plotheight = "98vh") {
 
-  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+  if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
   # Get original data from shareddata so we can check column existence and type

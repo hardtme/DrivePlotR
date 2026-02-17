@@ -40,7 +40,7 @@ driveplot_map <- function(shareddata,
                           fillOpacity = 1,
                           mapheight = "98vh") {
 
-  if (isFALSE(crosstalk::is.SharedData(shareddata))) {
+  if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
   # Get original data from shareddata so we can check the type of colorvar
