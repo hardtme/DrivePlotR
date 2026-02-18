@@ -20,12 +20,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     leaflet,
-    plotly,
+    plotly (>= 4.10.4),
     crosstalk,
     dplyr,
-    ggplot2,
+    ggplot2 (>= 3.5.2),
     htmltools,
-    rlang,
+    rlang (>= 1.1.6),
     viridisLite
 Depends: 
     R (>= 3.5)
