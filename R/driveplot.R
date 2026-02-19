@@ -6,28 +6,16 @@
 #' @param lat The column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column)
 #' @param x The variable from shareddata to be plotted on the horizontal axis.
-#' @param y1 The variable from shareddata to be plotted on the vertical axis
-#'   for the first graph.
-#' @param y2 The variable from shareddata to be plotted on the vertical axis
-#'   for the second graph.
-#' @param y3 The variable from shareddata to be plotted on the vertical axis
-#'   for the third graph.
-#' @param y4 The variable from shareddata to be plotted on the vertical axis
-#'   for the fourth graph.
+#' @param ys A vector or list of 1 to 4 variables from shareddata to be
+#'   plotted on the vertical axes of the companion graphs.
 #' @param colorvar The variable in shareddata to which color should be mapped.
 #' @param maplabel An optional label for the map points.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param fillOpacity The opacity of the fill of the map points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
-#' @param y1label The label for the variable on the vertical axis
-#'   for the first companion graph.
-#' @param y2label The label for the variable on the vertical axis
-#'   for the second companion graph.
-#' @param y3label The label for the variable on the vertical axis
-#'   for the third companion graph.
-#' @param y4label The label for the variable on the vertical axis
-#'   for the fourth companion graph.
+#' @param ylabels A vector or list of 1 to 4 labels for the vertical axes
+#'   of the companion graphs.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param plottitle The title for the plot map.
@@ -44,34 +32,25 @@
 #'
 #' driveplot(shareddata = shared_drive,
 #'           x = time_cst,
-#'           y1 = speed_mph,
-#'           y2 = gyro_heading,
-#'           y3 = gps_heading,
+#'           ys = c(speed_mph, gyro_heading, gps_heading),
 #'           colorvar = gyro_heading,
 #'           maplabel = time_cst,
 #'           colorpalette = "viridis",
 #'           fillOpacity = 1,
 #'           xlabel = "Time",
-#'           y1label = "Speed (mph)",
-#'           y2label = "Gyro Heading (degrees)",
-#'           y3label = "GPS Heading (degrees)")
+#'           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
+#'                       "GPS Heading (degrees)"))
 driveplot <- function(shareddata,
                       lng = NULL,
                       lat = NULL,
                       x,
-                      y1,
-                      y2 = NULL,
-                      y3 = NULL,
-                      y4 = NULL,
+                      ys,
                       colorvar = NULL,
                       maplabel = NA,
                       colorpalette = "#03F",
                       fillOpacity = 1,
                       xlabel = NULL,
-                      y1label = NULL,
-                      y2label = NULL,
-                      y3label = NULL,
-                      y4label = NULL,
+                      ylabels = NULL,
                       showlegend = TRUE,
                       legendtitle = NULL,
                       plottitle = NULL,
@@ -100,16 +79,10 @@ driveplot <- function(shareddata,
 
   plot_graphs <- driveplot_companions(shareddata = shareddata,
                                       x = {{ x }},
-                                      y1 = {{ y1 }},
-                                      y2 = {{ y2 }},
-                                      y3 = {{ y3 }},
-                                      y4 = {{ y4 }},
+                                      ys = {{ ys }},
                                       colorvar = {{ colorvar }},
                                       xlabel = xlabel,
-                                      y1label = y1label,
-                                      y2label = y2label,
-                                      y3label = y3label,
-                                      y4label = y4label,
+                                      ylabels = ylabels,
                                       colorpalette = colorpalette,
                                       showlegend = showlegend,
                                       legendtitle = legendtitle,
@@ -126,11 +99,11 @@ driveplot <- function(shareddata,
     final_viz <- suppressWarnings(
       bscols(
         h1(plottitle,
-          .noWS = c("before", "after", "outside", "after-begin", "before-end"),
-          align = "center", style="font-family: sans-serif; color:black"),
+           .noWS = c("before", "after", "outside", "after-begin", "before-end"),
+           align = "center", style="font-family: sans-serif; color:black"),
         plot_map, plot_graphs, widths = c(12, 6, 6)
-        )
       )
+    )
   }
   return(final_viz)
 }

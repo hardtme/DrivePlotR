@@ -7,16 +7,10 @@
 driveplot_companions(
   shareddata,
   x,
-  y1,
-  y2 = NULL,
-  y3 = NULL,
-  y4 = NULL,
+  ys,
   colorvar = NULL,
   xlabel = NULL,
-  y1label = NULL,
-  y2label = NULL,
-  y3label = NULL,
-  y4label = NULL,
+  ylabels = NULL,
   colorpalette = "#03F",
   showlegend = TRUE,
   legendtitle = NULL,
@@ -29,33 +23,15 @@ driveplot_companions(
 
 \item{x}{The variable from shareddata to be plotted on the horizontal axis.}
 
-\item{y1}{The variable from shareddata to be plotted on the vertical axis
-for the first graph.}
-
-\item{y2}{The variable from shareddata to be plotted on the vertical axis
-for the second graph.}
-
-\item{y3}{The variable from shareddata to be plotted on the vertical axis
-for the third graph.}
-
-\item{y4}{The variable from shareddata to be plotted on the vertical axis
-for the fourth graph.}
+\item{ys}{A vector or list of 1 to 4 variables from shareddata to be
+plotted on the vertical axes of the companion graphs.}
 
 \item{colorvar}{The variable in shareddata to which color should be mapped.}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
-\item{y1label}{The label for the variable on the vertical axis
-for the first graph.}
-
-\item{y2label}{The label for the variable on the vertical axis
-for the second graph.}
-
-\item{y3label}{The label for the variable on the vertical axis
-for the third graph.}
-
-\item{y4label}{The label for the variable on the vertical axis
-for the fourth graph.}
+\item{ylabels}{A vector or list of 1 to 4 labels for the vertical axes
+of the companion graphs.}
 
 \item{colorpalette}{The color palette for the plot map; either a single
 color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
@@ -85,14 +61,11 @@ shared_drive <- SharedData$new(drive7)
 driveplot_companions(
      shareddata = shared_drive,
      x = time_cst,
-     y1 = speed_mph,
-     y2 = gyro_heading,
-     y3 = gps_heading,
+     ys = c(speed_mph, gyro_heading, gps_heading),
      colorvar = gps_pdop,
      xlabel = "Time",
-     y1label = "Speed (mph)",
-     y2label = "Gyro Heading (degrees)",
-     y3label = "GPS Heading (degrees)",
+     ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
+                 "GPS Heading (degrees)"),
      colorpalette = "viridis")
 
 }

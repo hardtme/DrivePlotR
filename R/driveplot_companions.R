@@ -2,24 +2,12 @@
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param x The variable from shareddata to be plotted on the horizontal axis.
-#' @param y1 The variable from shareddata to be plotted on the vertical axis
-#'   for the first graph.
-#' @param y2 The variable from shareddata to be plotted on the vertical axis
-#'   for the second graph.
-#' @param y3 The variable from shareddata to be plotted on the vertical axis
-#'   for the third graph.
-#' @param y4 The variable from shareddata to be plotted on the vertical axis
-#'   for the fourth graph.
+#' @param ys A vector or list of 1 to 4 variables from shareddata to be
+#'   plotted on the vertical axes of the companion graphs.
 #' @param colorvar The variable in shareddata to which color should be mapped.
 #' @param xlabel The label for the variable on the horizontal axis.
-#' @param y1label The label for the variable on the vertical axis
-#'   for the first graph.
-#' @param y2label The label for the variable on the vertical axis
-#'   for the second graph.
-#' @param y3label The label for the variable on the vertical axis
-#'   for the third graph.
-#' @param y4label The label for the variable on the vertical axis
-#'   for the fourth graph.
+#' @param ylabels A vector or list of 1 to 4 labels for the vertical axes
+#'   of the companion graphs.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
@@ -31,7 +19,7 @@
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull
-#' @importFrom rlang enquo
+#' @importFrom rlang enquo quo_squash as_label sym
 #' @importFrom plotly layout subplot style
 #' @export
 #' @examples
@@ -43,46 +31,65 @@
 #' driveplot_companions(
 #'      shareddata = shared_drive,
 #'      x = time_cst,
-#'      y1 = speed_mph,
-#'      y2 = gyro_heading,
-#'      y3 = gps_heading,
+#'      ys = c(speed_mph, gyro_heading, gps_heading),
 #'      colorvar = gps_pdop,
 #'      xlabel = "Time",
-#'      y1label = "Speed (mph)",
-#'      y2label = "Gyro Heading (degrees)",
-#'      y3label = "GPS Heading (degrees)",
+#'      ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
+#'                  "GPS Heading (degrees)"),
 #'      colorpalette = "viridis")
 #'
-driveplot_companions <- function(shareddata,
-                                 x,
-                                 y1,
-                                 y2 = NULL,
-                                 y3 = NULL,
-                                 y4 = NULL,
-                                 colorvar = NULL,
-                                 xlabel = NULL,
-                                 y1label = NULL,
-                                 y2label = NULL,
-                                 y3label = NULL,
-                                 y4label = NULL,
-                                 colorpalette = "#03F",
-                                 showlegend = TRUE,
-                                 legendtitle = NULL,
-                                 spacing = 0.05,
-                                 plotheight = "98vh") {
-
+driveplot_companions<- function(shareddata,
+                                x,
+                                ys,
+                                colorvar = NULL,
+                                xlabel = NULL,
+                                ylabels = NULL,
+                                colorpalette = "#03F",
+                                showlegend = TRUE,
+                                legendtitle = NULL,
+                                spacing = 0.05,
+                                plotheight = "98vh") {
+  #browser()
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
+
+  ysquo <- as.list(quo_squash(enquo(ys)))
+  # Allow different syntax for a single y variable
+  # E.g., ys = c(speed_mph) and ys = speed_mph both work
+  ysquo <- if(length(ysquo) == 1) ysquo else ysquo[-1]
+
+  if (length(ysquo) < 1 || length(ysquo) > 4) {
+    stop("`ys` must be a vector or list with 1 to 4 `shareddata` column names.",
+         call. = FALSE)
+  }
+
+  if ((!is.null(ylabels)) && (length(ylabels) < 1 || length(ylabels) > 4)) {
+    stop("`ylabels` must be a vector or list of 1 to 4 character strings.",
+         call. = FALSE)
+  }
+
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
-  y1name <- as_label(enquo(y1))
-  y2name <- as_label(enquo(y2))
-  y3name <- as_label(enquo(y3))
-  y4name <- as_label(enquo(y4))
+  yslength <- length(ysquo)
+  if (yslength == 1) {
+    y1name <- as_label(ysquo[[1]])
+  } else if (yslength == 2) {
+    y1name <- as_label(ysquo[[1]])
+    y2name <- as_label(ysquo[[2]])
+  } else if (yslength == 3) {
+    y1name <- as_label(ysquo[[1]])
+    y2name <- as_label(ysquo[[2]])
+    y3name <- as_label(ysquo[[3]])
+  } else {
+    y1name <- as_label(ysquo[[1]])
+    y2name <- as_label(ysquo[[2]])
+    y3name <- as_label(ysquo[[3]])
+    y4name <- as_label(ysquo[[4]])
+  }
 
   if (!(xname %in% colnames(ogdata))) {
     stop(paste0("Can't find column `", xname, "` in `shareddata`."),
@@ -92,26 +99,19 @@ driveplot_companions <- function(shareddata,
          call. = FALSE)
   }
 
-  if (y2name == "NULL" && (y3name != "NULL" || y4name != "NULL")) {
-    stop("Must provide `y2` before providing `y3` or `y4`.",
-         call. = FALSE)
-  } else if (y2name != "NULL" && y3name == "NULL" && y4name != "NULL") {
-    stop("Must provide `y3` before providing `y4`.")
-  }
-
-  y2check <- if (y2name == "NULL") FALSE else TRUE
-  if (isTRUE(y2check) && !(y2name) %in% columns) {
+  if (yslength >= 2 && !(y2name) %in% columns) {
     stop(paste0("Can't find column `", y2name, "` in `shareddata`."),
          call. = FALSE)
-  }
-  y3check <- if (y3name == "NULL") FALSE else TRUE
-  if (isTRUE(y3check) && !(y3name) %in% columns) {
+  } else if (yslength >= 3 && !(y3name) %in% columns) {
     stop(paste0("Can't find column `", y3name, "` in `shareddata`."),
          call. = FALSE)
-  }
-  y4check <- if (y4name == "NULL") FALSE else TRUE
-  if (isTRUE(y4check) && !(y4name) %in% columns) {
+  } else if (yslength == 4 && !(y4name) %in% columns) {
     stop(paste0("Can't find column `", y4name, "` in `shareddata`."),
+         call. = FALSE)
+  }
+
+  if (!is.null(ylabels) && length(ylabels) != yslength) {
+    stop("If providing `ylabels`, `ys` and `ylabels` must be the same length.",
          call. = FALSE)
   }
 
@@ -131,14 +131,16 @@ driveplot_companions <- function(shareddata,
       unique() |>
       length()
   }
-  if (isFALSE(y2check) && isFALSE(y3check) && isFALSE(y4check)) {
+
+  if (yslength == 1) {
+    y1sym <- sym(ysquo[[1]])
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y1 }},
+                                 y = {{ y1sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y1label,
+                                 ylabel = ylabels[1],
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot1 <- plot1 |>
@@ -146,23 +148,25 @@ driveplot_companions <- function(shareddata,
     plot1$sizingPolicy$defaultHeight <- plotheight
     plot1$sizingPolicy$defaultWidth <- "100%"
     return(plot1)
-  } else if (isTRUE(y2check) && isFALSE(y3check) && isFALSE(y4check)) {
+  } else if (yslength == 2) {
+    y1sym <- sym(ysquo[[1]])
+    y2sym <- sym(ysquo[[2]])
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y1 }},
+                                 y = {{ y1sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y1label,
+                                 ylabel = ylabels[1],
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y2 }},
+                                 y = {{ y2sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y2label,
+                                 ylabel = ylabels[2],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
@@ -182,32 +186,35 @@ driveplot_companions <- function(shareddata,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  } else if (isTRUE(y2check) && isTRUE(y3check) && isFALSE(y4check)) {
+  } else if (yslength == 3) {
+    y1sym <- sym(ysquo[[1]])
+    y2sym <- sym(ysquo[[2]])
+    y3sym <- sym(ysquo[[3]])
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y1 }},
+                                 y = {{ y1sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y1label,
+                                 ylabel = ylabels[1],
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y2 }},
+                                 y = {{ y2sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y2label,
+                                 ylabel = ylabels[2],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     plot3 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y3 }},
+                                 y = {{ y3sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y3label,
+                                 ylabel = ylabels[3],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
@@ -238,41 +245,45 @@ driveplot_companions <- function(shareddata,
     plotlysubplot$sizingPolicy$defaultHeight <- plotheight
     plotlysubplot$sizingPolicy$defaultWidth <- "100%"
     return(plotlysubplot)
-  } else if (isTRUE(y2check) && isTRUE(y3check) && isTRUE(y4check)) {
+  } else if (yslength == 4) {
+    y1sym <- sym(ysquo[[1]])
+    y2sym <- sym(ysquo[[2]])
+    y3sym <- sym(ysquo[[3]])
+    y4sym <- sym(ysquo[[4]])
     plot1 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y1 }},
+                                 y = {{ y1sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y1label,
+                                 ylabel = ylabels[1],
                                  showlegend = showlegend,
                                  legendtitle = legendtitle)
     plot2 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y2 }},
+                                 y = {{ y2sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y2label,
+                                 ylabel = ylabels[2],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     plot3 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y3 }},
+                                 y = {{ y3sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y3label,
+                                 ylabel = ylabels[3],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     plot4 <- driveplot_companion(shareddata = shareddata,
                                  x = {{ x }},
-                                 y = {{ y4 }},
+                                 y = {{ y4sym }},
                                  colorvar = {{ colorvar }},
                                  colorpalette = colorpalette,
                                  xlabel = xlabel,
-                                 ylabel = y4label,
+                                 ylabel = ylabels[4],
                                  showlegend = FALSE,
                                  legendtitle = NULL)
     if (isTRUE(showlegend)) {
