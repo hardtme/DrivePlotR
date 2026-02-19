@@ -49,7 +49,7 @@ driveplot_companions<- function(shareddata,
                                 legendtitle = NULL,
                                 spacing = 0.05,
                                 plotheight = "98vh") {
-  #browser()
+
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
