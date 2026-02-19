@@ -98,16 +98,12 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot.html">driveplot</a></span><span class="op">(</span></span>
 <span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>, </span>
 <span>  x <span class="op">=</span> <span class="va">time_cst</span>, </span>
-<span>  y1 <span class="op">=</span> <span class="va">speed_mph</span>, </span>
-<span>  y2 <span class="op">=</span> <span class="va">gyro_heading</span>, </span>
-<span>  y3 <span class="op">=</span> <span class="va">gps_pdop</span>,</span>
+<span>  ys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">speed_mph</span>, <span class="va">gyro_heading</span>, <span class="va">gps_pdop</span><span class="op">)</span>,</span>
 <span>  colorvar <span class="op">=</span> <span class="va">gps_minute</span>, </span>
 <span>  maplabel <span class="op">=</span> <span class="va">time_cst</span>, </span>
 <span>  colorpalette <span class="op">=</span> <span class="st">"viridis"</span>, </span>
 <span>  xlabel <span class="op">=</span> <span class="st">"Time"</span>, </span>
-<span>  y1label <span class="op">=</span> <span class="st">"Speed (MPH)"</span>, </span>
-<span>  y2label <span class="op">=</span> <span class="st">"Gyro Heading"</span>, </span>
-<span>  y3label <span class="op">=</span> <span class="st">"GPS PDOP"</span>, </span>
+<span>  ylabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speed (MPH)"</span>, <span class="st">"Gyro Heading"</span>, <span class="st">"GPS PDOP"</span><span class="op">)</span>,</span>
 <span>  showlegend <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>  legendtitle <span class="op">=</span> <span class="st">"Minute"</span>, </span>
 <span>  plottitle <span class="op">=</span> <span class="st">"A Drive in Omaha, NE"</span></span>
