@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/hardtme/DrivePlotR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hardtme/DrivePlotR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of DrivePlotR is to produce linked plot maps for multivariate high resolution spatio-temporal data such as data from naturalistic driving studies and connected vehicles.
+The goal of DrivePlotR is to produce linked plot maps for multivariate high-resolution spatio-temporal data such as data from naturalistic driving studies and connected vehicles.
 
 ## Installation
 

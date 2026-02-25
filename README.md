@@ -11,7 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of DrivePlotR is to produce linked plot maps for multivariate
-high resolution spatio-temporal data such as data from naturalistic
+high-resolution spatio-temporal data such as data from naturalistic
 driving studies and connected vehicles.
 
 ## Installation
