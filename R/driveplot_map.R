@@ -13,7 +13,7 @@
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom dplyr pull filter
+#' @importFrom dplyr pull filter n_distinct
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
 #'    addTiles addCircleMarkers
@@ -108,10 +108,8 @@ driveplot_map <- function(shareddata,
   if (isFALSE(colorvarnumeric)) {
     colorarg <- enquo(colorvar)
     ncolors <- ogdata |>
-      filter(!is.na({{ colorvar }})) |>
-      pull({{ colorvar }}) |>
-      unique() |>
-      length()
+      dplyr::pull({{ colorvar }}) |>
+      dplyr::n_distinct(na.rm = TRUE)
     colorpal <- colorFactor(palette = viridis(n = ncolors,
                                               option = colorpalette),
                             domain = ogdata |> pull({{ colorvar }}),
