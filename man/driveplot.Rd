@@ -31,12 +31,12 @@ driveplot(
 \item{lat}{The column of shareddata containing latitude
 (only required if shareddata does not have a geometry column)}
 
-\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
+\item{x}{The column from shareddata to be plotted on the horizontal axis.}
 
-\item{ys}{A vector or list of 1 to 4 variables from shareddata to be
+\item{ys}{A vector or list of 1 to 4 columns from shareddata to be
 plotted on the vertical axes of the companion graphs.}
 
-\item{colorvar}{The variable in shareddata to which color should be mapped.}
+\item{colorvar}{The column in shareddata to which color should be mapped.}
 
 \item{maplabel}{An optional label for the map points.}
 

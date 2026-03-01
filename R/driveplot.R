@@ -5,10 +5,10 @@
 #'   (only required if shareddata does not have a geometry column).
 #' @param lat The column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column)
-#' @param x The variable from shareddata to be plotted on the horizontal axis.
-#' @param ys A vector or list of 1 to 4 variables from shareddata to be
+#' @param x The column from shareddata to be plotted on the horizontal axis.
+#' @param ys A vector or list of 1 to 4 columns from shareddata to be
 #'   plotted on the vertical axes of the companion graphs.
-#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param colorvar The column in shareddata to which color should be mapped.
 #' @param maplabel An optional label for the map points.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
@@ -24,6 +24,7 @@
 #' @returns A linked plot map.
 #' @importFrom crosstalk SharedData is.SharedData bscols
 #' @importFrom htmltools h1
+#' @importFrom rlang enexpr
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -76,10 +77,10 @@ driveplot <- function(shareddata,
                             colorpalette = colorpalette,
                             fillOpacity = fillOpacity,
                             mapheight = height)
-
+  ys <- rlang::enexpr(ys)
   plot_graphs <- driveplot_companions(shareddata = shareddata,
                                       x = {{ x }},
-                                      ys = {{ ys }},
+                                      ys = !!ys,
                                       colorvar = {{ colorvar }},
                                       xlabel = xlabel,
                                       ylabels = ylabels,
