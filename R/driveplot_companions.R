@@ -55,7 +55,7 @@ driveplot_companions <- function(shareddata,
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
-  yexpr <- as.list(rlang::enexpr(ys))
+  yexpr <- as.list(enexpr(ys))
   # Allow different syntax for a single y variable
   # E.g., ys = c(speed_mph) and ys = speed_mph both work
   yexpr <- if(length(yexpr) == 1) yexpr else yexpr[-1]
@@ -65,11 +65,11 @@ driveplot_companions <- function(shareddata,
   ogdata <- shareddata$origData()
   columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
-  xsym <- rlang::ensym(xname)
+  xsym <- ensym(xname)
   ylength <- length(yexpr)
   ynames <- yexpr |>
-    purrr::map(\(y) as_label(y)) |>
-    purrr::list_c()
+    map(\(y) as_label(y)) |>
+    list_c()
 
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
@@ -116,7 +116,7 @@ driveplot_companions <- function(shareddata,
       length()
   }
 
-  companion_graphs <- purrr::map2(
+  companion_graphs <- map2(
     .x = yexpr, .y = ylabels,
     .f = \(x, y) driveplot_companion(
       shareddata = shareddata,

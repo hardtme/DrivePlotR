@@ -77,7 +77,7 @@ driveplot <- function(shareddata,
                             colorpalette = colorpalette,
                             fillOpacity = fillOpacity,
                             mapheight = height)
-  ys <- rlang::enexpr(ys)
+  ys <- enexpr(ys)
   plot_graphs <- driveplot_companions(shareddata = shareddata,
                                       x = {{ x }},
                                       ys = !!ys,
