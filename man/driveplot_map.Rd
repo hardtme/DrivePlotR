@@ -21,10 +21,10 @@ driveplot_map(
 \item{lng}{The column of shareddata containing longitude
 (only required if shareddata does not have a geometry column).}
 
-\item{lat}{the column of shareddata containing latitude
+\item{lat}{The column of shareddata containing latitude
 (only required if shareddata does not have a geometry column).}
 
-\item{colorvar}{The variable in shareddata to which color should be mapped.}
+\item{colorvar}{The column in shareddata to which color should be mapped.}
 
 \item{label}{An optional label for the map points.}
 

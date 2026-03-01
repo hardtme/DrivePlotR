@@ -19,11 +19,11 @@ driveplot_companion(
 \arguments{
 \item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{x}{The variable from shareddata to be plotted on the horizontal axis.}
+\item{x}{The column from shareddata to be plotted on the horizontal axis.}
 
-\item{y}{The variable from shareddata to be plotted on the vertical axis.}
+\item{y}{The column from shareddata to be plotted on the vertical axis.}
 
-\item{colorvar}{The variable in shareddata to which color should be mapped.}
+\item{colorvar}{The column in shareddata to which color should be mapped.}
 
 \item{colorpalette}{The color palette for the plot; either a single
 color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}

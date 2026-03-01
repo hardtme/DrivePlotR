@@ -3,9 +3,9 @@
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param lng The column of shareddata containing longitude
 #'   (only required if shareddata does not have a geometry column).
-#' @param lat the column of shareddata containing latitude
+#' @param lat The column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column).
-#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param colorvar The column in shareddata to which color should be mapped.
 #' @param label An optional label for the map points.
 #' @param colorpalette The color palette for the map; either a single color
 #'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".

@@ -1,9 +1,9 @@
 #' Make a single plotly scatter plot from shared drive data
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
-#' @param x The variable from shareddata to be plotted on the horizontal axis.
-#' @param y The variable from shareddata to be plotted on the vertical axis.
-#' @param colorvar The variable in shareddata to which color should be mapped.
+#' @param x The column from shareddata to be plotted on the horizontal axis.
+#' @param y The column from shareddata to be plotted on the vertical axis.
+#' @param colorvar The column in shareddata to which color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param xlabel The label for the variable on the horizontal axis.
