@@ -21,7 +21,6 @@
 #' @importFrom dplyr pull
 #' @importFrom rlang enexpr enquo as_label ensym
 #' @importFrom plotly layout subplot style
-#' @importFrom purrr map map2 list_c
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -65,11 +64,10 @@ driveplot_companions <- function(shareddata,
   ogdata <- shareddata$origData()
   columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
-  xsym <- ensym(xname)
   ylength <- length(yexpr)
   ynames <- yexpr |>
-    map(\(y) as_label(y)) |>
-    list_c()
+    vapply(FUN = function(y) as_label(y),
+           FUN.VALUE = character(1))
 
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
@@ -77,7 +75,7 @@ driveplot_companions <- function(shareddata,
   }
 
   if (!(xname %in% columns)) {
-    stop(paste0("Can't find column `", xname, "` in `shareddata`."),
+    stop(paste0("Can't find `", xname, "` in `shareddata`."),
          call. = FALSE)
   } else if (length(setdiff(ynames, columns)) > 0) {
     missing_ys <- paste0("`", setdiff(ynames, columns), "`", collapse = ", ")
@@ -116,19 +114,20 @@ driveplot_companions <- function(shareddata,
       length()
   }
 
-  companion_graphs <- map2(
-    .x = yexpr, .y = ylabels,
-    .f = \(x, y) driveplot_companion(
+  companion_graphs <- mapply(
+    FUN = function(var, label) { driveplot_companion(
       shareddata = shareddata,
-      x = {{ xsym }},
-      y = {{ x }},
+      x = {{ x }},
+      y = {{ var }},
       colorvar = {{ colorvar }},
       colorpalette = colorpalette,
       xlabel = xlabel,
-      ylabel = y,
+      ylabel = label,
       showlegend = showlegend,
       legendtitle = legendtitle
-    )
+    )},
+    yexpr, ylabels,
+    SIMPLIFY = FALSE
   )
 
   if (isTRUE(showlegend)) {

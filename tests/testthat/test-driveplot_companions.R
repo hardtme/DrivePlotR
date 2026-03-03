@@ -12,7 +12,7 @@ test_that("x not provided", {
   expect_error(
     driveplot_companions(shareddata = shared_drive,
                          ys = speed_mph),
-  "Can't find column `<empty>` in `shareddata`.")
+  "Can't find `<empty>` in `shareddata`.")
 })
 
 test_that("ys not provided", {
@@ -29,7 +29,7 @@ test_that("misspelled x", {
     driveplot_companions(shareddata = shared_drive,
                         x = time_est,
                         ys = speed_mph),
-    "Can't find column `time_est` in `shareddata`."
+    "Can't find `time_est` in `shareddata`."
   )
 })
 
