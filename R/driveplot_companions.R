@@ -1,13 +1,15 @@
 #' Make a stack of companion graphs from shared drive data
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
-#' @param x The column from shareddata to be plotted on the horizontal axis.
-#' @param ys A vector or list of 1 to 4 column from shareddata to be
+#' @param x The bare (unquoted) column from shareddata to be plotted
+#'   on the horizontal axis.
+#' @param ys A vector or list of bare (unquoted) columns from shareddata to be
 #'   plotted on the vertical axes of the companion graphs.
-#' @param colorvar The column in shareddata to which color should be mapped.
+#' @param colorvar The bare (unquoted) column in shareddata to which color
+#'   should be mapped.
 #' @param xlabel The label for the variable on the horizontal axis.
-#' @param ylabels A vector or list of 1 to 4 labels for the vertical axes
-#'   of the companion graphs.
+#' @param ylabels A vector or list of labels for the vertical axes
+#'   of the companion graphs. It should be the same length as
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).

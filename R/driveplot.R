@@ -1,14 +1,16 @@
 #' Create a vehicle trajectory plot map
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
-#' @param lng The column of shareddata containing longitude
+#' @param lng The bare (unquoted) column of shareddata containing longitude
 #'   (only required if shareddata does not have a geometry column).
-#' @param lat The column of shareddata containing latitude
+#' @param lat The bare (unquoted) column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column)
-#' @param x The column from shareddata to be plotted on the horizontal axis.
-#' @param ys A vector or list of 1 to 4 columns from shareddata to be
+#' @param x The bare (unquoted) column from shareddata to be plotted
+#'   on the horizontal axis.
+#' @param ys A vector or list of bare (unquoted) columns from shareddata to be
 #'   plotted on the vertical axes of the companion graphs.
-#' @param colorvar The column in shareddata to which color should be mapped.
+#' @param colorvar The bare (unquoted) column in shareddata to which color
+#'   should be mapped.
 #' @param maplabel An optional label for the map points.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".

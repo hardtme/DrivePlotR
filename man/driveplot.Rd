@@ -25,18 +25,20 @@ driveplot(
 \arguments{
 \item{shareddata}{A SharedData object containing observations to be plotted.}
 
-\item{lng}{The column of shareddata containing longitude
+\item{lng}{The bare (unquoted) column of shareddata containing longitude
 (only required if shareddata does not have a geometry column).}
 
-\item{lat}{The column of shareddata containing latitude
+\item{lat}{The bare (unquoted) column of shareddata containing latitude
 (only required if shareddata does not have a geometry column)}
 
-\item{x}{The column from shareddata to be plotted on the horizontal axis.}
+\item{x}{The bare (unquoted) column from shareddata to be plotted
+on the horizontal axis.}
 
-\item{ys}{A vector or list of 1 to 4 columns from shareddata to be
+\item{ys}{A vector or list of bare (unquoted) columns from shareddata to be
 plotted on the vertical axes of the companion graphs.}
 
-\item{colorvar}{The column in shareddata to which color should be mapped.}
+\item{colorvar}{The bare (unquoted) column in shareddata to which color
+should be mapped.}
 
 \item{maplabel}{An optional label for the map points.}
 
