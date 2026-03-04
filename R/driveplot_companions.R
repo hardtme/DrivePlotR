@@ -21,7 +21,7 @@
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull
-#' @importFrom rlang enexpr enquo as_label ensym
+#' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr
 #' @importFrom plotly layout subplot style
 #' @export
 #' @examples
@@ -38,7 +38,8 @@
 #'      xlabel = "Time",
 #'      ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
 #'                  "GPS Heading (degrees)"),
-#'      colorpalette = "viridis")
+#'      colorpalette = "viridis",
+#'      legendtitle = "GPS PDOP")
 #'
 driveplot_companions <- function(shareddata,
                                   x,
@@ -56,18 +57,22 @@ driveplot_companions <- function(shareddata,
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
-  yexpr <- as.list(enexpr(ys))
+  ysquo <- enquo(ys)
   # Allow different syntax for a single y variable
   # E.g., ys = c(speed_mph) and ys = speed_mph both work
-  yexpr <- if(length(yexpr) == 1) yexpr else yexpr[-1]
+  if (quo_is_call(ysquo)) {
+    yslist <- call_args(ysquo)
+  } else {
+    yslist <- as.list(quo_get_expr(ysquo))
+  }
 
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   columns <- colnames(ogdata)
   xname <- as_label(enquo(x))
-  ylength <- length(yexpr)
-  ynames <- yexpr |>
+  ylength <- length(yslist)
+  ynames <- yslist |>
     vapply(FUN = function(y) as_label(y),
            FUN.VALUE = character(1))
 
@@ -128,7 +133,7 @@ driveplot_companions <- function(shareddata,
       showlegend = showlegend,
       legendtitle = legendtitle
     )},
-    yexpr, ylabels,
+    yslist, ylabels,
     SIMPLIFY = FALSE
   )
 

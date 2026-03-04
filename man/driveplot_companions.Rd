@@ -68,6 +68,7 @@ driveplot_companions(
      xlabel = "Time",
      ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
                  "GPS Heading (degrees)"),
-     colorpalette = "viridis")
+     colorpalette = "viridis",
+     legendtitle = "GPS PDOP")
 
 }

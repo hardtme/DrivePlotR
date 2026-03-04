@@ -26,7 +26,6 @@
 #' @returns A linked plot map.
 #' @importFrom crosstalk SharedData is.SharedData bscols
 #' @importFrom htmltools h1
-#' @importFrom rlang enexpr
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -79,10 +78,10 @@ driveplot <- function(shareddata,
                             colorpalette = colorpalette,
                             fillOpacity = fillOpacity,
                             mapheight = height)
-  ys <- enexpr(ys)
+
   plot_graphs <- driveplot_companions(shareddata = shareddata,
                                       x = {{ x }},
-                                      ys = !!ys,
+                                      ys = {{ ys }},
                                       colorvar = {{ colorvar }},
                                       xlabel = xlabel,
                                       ylabels = ylabels,
