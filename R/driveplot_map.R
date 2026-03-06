@@ -49,8 +49,10 @@ driveplot_map <- function(shareddata,
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   columns <- colnames(ogdata)
-  lngname <- as_label(enquo(lng))
-  latname <- as_label(enquo(lat))
+  quolng <- enquo(lng)
+  quolat <- enquo(lat)
+  lngname <- as_label(quolng)
+  latname <- as_label(quolat)
 
   lngcheck <- if (lngname == "NULL") FALSE else TRUE
   latcheck <- if (latname == "NULL") FALSE else TRUE
@@ -61,12 +63,12 @@ driveplot_map <- function(shareddata,
   }
 
   if (isTRUE(lngcheck) && !(lngname) %in% columns) {
-    stop(paste0("Can't find column `", lngname, "` in `shareddata`."),
+    stop(paste0("Can't find `", lngname, "` in `shareddata`."),
          call. = FALSE)
   }
 
   if (isTRUE(latcheck) && !(latname) %in% columns) {
-    stop(paste0("Can't find column `", latname, "` in `shareddata`."),
+    stop(paste0("Can't find `", latname, "` in `shareddata`."),
          call. = FALSE)
   }
 
@@ -143,9 +145,6 @@ driveplot_map <- function(shareddata,
     })))
     return(plot_map)
   }else{
-    quolng <- enquo(lng)
-    quolat <- enquo(lat)
-
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>

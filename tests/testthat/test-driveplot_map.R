@@ -34,14 +34,14 @@ test_that("check spelling of lng/lat", {
     driveplot_map(shareddata = drive1shared,
                   lng = gps_lng,
                   lat = gps_lat),
-    "Can't find column `gps_lng` in `shareddata`."
+    "Can't find `gps_lng` in `shareddata`."
   )
   # Misspelled lat
   expect_error(
     driveplot_map(shareddata = drive1shared,
                   lng = gps_long,
                   lat = gps_lt),
-    "Can't find column `gps_lt` in `shareddata`."
+    "Can't find `gps_lt` in `shareddata`."
   )
 })
 
