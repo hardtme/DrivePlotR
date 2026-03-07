@@ -16,8 +16,8 @@
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param fillOpacity The opacity of the fill of the map points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
-#' @param ylabels A vector or list of 1 to 4 labels for the vertical axes
-#'   of the companion graphs.
+#' @param ylabels A vector or list of labels for the vertical axes
+#'   of the companion graphs. If provided, it should be the same length as ys.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param plottitle The title for the plot map.
@@ -68,7 +68,8 @@ driveplot <- function(shareddata,
     height <- "98vh"
   }
   else{
-    height <- "85vh" # Leave more space for the title
+    # Leave more space for the title
+    height <- "85vh"
   }
   plot_map <- driveplot_map(shareddata = shareddata,
                             lng = {{ lng }},

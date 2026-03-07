@@ -9,7 +9,7 @@
 #'   should be mapped.
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
-#'   of the companion graphs. It should be the same length as
+#'   of the companion graphs. If provided, it should be the same length as ys.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
