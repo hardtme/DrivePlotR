@@ -37,7 +37,11 @@
 #'                     x = time_cst,
 #'                     y = speed_mph,
 #'                     colorvar = gyro_heading,
-#'                     colorpalette = "viridis")
+#'                     colorpalette = "viridis",
+#'                     xlabel = "Time",
+#'                     ylabel = "Speed (MPH)",
+#'                     showlegend = TRUE,
+#'                     legendtitle = "Gyro Heading")
 driveplot_companion <- function(shareddata,
                                 x,
                                 y,

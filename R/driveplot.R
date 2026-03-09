@@ -41,7 +41,9 @@
 #'           fillOpacity = 1,
 #'           xlabel = "Time",
 #'           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-#'                       "GPS Heading (degrees)"))
+#'                       "GPS Heading (degrees)"),
+#'           showlegend = TRUE,
+#'           legendtitle = "Gyro Heading")
 driveplot <- function(shareddata,
                       lng = NULL,
                       lat = NULL,

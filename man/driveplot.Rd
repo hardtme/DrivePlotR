@@ -81,5 +81,7 @@ driveplot(shareddata = shared_drive,
           fillOpacity = 1,
           xlabel = "Time",
           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-                      "GPS Heading (degrees)"))
+                      "GPS Heading (degrees)"),
+          showlegend = TRUE,
+          legendtitle = "Gyro Heading")
 }
