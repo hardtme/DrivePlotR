@@ -29,23 +29,21 @@ pak::pak("hardtme/DrivePlotR")
 This example shows the basic workflow for making visualizations with
 DrivePlotR.
 
-<!-- Examples borrowed from the DrivePlotR paper -->
-
 1.  Load DrivePlotR and make drive data available in the R session. We
     have made non-sensitive drives from a naturalistic driving study
     available as part of the DrivePlotR package, but any other data with
-    both geographic and temporal components would also be suitable.
+    both geographic and temporal components would also be suitable. Each
+    row in the data must represent one observation.
 
 ``` r
 library(DrivePlotR)
 data("drive7")
 ```
 
-2.  Establish the geographic variables and projection. The code below
-    creates a simple feature variable `geometry` of all points. Setting
-    the geographic projection to WGS84 ensures that points in the data
-    line up with maps in Leaflet. This is already done for the example
-    dataset `drive7` included with the package.
+2.  Establish the geographic variables and projection. Setting the
+    geographic projection to WGS84 ensures that points in the data are
+    compatible with maps in Leaflet. This is already done for the
+    example dataset `drive7` included with the package.
 
 3.  Convert the drive data into a shared data frame.
 

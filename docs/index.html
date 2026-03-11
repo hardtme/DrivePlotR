@@ -63,15 +63,14 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This example shows the basic workflow for making visualizations with DrivePlotR.</p>
-<!-- Examples borrowed from the DrivePlotR paper -->
 <ol style="list-style-type: decimal">
-<li>Load DrivePlotR and make drive data available in the R session. We have made non-sensitive drives from a naturalistic driving study available as part of the DrivePlotR package, but any other data with both geographic and temporal components would also be suitable.</li>
+<li>Load DrivePlotR and make drive data available in the R session. We have made non-sensitive drives from a naturalistic driving study available as part of the DrivePlotR package, but any other data with both geographic and temporal components would also be suitable. Each row in the data must represent one observation.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hardtme.github.io/DrivePlotR/">DrivePlotR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"drive7"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Establish the geographic variables and projection. The code below creates a simple feature variable <code>geometry</code> of all points. Setting the geographic projection to WGS84 ensures that points in the data line up with maps in Leaflet. This is already done for the example dataset <code>drive7</code> included with the package.</p></li>
+<li><p>Establish the geographic variables and projection. Setting the geographic projection to WGS84 ensures that points in the data are compatible with maps in Leaflet. This is already done for the example dataset <code>drive7</code> included with the package.</p></li>
 <li><p>Convert the drive data into a shared data frame.</p></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
