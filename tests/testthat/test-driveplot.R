@@ -97,8 +97,8 @@ test_that("works for both ways to specify coordinates", {
   # Provide a geometry column with type POINT
   expect_no_error(
     driveplot(shareddata = shared_drive,
-            x = time_cst,
-            ys = speed_mph)
+              x = time_cst,
+              ys = speed_mph)
   )
 })
 
@@ -126,17 +126,17 @@ test_that("provide geometry column but not x and ys", {
 test_that("x not provided", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
-    driveplot(shareddata = shared_drive,
-              ys = speed_mph),
-    "Can't find `<empty>` in `shareddata`.")
+    driveplot(shareddata = shared_drive, ys = speed_mph),
+    "Can't find `<empty>` in `shareddata`."
+  )
 })
 
 test_that("ys not provided", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
-    driveplot(shareddata = shared_drive,
-              x = time_cst),
-    "Can't find `<empty>` in `shareddata`.")
+    driveplot(shareddata = shared_drive, x = time_cst),
+    "Can't find `<empty>` in `shareddata`."
+  )
 })
 
 test_that("misspelled x", {

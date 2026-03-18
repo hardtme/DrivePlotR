@@ -2,7 +2,7 @@ test_that("dataframe throws error", {
   expect_error(
     driveplot_companion(shareddata = drive7, x = time_cst, y = speed_mph),
     "`shareddata` must be a SharedData object."
-    )
+  )
 })
 
 test_that("x is not in shareddata", {
@@ -45,7 +45,7 @@ test_that("colorvar is not in shareddata", {
   )
 })
 
-test_that("throw error when colorvar is specified, but incorrect colorpalette", {
+test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   # Specify colorvar, but not colorpalette
   expect_error(

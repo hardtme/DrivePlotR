@@ -12,7 +12,8 @@ test_that("x not provided", {
   expect_error(
     driveplot_companions(shareddata = shared_drive,
                          ys = speed_mph),
-  "Can't find `<empty>` in `shareddata`.")
+    "Can't find `<empty>` in `shareddata`."
+  )
 })
 
 test_that("ys not provided", {
@@ -20,15 +21,16 @@ test_that("ys not provided", {
   expect_error(
     driveplot_companions(shareddata = shared_drive,
                          x = time_cst),
-    "Can't find `<empty>` in `shareddata`.")
+    "Can't find `<empty>` in `shareddata`."
+  )
 })
 
 test_that("misspelled x", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot_companions(shareddata = shared_drive,
-                        x = time_est,
-                        ys = speed_mph),
+                         x = time_est,
+                         ys = speed_mph),
     "Can't find `time_est` in `shareddata`."
   )
 })
@@ -37,8 +39,8 @@ test_that("misspelled first y", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot_companions(shareddata = shared_drive,
-                        x = time_cst,
-                        ys = speed_kph),
+                         x = time_cst,
+                         ys = speed_kph),
     "Can't find `speed_kph` in `shareddata`."
   )
 })
@@ -187,9 +189,9 @@ test_that("provide two ys and one label", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = list(speed_mph, gyro_heading),
-                          ylabels = "Speed"),
+                         x = time_cst,
+                         ys = list(speed_mph, gyro_heading),
+                         ylabels = "Speed"),
     "If providing `ylabels`, `ys` and `ylabels` must be the same length."
   )
 })
@@ -198,9 +200,9 @@ test_that("provide only one y label without c() or list()", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = speed_mph,
-                          ylabels = "Speed")
+                         x = time_cst,
+                         ys = speed_mph,
+                         ylabels = "Speed")
   )
 })
 
@@ -208,30 +210,30 @@ test_that("provide only one y label with c()", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = speed_mph,
-                          ylabels = c("Speed"))
-    )
+                         x = time_cst,
+                         ys = speed_mph,
+                         ylabels = c("Speed"))
+  )
 })
 
 test_that("provide only one y label with list()", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = speed_mph,
-                          ylabels = list("Speed"))
-    )
+                         x = time_cst,
+                         ys = speed_mph,
+                         ylabels = list("Speed"))
+  )
 })
 
 test_that("specify two y labels with c()", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = c(speed_mph, gyro_heading),
-                          ylabels = c("Speed", "Gyro Heading"))
-    )
+                         x = time_cst,
+                         ys = c(speed_mph, gyro_heading),
+                         ylabels = c("Speed", "Gyro Heading"))
+  )
 })
 
 test_that("specify two y labels with list()", {
@@ -241,16 +243,16 @@ test_that("specify two y labels with list()", {
                          x = time_cst,
                          ys = c(speed_mph, gyro_heading),
                          ylabels = list("Speed", "Gyro Heading"))
-    )
+  )
 })
 
 test_that("specify ylabels without quotes", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot_companions(shareddata = shared_drive,
-                          x = time_cst,
-                          ys = c(speed_mph, gyro_heading),
-                          ylabels = list(Speed, Heading))
+                         x = time_cst,
+                         ys = c(speed_mph, gyro_heading),
+                         ylabels = list(Speed, Heading))
   )
 })
 
@@ -264,6 +266,3 @@ test_that("NA ylabels", {
     "`ylabels` cannot be NA."
   )
 })
-
-
-
