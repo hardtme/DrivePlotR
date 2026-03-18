@@ -117,4 +117,3 @@
 #'  geometry type POINT}
 #'  }
 "drive7"
-
