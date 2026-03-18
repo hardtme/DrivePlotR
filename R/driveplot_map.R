@@ -52,13 +52,14 @@ driveplot_map <- function(shareddata,
   columns <- colnames(ogdata)
   quolng <- enquo(lng)
   quolat <- enquo(lat)
+  quolabel <- enquo(label)
   lngname <- as_label(quolng)
   latname <- as_label(quolat)
 
   lngcheck <- if (lngname == "NULL") FALSE else TRUE
   latcheck <- if (latname == "NULL") FALSE else TRUE
   if ((isFALSE(lngcheck) && isTRUE(latcheck)) ||
-      (isTRUE(lngcheck) && isFALSE(latcheck))) {
+        (isTRUE(lngcheck) && isFALSE(latcheck))) {
     stop("If providing `lng` and `lat`, must provide both.",
          call. = FALSE)
   }
@@ -77,17 +78,16 @@ driveplot_map <- function(shareddata,
     stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
   }
 
-  quolabel <- enquo(label)
   colorvarnumeric <- tryCatch(
     ogdata |>
       pull({{ colorvar }}) |>
       is.numeric(),
-    error = function(e){},
+    error = function(e) { },
     finally = NULL
   )
   # Create color palettes
   if (is.null(colorvarnumeric) &&
-     colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+        colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     colorarg <- 0
     # We need to make sure the same color is used on the map and the plots
     colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
@@ -95,7 +95,7 @@ driveplot_map <- function(shareddata,
                             na.color = "dimgray")
   }
   if (is.null(colorvarnumeric) &&
-     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
+        !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
     colorarg <- 0
     colorpal <- colorFactor(palette = colorpalette,
                             domain = NULL,
@@ -131,30 +131,30 @@ driveplot_map <- function(shareddata,
       error = function(e) {
         stop("Geometry column must have type POINT.",
              call. = FALSE)
-        }
+      }
     )
     lng <- lnglat$lng
     lat <- lnglat$lat
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
-        addCircleMarkers(lat = lat, lng = lng, stroke = T,
+        addCircleMarkers(lat = lat, lng = lng, stroke = TRUE,
                          weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
                          fillColor = ~colorpal(!!colorarg),
                          fillOpacity = fillOpacity)
     })))
-    return(plot_map)
-  }else{
+    plot_map
+  }else {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
         addCircleMarkers(lat = ~(!!quolat), lng = ~(!!quolng),
-                         stroke = T, weight = 2, color = "dimgray",
+                         stroke = TRUE, weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
                          fillColor = ~colorpal(!!colorarg),
                          fillOpacity = fillOpacity)
     })))
-    return(plot_map)
+    plot_map
   }
 }
