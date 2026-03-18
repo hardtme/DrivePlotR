@@ -80,7 +80,7 @@ driveplot_companion <- function(shareddata,
     ogdata |>
       pull({{ colorvar }}) |>
       is.numeric(),
-    error = function(e){},
+    error = function(e) { },
     finally = NULL
   )
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
@@ -90,7 +90,8 @@ driveplot_companion <- function(shareddata,
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
   if (is.null(colorvarnumeric)  &&
-     !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
+        !(colorpalette %in% c("viridis", "magma",
+                              "inferno", "plasma"))) {
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
@@ -102,7 +103,8 @@ driveplot_companion <- function(shareddata,
                  show.legend = showlegend) +
       theme_bw()
   }else if (!is.null(colorvarnumeric) &&
-           !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
+              !(colorpalette %in% c("viridis", "magma",
+                                    "inferno", "plasma"))) {
     # {{ colorvar }} is a column in ogdata and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
@@ -110,7 +112,7 @@ driveplot_companion <- function(shareddata,
          colorpalette = "viridis", "magma", "inferno", or "plasma".',
          call. = FALSE)
   }else if (is.null(colorvarnumeric) &&
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is not a column in ogdata and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
@@ -123,7 +125,7 @@ driveplot_companion <- function(shareddata,
                  show.legend = showlegend) +
       theme_bw()
   }else if (isTRUE(colorvarnumeric) &&
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
@@ -135,7 +137,7 @@ driveplot_companion <- function(shareddata,
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
   }else if (isFALSE(colorvarnumeric) &&
-           colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
     # {{ colorvar }} is a non-numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
@@ -187,5 +189,5 @@ driveplot_companion <- function(shareddata,
       hide_guides()
   }
 
-  return(scatterplotly)
+  scatterplotly
 }
