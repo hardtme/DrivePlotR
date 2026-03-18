@@ -14,7 +14,7 @@
 #' @param maplabel An optional label for the map points.
 #' @param colorpalette The color palette for the plot map; either a single
 #'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
-#' @param fillOpacity The opacity of the fill of the map points (0 to 1).
+#' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
 #'   of the companion graphs. If provided, it should be the same length as ys.
@@ -38,7 +38,7 @@
 #'           colorvar = gyro_heading,
 #'           maplabel = time_cst,
 #'           colorpalette = "viridis",
-#'           fillOpacity = 1,
+#'           fillopacity = 1,
 #'           xlabel = "Time",
 #'           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
 #'                       "GPS Heading (degrees)"),
@@ -52,7 +52,7 @@ driveplot <- function(shareddata,
                       colorvar = NULL,
                       maplabel = NA,
                       colorpalette = "#03F",
-                      fillOpacity = 1,
+                      fillopacity = 1,
                       xlabel = NULL,
                       ylabels = NULL,
                       showlegend = TRUE,
@@ -78,7 +78,7 @@ driveplot <- function(shareddata,
                             colorvar = {{ colorvar }},
                             label = {{ maplabel }},
                             colorpalette = colorpalette,
-                            fillOpacity = fillOpacity,
+                            fillopacity = fillopacity,
                             mapheight = height)
 
   plot_graphs <- driveplot_companions(shareddata = shareddata,

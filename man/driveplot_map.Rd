@@ -11,7 +11,7 @@ driveplot_map(
   colorvar = NULL,
   label = NA,
   colorpalette = "#03F",
-  fillOpacity = 1,
+  fillopacity = 1,
   mapheight = "98vh"
 )
 }
@@ -32,7 +32,7 @@ should be mapped.}
 \item{colorpalette}{The color palette for the map; either a single color
 (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{fillOpacity}{The opacity of the fill of the map points (0 to 1).}
+\item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 
 \item{mapheight}{The height of the map in CSS units, e.g, "98vh".}
 }

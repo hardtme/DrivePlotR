@@ -10,7 +10,7 @@
 #' @param label An optional label for the map points.
 #' @param colorpalette The color palette for the map; either a single color
 #'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
-#' @param fillOpacity The opacity of the fill of the map points (0 to 1).
+#' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
@@ -39,7 +39,7 @@ driveplot_map <- function(shareddata,
                           colorvar = NULL,
                           label = NA,
                           colorpalette = "#03F",
-                          fillOpacity = 1,
+                          fillopacity = 1,
                           mapheight = "98vh") {
 
   if (isFALSE(is.SharedData(shareddata))) {
@@ -142,7 +142,7 @@ driveplot_map <- function(shareddata,
                          weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
                          fillColor = ~colorpal(!!colorarg),
-                         fillOpacity = fillOpacity)
+                         fillOpacity = fillopacity)
     })))
     plot_map
   }else {
@@ -153,7 +153,7 @@ driveplot_map <- function(shareddata,
                          stroke = TRUE, weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
                          fillColor = ~colorpal(!!colorarg),
-                         fillOpacity = fillOpacity)
+                         fillOpacity = fillopacity)
     })))
     plot_map
   }

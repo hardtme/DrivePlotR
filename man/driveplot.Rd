@@ -13,7 +13,7 @@ driveplot(
   colorvar = NULL,
   maplabel = NA,
   colorpalette = "#03F",
-  fillOpacity = 1,
+  fillopacity = 1,
   xlabel = NULL,
   ylabels = NULL,
   showlegend = TRUE,
@@ -45,7 +45,7 @@ should be mapped.}
 \item{colorpalette}{The color palette for the plot map; either a single
 color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
 
-\item{fillOpacity}{The opacity of the fill of the map points (0 to 1).}
+\item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
@@ -78,7 +78,7 @@ driveplot(shareddata = shared_drive,
           colorvar = gyro_heading,
           maplabel = time_cst,
           colorpalette = "viridis",
-          fillOpacity = 1,
+          fillopacity = 1,
           xlabel = "Time",
           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
                       "GPS Heading (degrees)"),
