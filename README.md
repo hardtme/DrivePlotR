@@ -11,8 +11,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of DrivePlotR is to produce linked plot maps for multivariate
-high-resolution spatio-temporal data such as data from naturalistic
-driving studies and connected vehicles.
+high-resolution spatio-temporal data such as vehicle trajectories from
+naturalistic driving studies and connected vehicles.
 
 ## Installation
 
@@ -26,14 +26,15 @@ pak::pak("hardtme/DrivePlotR")
 
 ## Example
 
-This example shows the basic workflow for making visualizations with
-DrivePlotR.
+This example shows the basic workflow for visualizing vehicle
+trajectories with DrivePlotR.
 
 1.  Load DrivePlotR and make drive data available in the R session. We
     have made non-sensitive drives from a naturalistic driving study
     available as part of the DrivePlotR package, but any other data with
     both geographic and temporal components would also be suitable. Each
-    row in the data must represent one observation.
+    row in the data must represent one observation from the vehicle
+    trajectory.
 
 ``` r
 library(DrivePlotR)
