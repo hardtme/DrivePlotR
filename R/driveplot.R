@@ -68,8 +68,7 @@ driveplot <- function(shareddata,
 
   if (isTRUE(notitle)) {
     height <- "98vh"
-  }
-  else{
+  }else {
     # Leave more space for the title
     height <- "85vh"
   }
@@ -96,19 +95,19 @@ driveplot <- function(shareddata,
 
   if (isTRUE(notitle)) {
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
-  }
-  else{
+  } else {
     # suppressWarnings so we don't see bscols warn that
     # the sum of the widths is greater than 12
     # We need this behavior to put the title on its own line
     final_viz <- suppressWarnings(
       bscols(
         h1(plottitle,
-           .noWS = c("before", "after", "outside", "after-begin", "before-end"),
-           align = "center", style="font-family: sans-serif; color:black"),
+           .noWS = c("before", "after", "outside",
+                     "after-begin", "before-end"),
+           align = "center", style = "font-family: sans-serif; color:black"),
         plot_map, plot_graphs, widths = c(12, 6, 6)
       )
     )
   }
-  return(final_viz)
+  final_viz
 }
