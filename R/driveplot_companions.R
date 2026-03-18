@@ -42,16 +42,16 @@
 #'      legendtitle = "GPS PDOP")
 #'
 driveplot_companions <- function(shareddata,
-                                  x,
-                                  ys,
-                                  colorvar = NULL,
-                                  xlabel = NULL,
-                                  ylabels = NULL,
-                                  colorpalette = "#03F",
-                                  showlegend = TRUE,
-                                  legendtitle = NULL,
-                                  spacing = 0.05,
-                                  plotheight = "98vh") {
+                                 x,
+                                 ys,
+                                 colorvar = NULL,
+                                 xlabel = NULL,
+                                 ylabels = NULL,
+                                 colorpalette = "#03F",
+                                 showlegend = TRUE,
+                                 legendtitle = NULL,
+                                 spacing = 0.05,
+                                 plotheight = "98vh") {
 
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
@@ -108,7 +108,7 @@ driveplot_companions <- function(shareddata,
     ogdata |>
       pull({{ colorvar }}) |>
       is.numeric(),
-    error = function(e){},
+    error = function(e) { },
     finally = NULL
   )
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
@@ -122,17 +122,18 @@ driveplot_companions <- function(shareddata,
   }
 
   companion_graphs <- mapply(
-    FUN = function(var, label) { driveplot_companion(
-      shareddata = shareddata,
-      x = {{ x }},
-      y = {{ var }},
-      colorvar = {{ colorvar }},
-      colorpalette = colorpalette,
-      xlabel = xlabel,
-      ylabel = label,
-      showlegend = showlegend,
-      legendtitle = legendtitle
-    )},
+    FUN = function(var, label) {
+                                driveplot_companion(
+                                  shareddata = shareddata,
+                                  x = {{ x }},
+                                  y = {{ var }},
+                                  colorvar = {{ colorvar }},
+                                  colorpalette = colorpalette,
+                                  xlabel = xlabel,
+                                  ylabel = label,
+                                  showlegend = showlegend,
+                                  legendtitle = legendtitle
+                                )},
     yslist, ylabels,
     SIMPLIFY = FALSE
   )
@@ -144,7 +145,7 @@ driveplot_companions <- function(shareddata,
                              titleY = TRUE,
                              which_layout = 1,
                              margin = spacing)
-  } else{
+  } else {
     plotlysubplot <- subplot(companion_graphs,
                              nrows = ylength,
                              shareX = TRUE,
@@ -153,11 +154,11 @@ driveplot_companions <- function(shareddata,
   }
   if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
     plotlysubplot <- plotlysubplot |>
-      style(showlegend = FALSE, traces = (ncolors + 1):(ncolors*ylength))
+      style(showlegend = FALSE, traces = (ncolors + 1):(ncolors * ylength))
   }
   plotlysubplot <- plotlysubplot |>
     layout(font = list(family = "sans-serif"))
   plotlysubplot$sizingPolicy$defaultHeight <- plotheight
   plotlysubplot$sizingPolicy$defaultWidth <- "100%"
-  return(plotlysubplot)
+  plotlysubplot
 }
