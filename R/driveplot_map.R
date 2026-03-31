@@ -15,7 +15,7 @@
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull filter n_distinct
-#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom rlang enquo get_expr eval_tidy quo_squash quo
 #' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
 #'    addTiles addCircleMarkers
 #' @importFrom viridisLite viridis
@@ -52,6 +52,12 @@ driveplot_map <- function(shareddata,
   columns <- colnames(ogdata)
   quolng <- enquo(lng)
   quolat <- enquo(lat)
+  quocolor <- enquo(colorvar)
+  if (is.character(get_expr(quocolor))) {
+    stop("Do not put argument `colorvar` in quotes.
+    Did you mean to use `colorpalette` instead?",
+         call. = FALSE)
+  }
   quolabel <- enquo(label)
   lngname <- as_label(quolng)
   latname <- as_label(quolat)
@@ -78,17 +84,17 @@ driveplot_map <- function(shareddata,
     stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
   }
 
-  colorvarnumeric <- tryCatch(
-    ogdata |>
-      pull({{ colorvar }}) |>
-      is.numeric(),
-    error = function(e) { },
-    finally = NULL
-  )
+  tidy_color <- eval_tidy(quocolor, data = ogdata)
+  if (is.null(tidy_color)) {
+    colorvarnumeric <- NULL
+  } else {
+    colorvarnumeric <- if (isTRUE(is.numeric(tidy_color))) TRUE else FALSE
+  }
+
   # Create color palettes
   if (is.null(colorvarnumeric) &&
         colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
-    colorarg <- 0
+    quocolor <- 0
     # We need to make sure the same color is used on the map and the plots
     colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
                             domain = NULL,
@@ -96,27 +102,24 @@ driveplot_map <- function(shareddata,
   }
   if (is.null(colorvarnumeric) &&
         !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
-    colorarg <- 0
+    quocolor <- 0
     colorpal <- colorFactor(palette = colorpalette,
                             domain = NULL,
                             na.color = "dimgray")
   }
 
   if (isTRUE(colorvarnumeric)) {
-    colorarg <- enquo(colorvar)
     colorpal <- colorNumeric(palette = colorpalette,
-                             domain = ogdata |> pull({{ colorvar }}),
+                             domain = eval_tidy(quocolor, data = ogdata),
                              na.color = "dimgray")
 
   }
   if (isFALSE(colorvarnumeric)) {
-    colorarg <- enquo(colorvar)
-    ncolors <- ogdata |>
-      pull({{ colorvar }}) |>
+    ncolors <- eval_tidy(quocolor, data = ogdata) |>
       n_distinct(na.rm = TRUE)
     colorpal <- colorFactor(palette = viridis(n = ncolors,
                                               option = colorpalette),
-                            domain = ogdata |> pull({{ colorvar }}),
+                            domain = eval_tidy(quocolor, data = ogdata),
                             na.color = "dimgray")
   }
   if (isFALSE(lngcheck) && isFALSE(latcheck)) {
@@ -141,7 +144,7 @@ driveplot_map <- function(shareddata,
         addCircleMarkers(lat = lat, lng = lng, stroke = TRUE,
                          weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
-                         fillColor = ~colorpal(!!colorarg),
+                         fillColor = ~colorpal(!!quocolor),
                          fillOpacity = fillopacity)
     })))
     plot_map
@@ -152,7 +155,7 @@ driveplot_map <- function(shareddata,
         addCircleMarkers(lat = ~(!!quolat), lng = ~(!!quolng),
                          stroke = TRUE, weight = 2, color = "dimgray",
                          label = ~(!!quolabel),
-                         fillColor = ~colorpal(!!colorarg),
+                         fillColor = ~colorpal(!!quocolor),
                          fillOpacity = fillopacity)
     })))
     plot_map

@@ -12,7 +12,7 @@ test_that("x not provided", {
   expect_error(
     driveplot_companions(shareddata = shared_drive,
                          ys = speed_mph),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -21,7 +21,7 @@ test_that("ys not provided", {
   expect_error(
     driveplot_companions(shareddata = shared_drive,
                          x = time_cst),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -31,7 +31,17 @@ test_that("misspelled x", {
     driveplot_companions(shareddata = shared_drive,
                          x = time_est,
                          ys = speed_mph),
-    "Can't find `time_est` in `shareddata`."
+    "object 'time_est' not found"
+  )
+})
+
+test_that("quoted x", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = "time_est",
+                         ys = speed_mph),
+    "Do not put argument `x` in quotes."
   )
 })
 
@@ -41,7 +51,17 @@ test_that("misspelled first y", {
     driveplot_companions(shareddata = shared_drive,
                          x = time_cst,
                          ys = speed_kph),
-    "Can't find `speed_kph` in `shareddata`."
+    "object 'speed_kph' not found"
+  )
+})
+
+test_that("quoted y", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_est,
+                         ys = "speed_mph"),
+    "Do not put argument `y` in quotes."
   )
 })
 
@@ -51,7 +71,17 @@ test_that("misspelled second y", {
     driveplot_companions(shareddata = shared_drive,
                          x = time_cst,
                          ys = c(speed_mph, gps_headin)),
-    "Can't find `gps_headin` in `shareddata`."
+    "object 'gps_headin' not found"
+  )
+})
+
+test_that("quoted second y", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = c(speed_mph, "gps_heading")),
+    "Do not put argument `y` in quotes."
   )
 })
 
@@ -62,7 +92,17 @@ test_that("misspelled third y", {
     driveplot_companions(shareddata = shared_drive,
                          x = time_cst,
                          ys = c(speed_mph, gps_heading, gyro_headin)),
-    "Can't find `gyro_headin` in `shareddata`."
+    "object 'gyro_headin' not found"
+  )
+})
+
+test_that("quoted third y", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = c(speed_mph, gps_heading, "gyro_heading")),
+    "Do not put argument `y` in quotes."
   )
 })
 
@@ -74,7 +114,18 @@ test_that("misspelled fourth y", {
                          x = time_cst,
                          ys = c(speed_mph, gps_heading,
                                 gyro_heading, gps_dop)),
-    "Can't find `gps_dop` in `shareddata`."
+    "object 'gps_dop' not found"
+  )
+})
+
+test_that("quoted fourth y", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = c(speed_mph, gps_heading,
+                                gyro_heading, "gps_pdop")),
+    "Do not put argument `y` in quotes."
   )
 })
 
@@ -264,5 +315,43 @@ test_that("NA ylabels", {
                          ys = c(speed_mph, gyro_heading),
                          ylabels = NA),
     "`ylabels` cannot be NA."
+  )
+})
+
+test_that("can modify function arguments", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Modify x
+  expect_no_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = as.POSIXct(time_cst, tz = "UTC"),
+                         ys = c(speed_mph, gyro_heading))
+  )
+  # Modify one y
+  expect_no_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = c(speed_mph * 1.609, gyro_heading))
+  )
+  # Modify two ys
+  expect_no_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = c(speed_mph * 1.609, gyro_heading %% 360))
+  )
+  # Modify colorvar
+  expect_no_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = time_cst,
+                         ys = list(speed_mph, gps_pdop),
+                         colorvar = gyro_heading %% 360,
+                         colorpalette = "viridis")
+  )
+  # Many modifications
+  expect_no_error(
+    driveplot_companions(shareddata = shared_drive,
+                         x = as.POSIXct(time_cst, tz = "UTC"),
+                         ys = list(speed_mph * 1.609, gyro_heading %% 360),
+                         colorvar = paste("Minute:", gps_minute),
+                         colorpalette = "viridis")
   )
 })

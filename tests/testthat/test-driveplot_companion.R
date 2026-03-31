@@ -11,7 +11,7 @@ test_that("x is not in shareddata", {
     driveplot_companion(shareddata = shared_drive,
                         x = time_est,
                         y = speed_mph),
-    "Can't find column `time_est` in `shareddata`."
+    "object 'time_est' not found"
   )
 })
 
@@ -21,7 +21,7 @@ test_that("y is not in shareddata", {
     driveplot_companion(shareddata = shared_drive,
                         x = time_cst,
                         y = speed_kph),
-    "Can't find column `speed_kph` in `shareddata`."
+    "object 'speed_kph' not found"
   )
 })
 
@@ -33,15 +33,35 @@ test_that("colorvar is not in shareddata", {
                         x = time_cst,
                         y = speed_mph,
                         colorvar = "red"),
-    "Can't find column `\"red\"` in `shareddata`."
+    "Do not put argument `colorvar` in quotes.
+    Did you mean to use `colorpalette` instead?"
   )
   # Misspelled colorvar
   expect_error(
     driveplot_companion(shareddata = shared_drive,
                         x = time_cst,
                         y = speed_mph,
-                        colorvar = gps_dop),
-    "Can't find column `gps_dop` in `shareddata`."
+                        colorvar = gps_dop,
+                        colorpalette = "viridis"),
+    "object 'gps_dop' not found"
+  )
+})
+
+test_that("throw error when x or y is quoted", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Quoted x
+  expect_error(
+    driveplot_companion(shareddata = shared_drive,
+                        x = "time_cst",
+                        y = speed_mph),
+    "Do not put argument `x` in quotes."
+  )
+  # Quoted y
+  expect_error(
+    driveplot_companion(shareddata = shared_drive,
+                        x = time_cst,
+                        y = "speed_mph"),
+    "Do not put argument `y` in quotes."
   )
 })
 
@@ -103,5 +123,29 @@ test_that("no error when colorpalette is specified without colorvar", {
                         x = time_cst,
                         y = speed_mph,
                         colorpalette = "plasma")
+  )
+})
+
+test_that("can perform operations within function arguments", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Modify x
+  expect_no_error(
+    driveplot_companion(shareddata = shared_drive,
+                        x = as.POSIXct(time_cst, tz = "UTC"),
+                        y = speed_mph)
+  )
+  # Modify y
+  expect_no_error(
+    driveplot_companion(shareddata = shared_drive,
+                        x = time_cst,
+                        y = speed_mph * 1.609)
+  )
+  # Modify colorvar
+  expect_no_error(
+    driveplot_companion(shareddata = shared_drive,
+                        x = time_cst,
+                        y = speed_mph,
+                        colorvar = gyro_heading %% 360,
+                        colorpalette = "viridis")
   )
 })

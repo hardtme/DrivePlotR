@@ -45,6 +45,16 @@ test_that("check spelling of lng/lat", {
   )
 })
 
+test_that("throw error when colorvar is misspecified", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_error(
+    driveplot_map(shareddata = shared_drive,
+                  colorvar = "red"),
+    "Do not put argument `colorvar` in quotes.
+    Did you mean to use `colorpalette` instead?"
+  )
+})
+
 test_that("missing geometry column throws error when lat/lng not provided", {
   drive1 <- nds_data |>
     dplyr::filter(drive == 1)
@@ -81,3 +91,4 @@ test_that("mapheight is in CSS units", {
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )
 })
+

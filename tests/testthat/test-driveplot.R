@@ -110,7 +110,7 @@ test_that("provide lat/lng but not x and ys", {
     driveplot(shareddata = drive1shared,
               lng = gps_long,
               lat = gps_lat),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -118,7 +118,7 @@ test_that("provide geometry column but not x and ys", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot(shareddata = shared_drive),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -127,7 +127,7 @@ test_that("x not provided", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot(shareddata = shared_drive, ys = speed_mph),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -135,7 +135,7 @@ test_that("ys not provided", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot(shareddata = shared_drive, x = time_cst),
-    "Can't find `<empty>` in `shareddata`."
+    "argument is missing, with no default"
   )
 })
 
@@ -145,7 +145,7 @@ test_that("misspelled x", {
     driveplot(shareddata = shared_drive,
               x = time_est,
               ys = speed_mph),
-    "Can't find `time_est` in `shareddata`."
+    "object 'time_est' not found"
   )
 })
 
@@ -155,7 +155,7 @@ test_that("misspelled first y", {
     driveplot(shareddata = shared_drive,
               x = time_cst,
               ys = speed_kph),
-    "Can't find `speed_kph` in `shareddata`."
+    "object 'speed_kph' not found"
   )
 })
 
@@ -165,7 +165,7 @@ test_that("misspelled second y", {
     driveplot(shareddata = shared_drive,
               x = time_cst,
               ys = c(speed_mph, gps_headin)),
-    "Can't find `gps_headin` in `shareddata`."
+    "object 'gps_headin' not found"
   )
 })
 
@@ -175,7 +175,7 @@ test_that("misspelled third y", {
     driveplot(shareddata = shared_drive,
               x = time_cst,
               ys = c(speed_mph, gps_heading, gyro_headin)),
-    "Can't find `gyro_headin` in `shareddata`."
+    "object 'gyro_headin' not found"
   )
 })
 
@@ -186,7 +186,7 @@ test_that("misspelled fourth y", {
               x = time_cst,
               ys = c(speed_mph, gps_heading,
                      gyro_heading, gps_dop)),
-    "Can't find `gps_dop` in `shareddata`."
+    "object 'gps_dop'"
   )
 })
 
@@ -336,5 +336,46 @@ test_that("NA ylabel", {
               ys = c(speed_mph, gyro_heading),
               ylabels = NA),
     "`ylabels` cannot be NA."
+  )
+})
+
+
+test_that("can modify function arguments", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Modify x
+  expect_no_error(
+    driveplot(shareddata = shared_drive,
+              x = as.POSIXct(time_cst, tz = "UTC"),
+              ys = c(speed_mph, gyro_heading))
+  )
+  # Modify one y
+  expect_no_error(
+    driveplot(shareddata = shared_drive,
+              x = time_cst,
+              ys = c(speed_mph * 1.609, gyro_heading))
+  )
+  # Modify two ys
+  expect_no_error(
+    driveplot(shareddata = shared_drive,
+              x = time_cst,
+              ys = c(speed_mph * 1.609, gyro_heading %% 360))
+  )
+  # Modify colorvar and maplabel
+  expect_no_error(
+    driveplot(shareddata = shared_drive,
+              x = time_cst,
+              ys = list(speed_mph, gps_pdop),
+              colorvar = gyro_heading %% 360,
+              maplabel = gyro_heading %% 360,
+              colorpalette = "viridis")
+  )
+  # Many modifications
+  expect_no_error(
+    driveplot(shareddata = shared_drive,
+              x = as.POSIXct(time_cst, tz = "UTC"),
+              ys = list(speed_mph * 1.609, gyro_heading %% 360),
+              colorvar = paste("Minute:", gps_minute),
+              maplabel = paste("Minute:", gps_minute),
+              colorpalette = "viridis")
   )
 })

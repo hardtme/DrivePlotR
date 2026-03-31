@@ -16,7 +16,7 @@
 #' @returns A plotly scatterplot.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom dplyr pull
-#' @importFrom rlang enquo as_label
+#' @importFrom rlang enquo quo_set_env global_env get_expr as_label
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #'   scale_fill_viridis_d ylab xlab labs aes
@@ -60,29 +60,51 @@ driveplot_companion <- function(shareddata,
   # x, y, and colorvar along with the type of colorvar
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  columns <- colnames(ogdata)
-  xname <- as_label(enquo(x))
-  yname <- as_label(enquo(y))
-  colorvarname <- as_label(enquo(colorvar))
+  quox <- enquo(x)
+  quox <- quo_set_env(quox, global_env())
+  if (is.character(get_expr(quox))) {
+    stop("Do not put argument `x` in quotes.",
+         call. = FALSE)
+  }
+  quoy <- enquo(y)
+  quoy <- quo_set_env(quoy, global_env())
+  if (is.character(get_expr(quoy))) {
+    stop("Do not put argument `y` in quotes.",
+         call. = FALSE)
+  }
+  yname <- as_label(quoy)
+  quocolor <- enquo(colorvar)
+  if (is.character(get_expr(quocolor))) {
+    stop("Do not put argument `colorvar` in quotes.
+    Did you mean to use `colorpalette` instead?",
+         call. = FALSE)
+  }
+  colorvarname <- as_label(quocolor)
 
-  if (!(xname %in% columns)) {
-    stop(paste0("Can't find column `", xname, "` in `shareddata`."),
+  tidy_x <- eval_tidy(quox, data = ogdata)
+  if (length(tidy_x) == 1 && is.na(tidy_x)) {
+    stop("Argument `x` cannot be NA.",
          call. = FALSE)
-  } else if (!(yname %in% columns)) {
-    stop(paste0("Can't find column `", yname, "` in `shareddata`."),
-         call. = FALSE)
-  } else if (colorvarname != "NULL" && !(colorvarname %in% columns)) {
-    stop(paste0("Can't find column `", colorvarname, "` in `shareddata`."),
+  } else if (length(tidy_x) == 1 && is.null(tidy_x)) {
+    stop("Argument `x` cannot be NULL.",
          call. = FALSE)
   }
 
-  colorvarnumeric <- tryCatch(
-    ogdata |>
-      pull({{ colorvar }}) |>
-      is.numeric(),
-    error = function(e) { },
-    finally = NULL
-  )
+  tidy_y <- eval_tidy(quoy, data = ogdata)
+  if (length(tidy_y) == 1 && is.na(tidy_y)) {
+    stop("Argument `y` cannot be NA.",
+         call. = FALSE)
+  } else if (length(tidy_y) == 1 && is.null(tidy_y)) {
+    stop("Argument `y` cannot be NULL.",
+         call. = FALSE)
+  }
+
+  tidy_color <- eval_tidy(quocolor, data = ogdata)
+  if (is.null(tidy_color)) {
+    colorvarnumeric <- NULL
+  } else {
+    colorvarnumeric <- if (is.numeric(tidy_color)) TRUE else FALSE
+  }
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
@@ -95,7 +117,7 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}),
+      geom_point(aes(x = !!quox, y = !!quoy),
                  shape = 21,
                  stroke = 0.05,
                  fill = colorpalette,
@@ -117,7 +139,7 @@ driveplot_companion <- function(shareddata,
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}),
+      geom_point(aes(x = !!quox, y = !!quoy),
                  shape = 21,
                  stroke = 0.05,
                  fill = viridis(n = 1, option = colorpalette),
@@ -129,7 +151,7 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} is a numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
+      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
                  shape = 21,
                  stroke = 0.05,
                  color = "dimgray",
@@ -141,7 +163,7 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} is a non-numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = {{ x }}, y = {{ y }}, fill = {{ colorvar }}),
+      geom_point(aes(x = !!quox , y = !!quoy, fill = !!quocolor),
                  shape = 21,
                  stroke = 0.05,
                  color = "dimgray",

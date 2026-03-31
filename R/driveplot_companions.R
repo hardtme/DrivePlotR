@@ -57,37 +57,27 @@ driveplot_companions <- function(shareddata,
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
-  ysquo <- enquo(ys)
+  quoys <- enquo(ys)
   # Allow different syntax for a single y variable
   # E.g., ys = c(speed_mph) and ys = speed_mph both work
-  if (quo_is_call(ysquo)) {
-    yslist <- call_args(ysquo)
+  if (quo_is_call(quoys)) {
+    yslist <- call_args(quoys)
   } else {
-    yslist <- as.list(quo_get_expr(ysquo))
+    yslist <- as.list(quo_get_expr(quoys))
   }
 
   # Get original data from shareddata so we can check column existence and type
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  columns <- colnames(ogdata)
-  xname <- as_label(enquo(x))
   ylength <- length(yslist)
   ynames <- yslist |>
     vapply(FUN = function(y) as_label(y),
            FUN.VALUE = character(1))
+  quocolor <- enquo(colorvar)
 
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
             call. = FALSE)
-  }
-
-  if (!(xname %in% columns)) {
-    stop(paste0("Can't find `", xname, "` in `shareddata`."),
-         call. = FALSE)
-  } else if (length(setdiff(ynames, columns)) > 0) {
-    missing_ys <- paste0("`", setdiff(ynames, columns), "`", collapse = ", ")
-    stop(paste0("Can't find ", missing_ys, " in `shareddata`."),
-         call. = FALSE)
   }
 
   if (any(is.na(ylabels))) {
@@ -104,21 +94,18 @@ driveplot_companions <- function(shareddata,
     ylabels <- vector(mode = "list", length = ylength)
   }
 
-  colorvarnumeric <- tryCatch(
-    ogdata |>
-      pull({{ colorvar }}) |>
-      is.numeric(),
-    error = function(e) { },
-    finally = NULL
-  )
+  tidy_color <- eval_tidy(quocolor, data = ogdata)
+  if (is.null(tidy_color)) {
+    colorvarnumeric <- NULL
+  } else {
+    colorvarnumeric <- if (is.numeric(tidy_color)) TRUE else FALSE
+  }
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
   if (isFALSE(colorvarnumeric)) {
-    ncolors <- ogdata |>
-      pull({{ colorvar }}) |>
-      unique() |>
-      length()
+    ncolors <- tidy_color |>
+      n_distinct(na.rm = TRUE)
   }
 
   companion_graphs <- mapply(
