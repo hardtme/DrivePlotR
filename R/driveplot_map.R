@@ -92,36 +92,50 @@ driveplot_map <- function(shareddata,
   }
 
   # Create color palettes
-  if (is.null(colorvarnumeric) &&
-        colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+  if (is.null(colorvarnumeric)) {
     quocolor <- 0
-    # We need to make sure the same color is used on the map and the plots
-    colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
-                            domain = NULL,
-                            na.color = "dimgray")
+    colorpal <- driveplot_map_color(colorvarnumeric = colorvarnumeric,
+                                    colorpalette = colorpalette,
+                                    quocolor = {{ quocolor }},
+                                    ogdata = ogdata)
+  } else {
+    colorpal <- driveplot_map_color(colorvarnumeric = colorvarnumeric,
+                                    colorpalette = colorpalette,
+                                    quocolor = {{ quocolor }},
+                                    ogdata = ogdata)
   }
-  if (is.null(colorvarnumeric) &&
-        !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
-    quocolor <- 0
-    colorpal <- colorFactor(palette = colorpalette,
-                            domain = NULL,
-                            na.color = "dimgray")
-  }
+  # if (is.null(colorvarnumeric) &&
+  #       colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+  #   quocolor <- 0
+  #   # We need to make sure the same color is used on the map and the plots
+  #   colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
+  #                           domain = NULL,
+  #                           na.color = "dimgray")
+  # }
+  # if (is.null(colorvarnumeric) &&
+  #       !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
+  #   quocolor <- 0
+  #   colorpal <- colorFactor(palette = colorpalette,
+  #                           domain = NULL,
+  #                           na.color = "dimgray")
+  # }
+  #
+  # if (isTRUE(colorvarnumeric)) {
+  #   colorpal <- colorNumeric(palette = colorpalette,
+  #                            domain = eval_tidy(quocolor, data = ogdata),
+  #                            na.color = "dimgray")
+  #
+  # }
+  # if (isFALSE(colorvarnumeric)) {
+  #   ncolors <- eval_tidy(quocolor, data = ogdata) |>
+  #     n_distinct(na.rm = TRUE)
+  #   colorpal <- colorFactor(palette = viridis(n = ncolors,
+  #                                             option = colorpalette),
+  #                           domain = eval_tidy(quocolor, data = ogdata),
+  #                           na.color = "dimgray")
+  # }
 
-  if (isTRUE(colorvarnumeric)) {
-    colorpal <- colorNumeric(palette = colorpalette,
-                             domain = eval_tidy(quocolor, data = ogdata),
-                             na.color = "dimgray")
-
-  }
-  if (isFALSE(colorvarnumeric)) {
-    ncolors <- eval_tidy(quocolor, data = ogdata) |>
-      n_distinct(na.rm = TRUE)
-    colorpal <- colorFactor(palette = viridis(n = ncolors,
-                                              option = colorpalette),
-                            domain = eval_tidy(quocolor, data = ogdata),
-                            na.color = "dimgray")
-  }
+  # Check latitude and longitude
   if (isFALSE(lngcheck) && isFALSE(latcheck)) {
     sfgeomcheck <- attr(ogdata, "sf_column")
     if (is.null(sfgeomcheck)) {
@@ -148,7 +162,7 @@ driveplot_map <- function(shareddata,
                          fillOpacity = fillopacity)
     })))
     plot_map
-  }else {
+  } else {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
