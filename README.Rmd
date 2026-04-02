@@ -92,3 +92,26 @@ driveplot(
   plottitle = "A Drive in Omaha, NE"
 )
 ```
+
+<!-- Delete?-->
+
+DrivePlotR provides users with a straightforward way to transform data columns right when they are specified. In the example below, speed in miles per hour (MPH) is converted to kilometers per hour (KPH), while gyro heading numbers are translated into general directions (N, S, E, W). 
+
+```{r transformation, eval = FALSE}
+driveplot(
+  shareddata = shared_drive, 
+  x = time_cst, 
+  ys = c(speed_mph * 1.60934, 
+         c("N", "E", "S", "W")[findInterval((gyro_heading + 45) %% 360, 
+                                            c(90, 180, 270)) + 1], 
+         gps_pdop),
+  colorvar = gps_minute, 
+  maplabel = time_cst, 
+  colorpalette = "viridis", 
+  xlabel = "Time", 
+  ylabels = c("Speed (KPH)", "General Gyro Heading", "GPS PDOP"),
+  showlegend = TRUE, 
+  legendtitle = "Minute", 
+  plottitle = "A Drive in Omaha, NE"
+)
+```
