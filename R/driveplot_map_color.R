@@ -1,5 +1,6 @@
 #' Create the color palette to be used in `driveplot_map()`.
 #'
+#' Helper function for internal use only
 #' @param colorvarnumeric An indication of whether the color variable is
 #'   numeric (TRUE), not numeric (FALSE), or not provided (NULL)
 #' @param colorpalette The color palette to use; either a single color

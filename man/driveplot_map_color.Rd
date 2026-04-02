@@ -21,5 +21,5 @@ numeric (TRUE), not numeric (FALSE), or not provided (NULL)}
 The leaflet color palette to be used in \code{driveplot_map()}.
 }
 \description{
-Create the color palette to be used in \code{driveplot_map()}.
+Helper function for internal use only
 }
