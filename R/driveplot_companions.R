@@ -10,8 +10,9 @@
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
 #'   of the companion graphs. If provided, it should be the same length as ys.
-#' @param colorpalette The color palette for the plot map; either a single
-#'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param colorpalette The color palette for the companion graphs; either a
+#'   single color (e.g., "red") or one of the viridis color palettes compatible
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param spacing A value between 0 and 1 for the space between the

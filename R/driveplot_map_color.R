@@ -17,12 +17,12 @@ driveplot_map_color <- function(colorvarnumeric,
                                 quocolor,
                                 ogdata) {
   if (is.null(colorvarnumeric) &&
-      colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+      colorpalette %in% leaflet_color_palettes()) {
     colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
                             domain = NULL,
                             na.color = "dimgray")
   } else if (is.null(colorvarnumeric) &&
-             !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
+             !(colorpalette %in% leaflet_color_palettes())) {
     colorpal <- colorFactor(palette = colorpalette,
                             domain = NULL,
                             na.color = "dimgray")

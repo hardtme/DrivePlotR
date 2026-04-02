@@ -8,7 +8,8 @@
 #' @param colorvar The bare (unquoted) column in shareddata to which
 #'   color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
-#'   color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#'   color (e.g., "red") or one of the viridis color palettes compatible
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabel The label for the variable on the vertical axis.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
@@ -112,8 +113,7 @@ driveplot_companion <- function(shareddata,
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
   if (is.null(colorvarnumeric)  &&
-        !(colorpalette %in% c("viridis", "magma",
-                              "inferno", "plasma"))) {
+        !(colorpalette %in% leaflet_color_palettes())) {
     # {{ colorvar }} isn't a column in ogdata and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
@@ -125,16 +125,19 @@ driveplot_companion <- function(shareddata,
                  show.legend = showlegend) +
       theme_bw()
   }else if (!is.null(colorvarnumeric) &&
-              !(colorpalette %in% c("viridis", "magma",
-                                    "inferno", "plasma"))) {
+              !(colorpalette %in% leaflet_color_palettes())) {
     # {{ colorvar }} is a column in ogdata and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
-    stop('When specifying colorvar, please use
-         colorpalette = "viridis", "magma", "inferno", or "plasma".',
+    palettes <- leaflet_color_palettes()
+    error_msg <- paste(paste(shQuote(palettes[-length(palettes)]),
+                                    collapse = ", "), "or",
+                              shQuote(palettes[length(palettes)]))
+    stop(paste0("When specifying colorvar, please use
+         colorpalette = ", error_msg),
          call. = FALSE)
   }else if (is.null(colorvarnumeric) &&
-              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is not a column in ogdata and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
@@ -147,7 +150,7 @@ driveplot_companion <- function(shareddata,
                  show.legend = showlegend) +
       theme_bw()
   }else if (isTRUE(colorvarnumeric) &&
-              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is a numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
@@ -159,7 +162,7 @@ driveplot_companion <- function(shareddata,
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
   }else if (isFALSE(colorvarnumeric) &&
-              colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
+              colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is a non-numeric column in ogdata and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +

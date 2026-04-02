@@ -67,14 +67,21 @@ test_that("throw error when x or y is quoted", {
 
 test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
+  # Construct comparison error message
+  palettes <- leaflet_color_palettes()
+  error_msg <- paste(paste(shQuote(palettes[-length(palettes)]),
+                           collapse = ", "), "or",
+                     shQuote(palettes[length(palettes)]))
+  compare_msg <- paste0("When specifying colorvar, please use
+         colorpalette = ", error_msg)
+
   # Specify colorvar, but not colorpalette
   expect_error(
     driveplot_companion(shareddata = shared_drive,
                         x = time_cst,
                         y = speed_mph,
                         colorvar = gps_pdop),
-    'When specifying colorvar, please use
-         colorpalette = "viridis", "magma", "inferno", or "plasma".'
+    compare_msg
   )
   # Specify a single color for colorpalette
   expect_error(
@@ -83,8 +90,7 @@ test_that("throw error when colorvar is specified, but wrong colorpalette", {
                         y = speed_mph,
                         colorvar = gps_pdop,
                         colorpalette = "black"),
-    'When specifying colorvar, please use
-         colorpalette = "viridis", "magma", "inferno", or "plasma".'
+    compare_msg
   )
   # Specify a different color palette, such as a ColorBrewer palette
   expect_error(
@@ -93,8 +99,7 @@ test_that("throw error when colorvar is specified, but wrong colorpalette", {
                         y = speed_mph,
                         colorvar = gps_pdop,
                         colorpalette = "Blues"),
-    'When specifying colorvar, please use
-         colorpalette = "viridis", "magma", "inferno", or "plasma".'
+    compare_msg
   )
   # Misspell a viridis color palette
   expect_error(
@@ -103,8 +108,7 @@ test_that("throw error when colorvar is specified, but wrong colorpalette", {
                         y = speed_mph,
                         colorvar = gps_pdop,
                         colorpalette = "mamga"),
-    'When specifying colorvar, please use
-         colorpalette = "viridis", "magma", "inferno", or "plasma".'
+    compare_msg
   )
 })
 

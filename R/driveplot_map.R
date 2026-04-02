@@ -8,8 +8,9 @@
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
 #' @param label An optional label for the map points.
-#' @param colorpalette The color palette for the map; either a single color
-#'   (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".
+#' @param colorpalette The color palette for the map; either a single
+#'   color (e.g., "red") or one of the viridis color palettes compatible
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
 #' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
@@ -104,36 +105,6 @@ driveplot_map <- function(shareddata,
                                     quocolor = {{ quocolor }},
                                     ogdata = ogdata)
   }
-  # if (is.null(colorvarnumeric) &&
-  #       colorpalette %in% c("viridis", "magma", "inferno", "plasma")) {
-  #   quocolor <- 0
-  #   # We need to make sure the same color is used on the map and the plots
-  #   colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
-  #                           domain = NULL,
-  #                           na.color = "dimgray")
-  # }
-  # if (is.null(colorvarnumeric) &&
-  #       !(colorpalette %in% c("viridis", "magma", "inferno", "plasma"))) {
-  #   quocolor <- 0
-  #   colorpal <- colorFactor(palette = colorpalette,
-  #                           domain = NULL,
-  #                           na.color = "dimgray")
-  # }
-  #
-  # if (isTRUE(colorvarnumeric)) {
-  #   colorpal <- colorNumeric(palette = colorpalette,
-  #                            domain = eval_tidy(quocolor, data = ogdata),
-  #                            na.color = "dimgray")
-  #
-  # }
-  # if (isFALSE(colorvarnumeric)) {
-  #   ncolors <- eval_tidy(quocolor, data = ogdata) |>
-  #     n_distinct(na.rm = TRUE)
-  #   colorpal <- colorFactor(palette = viridis(n = ncolors,
-  #                                             option = colorpalette),
-  #                           domain = eval_tidy(quocolor, data = ogdata),
-  #                           na.color = "dimgray")
-  # }
 
   # Check latitude and longitude
   if (isFALSE(lngcheck) && isFALSE(latcheck)) {

@@ -43,7 +43,8 @@ should be mapped.}
 \item{maplabel}{An optional label for the map points.}
 
 \item{colorpalette}{The color palette for the plot map; either a single
-color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
+color (e.g., "red") or one of the viridis color palettes compatible
+with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
 
 \item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 

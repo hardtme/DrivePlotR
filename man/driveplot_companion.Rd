@@ -29,7 +29,8 @@ on the vertical axis.}
 color should be mapped.}
 
 \item{colorpalette}{The color palette for the plot; either a single
-color (e.g., "red") or one of "viridis", "inferno", "magma", or "plasma".}
+color (e.g., "red") or one of the viridis color palettes compatible
+with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
