@@ -42,9 +42,9 @@ data("drive7")
 ```
 
 2.  Establish the geographic variables and projection. Setting the
-    geographic projection to WGS84 ensures that points in the data are
-    compatible with maps in Leaflet. This is already done for the
-    example dataset `drive7` included with the package.
+    geographic projection to WGS84 ensures that data points are
+    compatible with Leaflet maps. This is already done for the example
+    dataset `drive7` included with the package.
 
 3.  Convert the drive data into a shared data frame.
 
@@ -54,9 +54,9 @@ shared_drive <- crosstalk::SharedData$new(drive7)
 
 4.  Create visualizations.
 
-Although the main purpose of DrivePlotR is for users to create linked
+Although the main purpose of DrivePlotR is to create linked
 visualizations with a map and one to four companion graphs, users can
-also separately create maps or companion graphs.
+also create maps or companion graphs separately.
 
 You can create a basic standalone map with the following code:
 
@@ -81,9 +81,9 @@ driveplot_companion(
 DrivePlotR offers many options for customization. For example, the
 following code creates a more complex linked plot map. The companion
 graphs include speed, gyroscopic heading (the direction the vehicle is
-going), and GPS position dilution of precision (PDOP, which is a measure
-of the quality of the GPS location data). The points on both the map and
-the companion graphs are colored by the minute of the drive during which
+moving), and GPS position dilution of precision (PDOP,a measure of the
+quality of the GPS location data). The points on both the map and the
+companion graphs are colored by the minute of the drive during which
 they occurred.
 
 ``` r
