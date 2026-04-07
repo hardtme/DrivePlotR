@@ -1,7 +1,7 @@
-test_that("dataframe throws error", {
-  expect_error(
+test_that("dataframe causes warning", {
+  expect_warning(
     driveplot_companion(shareddata = drive7, x = time_cst, y = speed_mph),
-    "`shareddata` must be a SharedData object."
+    "Converted `shareddata` to a SharedData object."
   )
 })
 
