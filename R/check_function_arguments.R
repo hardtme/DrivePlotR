@@ -9,13 +9,20 @@
 #' @param argname The name (x or y) of the argument to be checked.
 #' @returns The result of the argument tidily evaluated in the environment
 #'   of the original data from `shareddata`.
-#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy
+#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy quo_is_null
 #' @keywords internal
 check_xy <- function(shareddata, arg, argname) {
   ogdata <- shareddata$origData()
 
   quoarg <- enquo(arg)
   quoarg <- quo_set_env(quoarg, global_env())
+
+  if (quo_is_null(quoarg)) {
+    stop(
+      sprintf("Argument `%s` cannot be NULL.", argname),
+      call. = FALSE
+    )
+  }
 
   if (is.character(get_expr(quoarg))) {
     stop(
@@ -30,12 +37,7 @@ check_xy <- function(shareddata, arg, argname) {
       sprintf("Argument `%s` cannot be NA.", argname),
       call. = FALSE
     )
-  } else if (is.null(tidy_arg)) {
-      stop(
-        sprintf("Argument `%s` cannot be NULL.", argname),
-        call. = FALSE
-      )
-  }
+   }
   tidy_arg
 }
 
@@ -54,6 +56,7 @@ check_colorvar <- function(shareddata, colorvar) {
   ogdata <- shareddata$origData()
 
   quocolor <- enquo(colorvar)
+  quocolor <- quo_set_env(quocolor, global_env())
 
   if (is.character(get_expr(quocolor))) {
     stop(
@@ -83,7 +86,7 @@ check_colorvar <- function(shareddata, colorvar) {
 #' @returns If `lng` and `lat` are correctly provided, return NULL. If an sf
 #'  geometry column is provided, return a dataframe of the points derived from
 #'  the geometry column.
-#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy
+#' @importFrom rlang enquo as_label quo_is_null
 #' @importFrom leaflet derivePoints
 #' @keywords internal
 check_lnglat <- function(shareddata, lng, lat) {
@@ -95,13 +98,12 @@ check_lnglat <- function(shareddata, lng, lat) {
   latname <- as_label(quolat)
   columns <- colnames(ogdata)
 
-  lng_provided <- lngname != "NULL"
-  lat_provided <- latname != "NULL"
+  lng_provided <- !quo_is_null(quolng)
+  lat_provided <- !quo_is_null(quolat)
 
   if (xor(lng_provided, lat_provided)) {
     stop("If providing `lng` and `lat`, must provide both.", call. = FALSE)
   }
-
 
   if (lng_provided && !(lngname %in% columns)) {
     stop(

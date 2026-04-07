@@ -76,6 +76,28 @@ test_that("throw error when x or y is quoted", {
   )
 })
 
+test_that("throw error when x or y is NULL", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # x is NULL
+  expect_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = NULL,
+      y = speed_mph
+    ),
+    "Argument `x` cannot be NULL."
+  )
+  # y is NULL
+  expect_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = NULL
+    ),
+    "Argument `y` cannot be NULL."
+  )
+})
+
 test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   # Construct comparison error message
