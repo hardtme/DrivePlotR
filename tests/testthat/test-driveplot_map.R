@@ -11,16 +11,20 @@ test_that("if providing lng/lat, must provide both", {
   drive1shared <- crosstalk::SharedData$new(drive1)
   # lng is provided, but not lat
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = gps_long,
-                  lat = NULL),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = gps_long,
+      lat = NULL
+    ),
     "If providing `lng` and `lat`, must provide both."
   )
   # lat is provided, but not lng
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = NULL,
-                  lat = gps_lat),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = NULL,
+      lat = gps_lat
+    ),
     "If providing `lng` and `lat`, must provide both."
   )
 })
@@ -31,16 +35,20 @@ test_that("check spelling of lng/lat", {
   drive1shared <- crosstalk::SharedData$new(drive1)
   # Misspelled lng
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = gps_lng,
-                  lat = gps_lat),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = gps_lng,
+      lat = gps_lat
+    ),
     "Can't find `gps_lng` in `shareddata`."
   )
   # Misspelled lat
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = gps_long,
-                  lat = gps_lt),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = gps_long,
+      lat = gps_lt
+    ),
     "Can't find `gps_lt` in `shareddata`."
   )
 })
@@ -48,8 +56,10 @@ test_that("check spelling of lng/lat", {
 test_that("throw error when colorvar is misspecified", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
-    driveplot_map(shareddata = shared_drive,
-                  colorvar = "red"),
+    driveplot_map(
+      shareddata = shared_drive,
+      colorvar = "red"
+    ),
     "Do not put argument `colorvar` in quotes.
     Did you mean to use `colorpalette` instead?"
   )
@@ -81,17 +91,21 @@ test_that("mapheight is in CSS units", {
     dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = gps_long,
-                  lat = gps_lat,
-                  mapheight = "100"),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = gps_long,
+      lat = gps_lat,
+      mapheight = "100"
+    ),
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )
   expect_error(
-    driveplot_map(shareddata = drive1shared,
-                  lng = gps_long,
-                  lat = gps_lat,
-                  mapheight = 100),
+    driveplot_map(
+      shareddata = drive1shared,
+      lng = gps_long,
+      lat = gps_lat,
+      mapheight = 100
+    ),
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )
 })
