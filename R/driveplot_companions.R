@@ -66,8 +66,6 @@ driveplot_companions <- function(shareddata,
     yslist <- as.list(quo_get_expr(quoys))
   }
 
-  # Get original data from shareddata so we can check column existence and type
-  # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   ylength <- length(yslist)
   quocolor <- enquo(colorvar)
@@ -80,9 +78,7 @@ driveplot_companions <- function(shareddata,
   } else {
     colorvarnumeric <- if (is.numeric(tidy_color)) TRUE else FALSE
   }
-  # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
-  # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
-  # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
+
   if (isFALSE(colorvarnumeric)) {
     ncolors <- tidy_color |>
       n_distinct(na.rm = TRUE)

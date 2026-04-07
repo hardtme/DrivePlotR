@@ -74,10 +74,6 @@ driveplot_companion <- function(shareddata,
 
   colorvarnumeric <- check_colorvar(shareddata = shareddata,
                                     colorvar = {{ quocolor }})
-  # colovarnumeric = NULL if {{ colorvar }} isn't a column in the data
-  # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in the data
-  # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column
-  # in the data
 
   if (is.null(colorvarnumeric) &&
     !(colorpalette %in% leaflet_color_palettes())) {
