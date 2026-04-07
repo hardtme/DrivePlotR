@@ -11,5 +11,7 @@ Vector of viridis color palettes supported by Leaflet.
 }
 \description{
 Helper function
+}
+\details{
 The map uses the same color palette as the companion graphs.
 }

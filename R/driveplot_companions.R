@@ -21,7 +21,6 @@
 #'   e.g, "98vh"
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom dplyr pull
 #' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr
 #' @importFrom plotly layout subplot style
 #' @export

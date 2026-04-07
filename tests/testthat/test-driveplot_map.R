@@ -82,11 +82,15 @@ test_that("mapheight is in CSS units", {
   drive1shared <- crosstalk::SharedData$new(drive1)
   expect_error(
     driveplot_map(shareddata = drive1shared,
+                  lng = gps_long,
+                  lat = gps_lat,
                   mapheight = "100"),
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )
   expect_error(
     driveplot_map(shareddata = drive1shared,
+                  lng = gps_long,
+                  lat = gps_lat,
                   mapheight = 100),
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )

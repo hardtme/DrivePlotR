@@ -73,6 +73,7 @@ driveplot <- function(shareddata,
     # Leave more space for the title
     height <- "85vh"
   }
+
   plot_map <- driveplot_map(shareddata = shareddata,
                             lng = {{ lng }},
                             lat = {{ lat }},

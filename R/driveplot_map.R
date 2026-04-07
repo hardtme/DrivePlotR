@@ -15,11 +15,8 @@
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom dplyr pull filter n_distinct
-#' @importFrom rlang enquo get_expr eval_tidy quo_squash quo
-#' @importFrom leaflet colorFactor derivePoints colorNumeric leaflet
-#'    addTiles addCircleMarkers
-#' @importFrom viridisLite viridis
+#' @importFrom rlang enquo eval_tidy quo_squash quo
+#' @importFrom leaflet leaflet addTiles addCircleMarkers
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -50,46 +47,21 @@ driveplot_map <- function(shareddata,
   # and set color palette domains
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
-  columns <- colnames(ogdata)
   quolng <- enquo(lng)
   quolat <- enquo(lat)
   quocolor <- enquo(colorvar)
-  if (is.character(get_expr(quocolor))) {
-    stop("Do not put argument `colorvar` in quotes.
-    Did you mean to use `colorpalette` instead?",
-         call. = FALSE)
-  }
   quolabel <- enquo(label)
-  lngname <- as_label(quolng)
-  latname <- as_label(quolat)
 
-  lngcheck <- if (lngname == "NULL") FALSE else TRUE
-  latcheck <- if (latname == "NULL") FALSE else TRUE
-  if ((isFALSE(lngcheck) && isTRUE(latcheck)) ||
-        (isTRUE(lngcheck) && isFALSE(latcheck))) {
-    stop("If providing `lng` and `lat`, must provide both.",
-         call. = FALSE)
-  }
+  checks <- check_function_arguments(shareddata = shareddata,
+                                     checks = c("colorvar", "lng", "lat"),
+                                     colorvar = {{ quocolor }},
+                                     lng = {{ quolng }},
+                                     lat = {{ quolat }})
 
-  if (isTRUE(lngcheck) && !(lngname) %in% columns) {
-    stop(paste0("Can't find `", lngname, "` in `shareddata`."),
-         call. = FALSE)
-  }
-
-  if (isTRUE(latcheck) && !(latname) %in% columns) {
-    stop(paste0("Can't find `", latname, "` in `shareddata`."),
-         call. = FALSE)
-  }
+  colorvarnumeric <- checks$colorvarnumeric
 
   if (isFALSE(grepl("vh", mapheight))) {
     stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
-  }
-
-  tidy_color <- eval_tidy(quocolor, data = ogdata)
-  if (is.null(tidy_color)) {
-    colorvarnumeric <- NULL
-  } else {
-    colorvarnumeric <- if (isTRUE(is.numeric(tidy_color))) TRUE else FALSE
   }
 
   # Create color palettes
@@ -107,22 +79,10 @@ driveplot_map <- function(shareddata,
   }
 
   # Check latitude and longitude
-  if (isFALSE(lngcheck) && isFALSE(latcheck)) {
-    sfgeomcheck <- attr(ogdata, "sf_column")
-    if (is.null(sfgeomcheck)) {
-      stop("Can't find a geometry column and `lng` and `lat` not provided.",
-           call. = FALSE)
-    }
-
-    lnglat <- tryCatch(
-      derivePoints(shareddata),
-      error = function(e) {
-        stop("Geometry column must have type POINT.",
-             call. = FALSE)
-      }
-    )
-    lng <- lnglat$lng
-    lat <- lnglat$lat
+  #if (isFALSE(lngcheck) && isFALSE(latcheck)) {
+  if (!is.null(checks$lnglat)) {
+    lng <- checks$lnglat$lng
+    lat <- checks$lnglat$lat
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>

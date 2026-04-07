@@ -59,7 +59,7 @@ test_that("quoted y", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_error(
     driveplot_companions(shareddata = shared_drive,
-                         x = time_est,
+                         x = time_cst,
                          ys = "speed_mph"),
     "Do not put argument `y` in quotes."
   )

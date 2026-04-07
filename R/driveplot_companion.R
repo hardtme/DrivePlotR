@@ -16,8 +16,7 @@
 #' @param legendtitle The title for the plot legend.
 #' @returns A plotly scatterplot.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom dplyr pull
-#' @importFrom rlang enquo quo_set_env global_env get_expr as_label
+#' @importFrom rlang enquo quo_set_env global_env as_label
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #'   scale_fill_viridis_d ylab xlab labs aes
@@ -63,49 +62,19 @@ driveplot_companion <- function(shareddata,
   ogdata <- shareddata$origData()
   quox <- enquo(x)
   quox <- quo_set_env(quox, global_env())
-  if (is.character(get_expr(quox))) {
-    stop("Do not put argument `x` in quotes.",
-         call. = FALSE)
-  }
   quoy <- enquo(y)
   quoy <- quo_set_env(quoy, global_env())
-  if (is.character(get_expr(quoy))) {
-    stop("Do not put argument `y` in quotes.",
-         call. = FALSE)
-  }
-  yname <- as_label(quoy)
   quocolor <- enquo(colorvar)
-  if (is.character(get_expr(quocolor))) {
-    stop("Do not put argument `colorvar` in quotes.
-    Did you mean to use `colorpalette` instead?",
-         call. = FALSE)
-  }
+
+  checks <- check_function_arguments(shareddata = shareddata,
+                                     checks = c("x", "y", "colorvar"),
+                                     x = {{ quox }},
+                                     y = {{ quoy }},
+                                     colorvar = {{ quocolor }})
+
+  yname <- as_label(quoy)
   colorvarname <- as_label(quocolor)
-
-  tidy_x <- eval_tidy(quox, data = ogdata)
-  if (length(tidy_x) == 1 && is.na(tidy_x)) {
-    stop("Argument `x` cannot be NA.",
-         call. = FALSE)
-  } else if (length(tidy_x) == 1 && is.null(tidy_x)) {
-    stop("Argument `x` cannot be NULL.",
-         call. = FALSE)
-  }
-
-  tidy_y <- eval_tidy(quoy, data = ogdata)
-  if (length(tidy_y) == 1 && is.na(tidy_y)) {
-    stop("Argument `y` cannot be NA.",
-         call. = FALSE)
-  } else if (length(tidy_y) == 1 && is.null(tidy_y)) {
-    stop("Argument `y` cannot be NULL.",
-         call. = FALSE)
-  }
-
-  tidy_color <- eval_tidy(quocolor, data = ogdata)
-  if (is.null(tidy_color)) {
-    colorvarnumeric <- NULL
-  } else {
-    colorvarnumeric <- if (is.numeric(tidy_color)) TRUE else FALSE
-  }
+  colorvarnumeric <- checks$colorvarnumeric
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
