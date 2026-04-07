@@ -39,8 +39,7 @@ test_that("colorvar is not in shareddata", {
       y = speed_mph,
       colorvar = "red"
     ),
-    "Do not put argument `colorvar` in quotes.
-    Did you mean to use `colorpalette` instead?"
+    "Do not put argument `colorvar` in quotes.\nDid you mean `colorpalette`?"
   )
   # Misspelled colorvar
   expect_error(

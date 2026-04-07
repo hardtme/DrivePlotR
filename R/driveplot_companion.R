@@ -55,7 +55,6 @@ driveplot_companion <- function(shareddata,
                                 ylabel = NULL,
                                 showlegend = TRUE,
                                 legendtitle = NULL) {
-
   shareddata <- convert_to_SharedData(shareddata)
 
   quox <- enquo(x)
@@ -64,23 +63,22 @@ driveplot_companion <- function(shareddata,
   quoy <- quo_set_env(quoy, global_env())
   quocolor <- enquo(colorvar)
 
-  checks <- check_function_arguments(
-    shareddata = shareddata,
-    checks = c("x", "y", "colorvar"),
-    x = {{ quox }},
-    y = {{ quoy }},
-    colorvar = {{ quocolor }}
-  )
+  check_x <- check_xy(shareddata = shareddata,
+                      arg = {{ quox }},
+                      argname = "x")
 
+  check_y <- check_xy(shareddata = shareddata,
+                      arg = {{ quoy }},
+                      argname = "y")
   yname <- as_label(quoy)
-  colorvarnumeric <- checks$colorvarnumeric
+
+  colorvarnumeric <- check_colorvar(shareddata = shareddata,
+                                    colorvar = {{ quocolor }})
   # colovarnumeric = NULL if {{ colorvar }} isn't a column in the data
   # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in the data
   # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column
   # in the data
 
-  # Use viridis color palettes allowed by leaflet:
-  # "viridis", "magma", "inferno", or "plasma"
   if (is.null(colorvarnumeric) &&
     !(colorpalette %in% leaflet_color_palettes())) {
     # {{ colorvar }} isn't a column in the data and

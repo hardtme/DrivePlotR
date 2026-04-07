@@ -72,27 +72,7 @@ driveplot_companions <- function(shareddata,
   ylength <- length(yslist)
   quocolor <- enquo(colorvar)
 
-  if (ylength > 4) {
-    warning("4+ columns were passed in `ys`, so graphs may be compressed.",
-      call. = FALSE
-    )
-  }
-
-  if (any(is.na(ylabels))) {
-    stop("`ylabels` cannot be NA.",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(ylabels) && length(ylabels) != ylength) {
-    stop("If providing `ylabels`, `ys` and `ylabels` must be the same length.",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(ylabels)) {
-    ylabels <- vector(mode = "list", length = ylength)
-  }
+  ylabels <- check_ylabels(ylabels = ylabels, ylength = ylength)
 
   tidy_color <- eval_tidy(quocolor, data = ogdata)
   if (is.null(tidy_color)) {

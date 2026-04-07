@@ -1,132 +1,172 @@
-#' Check the arguments provided to a function and throw an error if there is
-#'  a problem.
+#' Check the arguments provided to `driveplot_companion()`, `driveplot_map()`,
+#'   and `driveplot_map()`.
+
+#' Function to check the x and y arguments for `driveplot_companion()`.
 #'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
-#' @param checks A vector of the checks to be performed; defaults to
-#'  `c("x", "y", "colorvar", "lat", "lng")`
-#' @param x The `x` argument provided to the calling function.
-#' @param y The `y` argument provided to the calling function.
-#' @param colorvar The `colorvar` argument provided to the calling function.
-#' @param lng The `lng` argument provided to the calling function.
-#' @param lat The `lat` argument provided to the calling function.
-#' @returns TRUE if all function arguments pass the checks.
-#' @importFrom crosstalk SharedData
-#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy as_label
-#' @importFrom leaflet derivePoints
-#'
-check_function_arguments <- function(shareddata,
-                                     checks = c("x", "y", "colorvar",
-                                                "lat", "lng"),
-                                     x = NULL,
-                                     y = NULL,
-                                     colorvar = NULL,
-                                     lng = NULL,
-                                     lat = NULL) {
-
-  results_of_checks <- list(colorvarnumeric = NULL,
-                            lnglat = NULL)
-
+#' @param arg The `x` or `y` argument provided to the calling function.
+#' @param argname The name (x or y) of the argument to be checked.
+#' @returns The result of the argument tidily evaluated in the environment
+#'   of the original data from `shareddata`.
+#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy
+#' @keywords internal
+check_xy <- function(shareddata, arg, argname) {
   ogdata <- shareddata$origData()
 
-  # Checks associated with `driveplot_companion()`
-  if ("x" %in% checks) {
-    quox <- enquo(x)
-    quox <- quo_set_env(quox, global_env())
-    if (is.character(get_expr(quox))) {
-      stop("Do not put argument `x` in quotes.",
-           call. = FALSE)
-    }
+  quoarg <- enquo(arg)
+  quoarg <- quo_set_env(quoarg, global_env())
 
-    tidy_x <- eval_tidy(quox, data = ogdata)
-    if (length(tidy_x) == 1 && is.na(tidy_x)) {
-      stop("Argument `x` cannot be NA.",
-           call. = FALSE)
-    } else if (is.null(tidy_x)) {
-      stop("Argument `x` cannot be NULL.",
-           call. = FALSE)
-    }
+  if (is.character(get_expr(quoarg))) {
+    stop(
+      sprintf("Do not put argument `%s` in quotes.", argname),
+      call. = FALSE
+    )
   }
 
-  if ("y" %in% checks) {
-    quoy <- enquo(y)
-    quoy <- quo_set_env(quoy, global_env())
-    if (is.character(get_expr(quoy))) {
-      stop("Do not put argument `y` in quotes.",
-           call. = FALSE)
-    }
-    tidy_y <- eval_tidy(quoy, data = ogdata)
-    if (length(tidy_y) == 1 && is.na(tidy_y)) {
-      stop("Argument `y` cannot be NA.",
-           call. = FALSE)
-    } else if (is.null(tidy_y)) {
-      stop("Argument `y` cannot be NULL.",
-           call. = FALSE)
-    }
+  tidy_arg <- eval_tidy(quoarg, ogdata)
+  if (length(tidy_arg) == 1 && is.na(tidy_arg)) {
+    stop(
+      sprintf("Argument `%s` cannot be NA.", argname),
+      call. = FALSE
+    )
+  } else if (is.null(tidy_arg)) {
+      stop(
+        sprintf("Argument `%s` cannot be NULL.", argname),
+        call. = FALSE
+      )
+  }
+  tidy_arg
+}
+
+#' Function to check the colorvar argument for `driveplot_companion()`
+#'   and `driveplot_map()`.
+#'
+#' Helper function for internal use only.
+#' @param shareddata The SharedData object provided to the calling function.
+#' @param colorvar The `colorvar` argument provided to the calling function.
+#' @returns A value indicating whether colorvar is not a column in the data
+#'   (NULL), colorvar is a numeric column in the data (TRUE), or colorvar is
+#'   not a numeric column in the data (FALSE).
+#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy
+#' @keywords internal
+check_colorvar <- function(shareddata, colorvar) {
+  ogdata <- shareddata$origData()
+
+  quocolor <- enquo(colorvar)
+
+  if (is.character(get_expr(quocolor))) {
+    stop(
+      "Do not put argument `colorvar` in quotes.\nDid you mean `colorpalette`?",
+      call. = FALSE
+    )
   }
 
-  # Checks for the color variable
-  if ("colorvar" %in% checks) {
-    quocolor <- enquo(colorvar)
-    if (is.character(get_expr(quocolor))) {
-      stop("Do not put argument `colorvar` in quotes.
-    Did you mean to use `colorpalette` instead?",
-           call. = FALSE)
-    }
-    tidy_color <- eval_tidy(quocolor, data = ogdata)
-    if (is.null(tidy_color)) {
-      results_of_checks$colorvarnumeric <- NULL
-    } else if (isTRUE(is.numeric(tidy_color))) {
-      results_of_checks$colorvarnumeric <- TRUE
-    } else if (isFALSE(is.numeric(tidy_color))) {
-      results_of_checks$colorvarnumeric <- FALSE
-    }
+  tidy_color <- eval_tidy(quocolor, data = ogdata)
+  if (is.null(tidy_color)) {
+    colorvarnumeric <- NULL
+  } else if (isTRUE(is.numeric(tidy_color))) {
+    colorvarnumeric <- TRUE
+  } else if (isFALSE(is.numeric(tidy_color))) {
+    colorvarnumeric <- FALSE
   }
 
-  # Checks associated with `driveplot_map()`
-  if ("lng" %in% checks && "lat" %in% checks) {
-    quolng <- enquo(lng)
-    quolat <- enquo(lat)
-    lngname <- as_label(quolng)
-    latname <- as_label(quolat)
-    columns <- colnames(ogdata)
+  colorvarnumeric
+}
 
-    lngcheck <- if (lngname == "NULL") FALSE else TRUE
-    latcheck <- if (latname == "NULL") FALSE else TRUE
+#' Function to check the latitude and longitude for `driveplot_map()`.
+#'
+#' Helper function for internal use only.
+#' @param shareddata The SharedData object provided to the calling function.
+#' @param lng The `lng` argument provided to the calling function.
+#' @param lat The `lat` argument provided to the calling function.
+#' @returns If `lng` and `lat` are correctly provided, return NULL. If an sf
+#'  geometry column is provided, return a dataframe of the points derived from
+#'  the geometry column.
+#' @importFrom rlang enquo quo_set_env global_env get_expr eval_tidy
+#' @importFrom leaflet derivePoints
+#' @keywords internal
+check_lnglat <- function(shareddata, lng, lat) {
+  ogdata <- shareddata$origData()
 
-    if ((isFALSE(lngcheck) && isTRUE(latcheck)) ||
-          (isTRUE(lngcheck) && isFALSE(latcheck))) {
-      stop("If providing `lng` and `lat`, must provide both.",
-           call. = FALSE)
+  quolng <- enquo(lng)
+  quolat <- enquo(lat)
+  lngname <- as_label(quolng)
+  latname <- as_label(quolat)
+  columns <- colnames(ogdata)
+
+  lng_provided <- lngname != "NULL"
+  lat_provided <- latname != "NULL"
+
+  if (xor(lng_provided, lat_provided)) {
+    stop("If providing `lng` and `lat`, must provide both.", call. = FALSE)
+  }
+
+
+  if (lng_provided && !(lngname %in% columns)) {
+    stop(
+      sprintf("Can't find `%s` in `shareddata`.", lngname),
+      call. = FALSE
+    )
+  }
+
+  if (lat_provided && !(latname %in% columns)) {
+    stop(
+      sprintf("Can't find `%s` in `shareddata`.", latname),
+      call. = FALSE
+    )
+  }
+
+  if (!lng_provided && !lat_provided) {
+    sfgeom <- attr(ogdata, "sf_column")
+    if (is.null(sfgeom)) {
+      stop(
+        "Can't find a geometry column and `lng` and `lat` not provided.",
+        call. = FALSE
+      )
     }
-
-    if (isTRUE(lngcheck) && !(lngname) %in% columns) {
-      stop(paste0("Can't find `", lngname, "` in `shareddata`."),
-           call. = FALSE)
-    }
-
-    if (isTRUE(latcheck) && !(latname) %in% columns) {
-      stop(paste0("Can't find `", latname, "` in `shareddata`."),
-           call. = FALSE)
-    }
-
-    # Check for sf geometry column
-    if (isFALSE(lngcheck) && isFALSE(latcheck)) {
-      sfgeomcheck <- attr(ogdata, "sf_column")
-      if (is.null(sfgeomcheck)) {
-        stop("Can't find a geometry column and `lng` and `lat` not provided.",
+    lnglat <- tryCatch(
+      derivePoints(shareddata),
+      error = function(e) {
+        stop("Geometry column must have type POINT.",
              call. = FALSE)
       }
-
-      lnglat <- tryCatch(
-        derivePoints(shareddata),
-        error = function(e) {
-          stop("Geometry column must have type POINT.",
-               call. = FALSE)
-        }
-      )
-      results_of_checks$lnglat <- lnglat
-    }
+    )
+  } else{
+    lnglat <- NULL
   }
-  results_of_checks
+
+  lnglat
+}
+
+#' Function to check the `ylabels` argument for `driveplot_companions()`.
+#'
+#' Helper function for internal use only.
+#' @param ylabels A vector or list of labels provided to the calling function.
+#' @param ylength The length of the ys argument from the calling function.
+#' @returns Either `ylabels` or a list of NULL of length `ylength`.
+check_ylabels <- function(ylabels, ylength) {
+  if (ylength > 4) {
+    warning("4+ columns were passed in `ys`, so graphs may be compressed.",
+            call. = FALSE
+    )
+  }
+
+  if (any(is.na(ylabels))) {
+    stop("`ylabels` cannot be NA.",
+         call. = FALSE
+    )
+  }
+
+  if (!is.null(ylabels) && length(ylabels) != ylength) {
+    stop("If providing `ylabels`, `ys` and `ylabels` must be the same length.",
+         call. = FALSE
+    )
+  }
+
+  if (is.null(ylabels)) {
+    ylabels <- vector(mode = "list", length = ylength)
+  }
+
+  ylabels
 }

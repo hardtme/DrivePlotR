@@ -60,8 +60,7 @@ test_that("throw error when colorvar is misspecified", {
       shareddata = shared_drive,
       colorvar = "red"
     ),
-    "Do not put argument `colorvar` in quotes.
-    Did you mean to use `colorpalette` instead?"
+    "Do not put argument `colorvar` in quotes.\nDid you mean `colorpalette`?"
   )
 })
 

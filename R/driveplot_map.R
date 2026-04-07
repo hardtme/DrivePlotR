@@ -53,15 +53,12 @@ driveplot_map <- function(shareddata,
   quocolor <- enquo(colorvar)
   quolabel <- enquo(label)
 
-  checks <- check_function_arguments(
-    shareddata = shareddata,
-    checks = c("colorvar", "lng", "lat"),
-    colorvar = {{ quocolor }},
-    lng = {{ quolng }},
-    lat = {{ quolat }}
-  )
+  colorvarnumeric <- check_colorvar(shareddata = shareddata,
+                                    colorvar = {{ quocolor }})
 
-  colorvarnumeric <- checks$colorvarnumeric
+  lnglat <- check_lnglat(shareddata = shareddata,
+                         lng = {{ quolng }},
+                         lat = {{ quolat }})
 
   if (isFALSE(grepl("vh", mapheight))) {
     stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
@@ -85,9 +82,9 @@ driveplot_map <- function(shareddata,
     )
   }
 
-  if (!is.null(checks$lnglat)) {
-    lng <- checks$lnglat$lng
-    lat <- checks$lnglat$lat
+  if (!is.null(lnglat)) {
+    lng <- lnglat$lng
+    lat <- lnglat$lat
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
