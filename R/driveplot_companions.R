@@ -55,9 +55,7 @@ driveplot_companions <- function(shareddata,
                                  legendtitle = NULL,
                                  spacing = 0.05,
                                  plotheight = "98vh") {
-  if (isFALSE(is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.", call. = FALSE)
-  }
+  shareddata <- convert_to_SharedData(shareddata)
 
   quoys <- enquo(ys)
   # Allow different syntax for a single y variable

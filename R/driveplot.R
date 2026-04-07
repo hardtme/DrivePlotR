@@ -64,9 +64,7 @@ driveplot <- function(shareddata,
                       legendtitle = NULL,
                       plottitle = NULL,
                       spacing = 0.05) {
-  if (isFALSE(is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.", call. = FALSE)
-  }
+  shareddata <- convert_to_SharedData(shareddata)
 
   notitle <- is.null(plottitle)
 
@@ -122,5 +120,6 @@ driveplot <- function(shareddata,
       )
     )
   }
+
   final_viz
 }

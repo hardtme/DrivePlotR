@@ -41,9 +41,9 @@ driveplot_map <- function(shareddata,
                           colorpalette = "#03F",
                           fillopacity = 1,
                           mapheight = "98vh") {
-  if (isFALSE(is.SharedData(shareddata))) {
-    stop("`shareddata` must be a SharedData object.", call. = FALSE)
-  }
+
+  shareddata <- convert_to_SharedData(shareddata)
+
   # Get original data from shareddata so we can check the type of colorvar
   # and set color palette domains
   # We can't directly access columns in a SharedData object
