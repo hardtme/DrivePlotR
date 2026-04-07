@@ -95,4 +95,3 @@ test_that("mapheight is in CSS units", {
     "Must specify `mapheight` in CSS units, e.g., '98vh'"
   )
 })
-

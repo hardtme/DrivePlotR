@@ -70,9 +70,6 @@ driveplot_companions <- function(shareddata,
   # We can't directly access columns in a SharedData object
   ogdata <- shareddata$origData()
   ylength <- length(yslist)
-  ynames <- yslist |>
-    vapply(FUN = function(y) as_label(y),
-           FUN.VALUE = character(1))
   quocolor <- enquo(colorvar)
 
   if (ylength > 4) {

@@ -56,10 +56,6 @@ driveplot_companion <- function(shareddata,
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
 
-  # Get original data from shareddata so we can check the existence of
-  # x, y, and colorvar along with the type of colorvar
-  # We can't directly access columns in a SharedData object
-  ogdata <- shareddata$origData()
   quox <- enquo(x)
   quox <- quo_set_env(quox, global_env())
   quoy <- enquo(y)
@@ -73,17 +69,17 @@ driveplot_companion <- function(shareddata,
                                      colorvar = {{ quocolor }})
 
   yname <- as_label(quoy)
-  colorvarname <- as_label(quocolor)
   colorvarnumeric <- checks$colorvarnumeric
-  # colovarnumeric = NULL if {{ colorvar }} isn't a column in ogdata
-  # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in ogdata
-  # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column in ogdata
+  # colovarnumeric = NULL if {{ colorvar }} isn't a column in the data
+  # colorvarnumeric = TRUE if {{ colorvar }} is a numeric column in the data
+  # colorvarnumeric = FALSE if {{ colorvar }} is not a numeric column
+  # in the data
 
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
   if (is.null(colorvarnumeric)  &&
         !(colorpalette %in% leaflet_color_palettes())) {
-    # {{ colorvar }} isn't a column in ogdata and
+    # {{ colorvar }} isn't a column in the data and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy),
@@ -95,19 +91,19 @@ driveplot_companion <- function(shareddata,
       theme_bw()
   }else if (!is.null(colorvarnumeric) &&
               !(colorpalette %in% leaflet_color_palettes())) {
-    # {{ colorvar }} is a column in ogdata and
+    # {{ colorvar }} is a column in the data and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
     palettes <- leaflet_color_palettes()
     error_msg <- paste(paste(shQuote(palettes[-length(palettes)]),
-                                    collapse = ", "), "or",
-                              shQuote(palettes[length(palettes)]))
+                             collapse = ", "), "or",
+                       shQuote(palettes[length(palettes)]))
     stop(paste0("When specifying colorvar, please use
          colorpalette = ", error_msg),
          call. = FALSE)
   }else if (is.null(colorvarnumeric) &&
               colorpalette %in% leaflet_color_palettes()) {
-    # {{ colorvar }} is not a column in ogdata and
+    # {{ colorvar }} is not a column in the data and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- ggplot(data = shareddata) +
@@ -120,7 +116,7 @@ driveplot_companion <- function(shareddata,
       theme_bw()
   }else if (isTRUE(colorvarnumeric) &&
               colorpalette %in% leaflet_color_palettes()) {
-    # {{ colorvar }} is a numeric column in ogdata and
+    # {{ colorvar }} is a numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
@@ -132,10 +128,10 @@ driveplot_companion <- function(shareddata,
       theme_bw()
   }else if (isFALSE(colorvarnumeric) &&
               colorpalette %in% leaflet_color_palettes()) {
-    # {{ colorvar }} is a non-numeric column in ogdata and
+    # {{ colorvar }} is a non-numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox , y = !!quoy, fill = !!quocolor),
+      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
                  shape = 21,
                  stroke = 0.05,
                  color = "dimgray",
