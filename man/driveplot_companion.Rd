@@ -52,18 +52,22 @@ data(drive7)
 shared_drive <- SharedData$new(drive7)
 
 # Time series of speed
-driveplot_companion(shareddata = shared_drive,
-                    x = time_cst,
-                    y = speed_mph)
+driveplot_companion(
+  shareddata = shared_drive,
+  x = time_cst,
+  y = speed_mph
+)
 
 # Color points by direction of car
-driveplot_companion(shareddata = shared_drive,
-                    x = time_cst,
-                    y = speed_mph,
-                    colorvar = gyro_heading,
-                    colorpalette = "viridis",
-                    xlabel = "Time",
-                    ylabel = "Speed (MPH)",
-                    showlegend = TRUE,
-                    legendtitle = "Gyro Heading")
+driveplot_companion(
+  shareddata = shared_drive,
+  x = time_cst,
+  y = speed_mph,
+  colorvar = gyro_heading,
+  colorpalette = "viridis",
+  xlabel = "Time",
+  ylabel = "Speed (MPH)",
+  showlegend = TRUE,
+  legendtitle = "Gyro Heading"
+)
 }

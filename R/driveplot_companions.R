@@ -31,15 +31,18 @@
 #'
 #' # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 #' driveplot_companions(
-#'      shareddata = shared_drive,
-#'      x = time_cst,
-#'      ys = c(speed_mph, gyro_heading, gps_heading),
-#'      colorvar = gps_pdop,
-#'      xlabel = "Time",
-#'      ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-#'                  "GPS Heading (degrees)"),
-#'      colorpalette = "viridis",
-#'      legendtitle = "GPS PDOP")
+#'   shareddata = shared_drive,
+#'   x = time_cst,
+#'   ys = c(speed_mph, gyro_heading, gps_heading),
+#'   colorvar = gps_pdop,
+#'   xlabel = "Time",
+#'   ylabels = c(
+#'     "Speed (mph)", "Gyro Heading (degrees)",
+#'     "GPS Heading (degrees)"
+#'   ),
+#'   colorpalette = "viridis",
+#'   legendtitle = "GPS PDOP"
+#' )
 #'
 driveplot_companions <- function(shareddata,
                                  x,
@@ -52,7 +55,6 @@ driveplot_companions <- function(shareddata,
                                  legendtitle = NULL,
                                  spacing = 0.05,
                                  plotheight = "98vh") {
-
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
@@ -74,17 +76,20 @@ driveplot_companions <- function(shareddata,
 
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
-            call. = FALSE)
+      call. = FALSE
+    )
   }
 
   if (any(is.na(ylabels))) {
     stop("`ylabels` cannot be NA.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   if (!is.null(ylabels) && length(ylabels) != ylength) {
     stop("If providing `ylabels`, `ys` and `ylabels` must be the same length.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   if (is.null(ylabels)) {
@@ -107,34 +112,37 @@ driveplot_companions <- function(shareddata,
 
   companion_graphs <- mapply(
     FUN = function(var, label) {
-                                driveplot_companion(
-                                  shareddata = shareddata,
-                                  x = {{ x }},
-                                  y = {{ var }},
-                                  colorvar = {{ colorvar }},
-                                  colorpalette = colorpalette,
-                                  xlabel = xlabel,
-                                  ylabel = label,
-                                  showlegend = showlegend,
-                                  legendtitle = legendtitle
-                                )},
+      driveplot_companion(
+        shareddata = shareddata,
+        x = {{ x }},
+        y = {{ var }},
+        colorvar = {{ colorvar }},
+        colorpalette = colorpalette,
+        xlabel = xlabel,
+        ylabel = label,
+        showlegend = showlegend,
+        legendtitle = legendtitle
+      )
+    },
     yslist, ylabels,
     SIMPLIFY = FALSE
   )
 
   if (isTRUE(showlegend)) {
     plotlysubplot <- subplot(companion_graphs,
-                             nrows = ylength,
-                             shareX = TRUE,
-                             titleY = TRUE,
-                             which_layout = 1,
-                             margin = spacing)
+      nrows = ylength,
+      shareX = TRUE,
+      titleY = TRUE,
+      which_layout = 1,
+      margin = spacing
+    )
   } else {
     plotlysubplot <- subplot(companion_graphs,
-                             nrows = ylength,
-                             shareX = TRUE,
-                             titleY = TRUE,
-                             margin = spacing)
+      nrows = ylength,
+      shareX = TRUE,
+      titleY = TRUE,
+      margin = spacing
+    )
   }
   if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
     plotlysubplot <- plotlysubplot |>

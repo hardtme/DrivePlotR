@@ -73,16 +73,20 @@ library(crosstalk)
 data(drive7)
 shared_drive <- SharedData$new(drive7)
 
-driveplot(shareddata = shared_drive,
-          x = time_cst,
-          ys = c(speed_mph, gyro_heading, gps_heading),
-          colorvar = gyro_heading,
-          maplabel = time_cst,
-          colorpalette = "viridis",
-          fillopacity = 1,
-          xlabel = "Time",
-          ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-                      "GPS Heading (degrees)"),
-          showlegend = TRUE,
-          legendtitle = "Gyro Heading")
+driveplot(
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(speed_mph, gyro_heading, gps_heading),
+  colorvar = gyro_heading,
+  maplabel = time_cst,
+  colorpalette = "viridis",
+  fillopacity = 1,
+  xlabel = "Time",
+  ylabels = c(
+    "Speed (mph)", "Gyro Heading (degrees)",
+    "GPS Heading (degrees)"
+  ),
+  showlegend = TRUE,
+  legendtitle = "Gyro Heading"
+)
 }

@@ -28,20 +28,24 @@
 #' shared_drive <- SharedData$new(drive7)
 #'
 #' # Time series of speed
-#' driveplot_companion(shareddata = shared_drive,
-#'                     x = time_cst,
-#'                     y = speed_mph)
+#' driveplot_companion(
+#'   shareddata = shared_drive,
+#'   x = time_cst,
+#'   y = speed_mph
+#' )
 #'
 #' # Color points by direction of car
-#' driveplot_companion(shareddata = shared_drive,
-#'                     x = time_cst,
-#'                     y = speed_mph,
-#'                     colorvar = gyro_heading,
-#'                     colorpalette = "viridis",
-#'                     xlabel = "Time",
-#'                     ylabel = "Speed (MPH)",
-#'                     showlegend = TRUE,
-#'                     legendtitle = "Gyro Heading")
+#' driveplot_companion(
+#'   shareddata = shared_drive,
+#'   x = time_cst,
+#'   y = speed_mph,
+#'   colorvar = gyro_heading,
+#'   colorpalette = "viridis",
+#'   xlabel = "Time",
+#'   ylabel = "Speed (MPH)",
+#'   showlegend = TRUE,
+#'   legendtitle = "Gyro Heading"
+#' )
 driveplot_companion <- function(shareddata,
                                 x,
                                 y,
@@ -51,7 +55,6 @@ driveplot_companion <- function(shareddata,
                                 ylabel = NULL,
                                 showlegend = TRUE,
                                 legendtitle = NULL) {
-
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
@@ -62,11 +65,13 @@ driveplot_companion <- function(shareddata,
   quoy <- quo_set_env(quoy, global_env())
   quocolor <- enquo(colorvar)
 
-  checks <- check_function_arguments(shareddata = shareddata,
-                                     checks = c("x", "y", "colorvar"),
-                                     x = {{ quox }},
-                                     y = {{ quoy }},
-                                     colorvar = {{ quocolor }})
+  checks <- check_function_arguments(
+    shareddata = shareddata,
+    checks = c("x", "y", "colorvar"),
+    x = {{ quox }},
+    y = {{ quoy }},
+    colorvar = {{ quocolor }}
+  )
 
   yname <- as_label(quoy)
   colorvarnumeric <- checks$colorvarnumeric
@@ -77,65 +82,73 @@ driveplot_companion <- function(shareddata,
 
   # Use viridis color palettes allowed by leaflet:
   # "viridis", "magma", "inferno", or "plasma"
-  if (is.null(colorvarnumeric)  &&
-        !(colorpalette %in% leaflet_color_palettes())) {
+  if (is.null(colorvarnumeric) &&
+    !(colorpalette %in% leaflet_color_palettes())) {
     # {{ colorvar }} isn't a column in the data and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy),
-                 shape = 21,
-                 stroke = 0.05,
-                 fill = colorpalette,
-                 color = "dimgray",
-                 show.legend = showlegend) +
+        shape = 21,
+        stroke = 0.05,
+        fill = colorpalette,
+        color = "dimgray",
+        show.legend = showlegend
+      ) +
       theme_bw()
-  }else if (!is.null(colorvarnumeric) &&
-              !(colorpalette %in% leaflet_color_palettes())) {
+  } else if (!is.null(colorvarnumeric) &&
+    !(colorpalette %in% leaflet_color_palettes())) {
     # {{ colorvar }} is a column in the data and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
     palettes <- leaflet_color_palettes()
-    error_msg <- paste(paste(shQuote(palettes[-length(palettes)]),
-                             collapse = ", "), "or",
-                       shQuote(palettes[length(palettes)]))
+    error_msg <- paste(
+      paste(shQuote(palettes[-length(palettes)]),
+        collapse = ", "
+      ), "or",
+      shQuote(palettes[length(palettes)])
+    )
     stop(paste0("When specifying colorvar, please use
          colorpalette = ", error_msg),
-         call. = FALSE)
-  }else if (is.null(colorvarnumeric) &&
-              colorpalette %in% leaflet_color_palettes()) {
+      call. = FALSE
+    )
+  } else if (is.null(colorvarnumeric) &&
+    colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is not a column in the data and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy),
-                 shape = 21,
-                 stroke = 0.05,
-                 fill = viridis(n = 1, option = colorpalette),
-                 color = "dimgray",
-                 show.legend = showlegend) +
+        shape = 21,
+        stroke = 0.05,
+        fill = viridis(n = 1, option = colorpalette),
+        color = "dimgray",
+        show.legend = showlegend
+      ) +
       theme_bw()
-  }else if (isTRUE(colorvarnumeric) &&
-              colorpalette %in% leaflet_color_palettes()) {
+  } else if (isTRUE(colorvarnumeric) &&
+    colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is a numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
-                 shape = 21,
-                 stroke = 0.05,
-                 color = "dimgray",
-                 show.legend = showlegend) +
+        shape = 21,
+        stroke = 0.05,
+        color = "dimgray",
+        show.legend = showlegend
+      ) +
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
-  }else if (isFALSE(colorvarnumeric) &&
-              colorpalette %in% leaflet_color_palettes()) {
+  } else if (isFALSE(colorvarnumeric) &&
+    colorpalette %in% leaflet_color_palettes()) {
     # {{ colorvar }} is a non-numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
-                 shape = 21,
-                 stroke = 0.05,
-                 color = "dimgray",
-                 show.legend = showlegend) +
+        shape = 21,
+        stroke = 0.05,
+        color = "dimgray",
+        show.legend = showlegend
+      ) +
       scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
       theme_bw()
   }

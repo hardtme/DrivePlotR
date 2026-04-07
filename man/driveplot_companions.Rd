@@ -62,14 +62,17 @@ shared_drive <- SharedData$new(drive7)
 
 # Linked time series of speed, headings (in GPS and gyro), and GPS quality
 driveplot_companions(
-     shareddata = shared_drive,
-     x = time_cst,
-     ys = c(speed_mph, gyro_heading, gps_heading),
-     colorvar = gps_pdop,
-     xlabel = "Time",
-     ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-                 "GPS Heading (degrees)"),
-     colorpalette = "viridis",
-     legendtitle = "GPS PDOP")
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(speed_mph, gyro_heading, gps_heading),
+  colorvar = gps_pdop,
+  xlabel = "Time",
+  ylabels = c(
+    "Speed (mph)", "Gyro Heading (degrees)",
+    "GPS Heading (degrees)"
+  ),
+  colorpalette = "viridis",
+  legendtitle = "GPS PDOP"
+)
 
 }

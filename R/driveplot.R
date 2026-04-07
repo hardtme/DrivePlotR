@@ -33,18 +33,22 @@
 #' data(drive7)
 #' shared_drive <- SharedData$new(drive7)
 #'
-#' driveplot(shareddata = shared_drive,
-#'           x = time_cst,
-#'           ys = c(speed_mph, gyro_heading, gps_heading),
-#'           colorvar = gyro_heading,
-#'           maplabel = time_cst,
-#'           colorpalette = "viridis",
-#'           fillopacity = 1,
-#'           xlabel = "Time",
-#'           ylabels = c("Speed (mph)", "Gyro Heading (degrees)",
-#'                       "GPS Heading (degrees)"),
-#'           showlegend = TRUE,
-#'           legendtitle = "Gyro Heading")
+#' driveplot(
+#'   shareddata = shared_drive,
+#'   x = time_cst,
+#'   ys = c(speed_mph, gyro_heading, gps_heading),
+#'   colorvar = gyro_heading,
+#'   maplabel = time_cst,
+#'   colorpalette = "viridis",
+#'   fillopacity = 1,
+#'   xlabel = "Time",
+#'   ylabels = c(
+#'     "Speed (mph)", "Gyro Heading (degrees)",
+#'     "GPS Heading (degrees)"
+#'   ),
+#'   showlegend = TRUE,
+#'   legendtitle = "Gyro Heading"
+#' )
 driveplot <- function(shareddata,
                       lng = NULL,
                       lat = NULL,
@@ -60,7 +64,6 @@ driveplot <- function(shareddata,
                       legendtitle = NULL,
                       plottitle = NULL,
                       spacing = 0.05) {
-
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
@@ -69,31 +72,35 @@ driveplot <- function(shareddata,
 
   if (isTRUE(notitle)) {
     height <- "98vh"
-  }else {
+  } else {
     # Leave more space for the title
     height <- "85vh"
   }
 
-  plot_map <- driveplot_map(shareddata = shareddata,
-                            lng = {{ lng }},
-                            lat = {{ lat }},
-                            colorvar = {{ colorvar }},
-                            label = {{ maplabel }},
-                            colorpalette = colorpalette,
-                            fillopacity = fillopacity,
-                            mapheight = height)
+  plot_map <- driveplot_map(
+    shareddata = shareddata,
+    lng = {{ lng }},
+    lat = {{ lat }},
+    colorvar = {{ colorvar }},
+    label = {{ maplabel }},
+    colorpalette = colorpalette,
+    fillopacity = fillopacity,
+    mapheight = height
+  )
 
-  plot_graphs <- driveplot_companions(shareddata = shareddata,
-                                      x = {{ x }},
-                                      ys = {{ ys }},
-                                      colorvar = {{ colorvar }},
-                                      xlabel = xlabel,
-                                      ylabels = ylabels,
-                                      colorpalette = colorpalette,
-                                      showlegend = showlegend,
-                                      legendtitle = legendtitle,
-                                      spacing = spacing,
-                                      plotheight = height)
+  plot_graphs <- driveplot_companions(
+    shareddata = shareddata,
+    x = {{ x }},
+    ys = {{ ys }},
+    colorvar = {{ colorvar }},
+    xlabel = xlabel,
+    ylabels = ylabels,
+    colorpalette = colorpalette,
+    showlegend = showlegend,
+    legendtitle = legendtitle,
+    spacing = spacing,
+    plotheight = height
+  )
 
   if (isTRUE(notitle)) {
     final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
@@ -104,10 +111,14 @@ driveplot <- function(shareddata,
     final_viz <- suppressWarnings(
       bscols(
         h1(plottitle,
-           .noWS = c("before", "after", "outside",
-                     "after-begin", "before-end"),
-           align = "center", style = "font-family: sans-serif; color:black"),
-        plot_map, plot_graphs, widths = c(12, 6, 6)
+          .noWS = c(
+            "before", "after", "outside",
+            "after-begin", "before-end"
+          ),
+          align = "center", style = "font-family: sans-serif; color:black"
+        ),
+        plot_map, plot_graphs,
+        widths = c(12, 6, 6)
       )
     )
   }

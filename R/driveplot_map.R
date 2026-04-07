@@ -27,10 +27,12 @@
 #' driveplot_map(shareddata = shared_drive)
 #'
 #' # Color drive points by direction of car
-#' driveplot_map(shareddata = shared_drive,
-#'               colorvar = gyro_heading,
-#'               label = gyro_heading,
-#'               colorpalette = "viridis")
+#' driveplot_map(
+#'   shareddata = shared_drive,
+#'   colorvar = gyro_heading,
+#'   label = gyro_heading,
+#'   colorpalette = "viridis"
+#' )
 driveplot_map <- function(shareddata,
                           lng = NULL,
                           lat = NULL,
@@ -39,7 +41,6 @@ driveplot_map <- function(shareddata,
                           colorpalette = "#03F",
                           fillopacity = 1,
                           mapheight = "98vh") {
-
   if (isFALSE(is.SharedData(shareddata))) {
     stop("`shareddata` must be a SharedData object.", call. = FALSE)
   }
@@ -52,11 +53,13 @@ driveplot_map <- function(shareddata,
   quocolor <- enquo(colorvar)
   quolabel <- enquo(label)
 
-  checks <- check_function_arguments(shareddata = shareddata,
-                                     checks = c("colorvar", "lng", "lat"),
-                                     colorvar = {{ quocolor }},
-                                     lng = {{ quolng }},
-                                     lat = {{ quolat }})
+  checks <- check_function_arguments(
+    shareddata = shareddata,
+    checks = c("colorvar", "lng", "lat"),
+    colorvar = {{ quocolor }},
+    lng = {{ quolng }},
+    lat = {{ quolat }}
+  )
 
   colorvarnumeric <- checks$colorvarnumeric
 
@@ -67,41 +70,47 @@ driveplot_map <- function(shareddata,
   # Create color palettes
   if (is.null(colorvarnumeric)) {
     quocolor <- 0
-    colorpal <- driveplot_map_color(colorvarnumeric = colorvarnumeric,
-                                    colorpalette = colorpalette,
-                                    quocolor = {{ quocolor }},
-                                    ogdata = ogdata)
+    colorpal <- driveplot_map_color(
+      colorvarnumeric = colorvarnumeric,
+      colorpalette = colorpalette,
+      quocolor = {{ quocolor }},
+      ogdata = ogdata
+    )
   } else {
-    colorpal <- driveplot_map_color(colorvarnumeric = colorvarnumeric,
-                                    colorpalette = colorpalette,
-                                    quocolor = {{ quocolor }},
-                                    ogdata = ogdata)
+    colorpal <- driveplot_map_color(
+      colorvarnumeric = colorvarnumeric,
+      colorpalette = colorpalette,
+      quocolor = {{ quocolor }},
+      ogdata = ogdata
+    )
   }
 
-  # Check latitude and longitude
-  #if (isFALSE(lngcheck) && isFALSE(latcheck)) {
   if (!is.null(checks$lnglat)) {
     lng <- checks$lnglat$lng
     lat <- checks$lnglat$lat
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
-        addCircleMarkers(lat = lat, lng = lng, stroke = TRUE,
-                         weight = 2, color = "dimgray",
-                         label = ~(!!quolabel),
-                         fillColor = ~colorpal(!!quocolor),
-                         fillOpacity = fillopacity)
+        addCircleMarkers(
+          lat = lat, lng = lng, stroke = TRUE,
+          weight = 2, color = "dimgray",
+          label = ~ (!!quolabel),
+          fillColor = ~ colorpal(!!quocolor),
+          fillOpacity = fillopacity
+        )
     })))
     plot_map
   } else {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
-        addCircleMarkers(lat = ~(!!quolat), lng = ~(!!quolng),
-                         stroke = TRUE, weight = 2, color = "dimgray",
-                         label = ~(!!quolabel),
-                         fillColor = ~colorpal(!!quocolor),
-                         fillOpacity = fillopacity)
+        addCircleMarkers(
+          lat = ~ (!!quolat), lng = ~ (!!quolng),
+          stroke = TRUE, weight = 2, color = "dimgray",
+          label = ~ (!!quolabel),
+          fillColor = ~ colorpal(!!quocolor),
+          fillOpacity = fillopacity
+        )
     })))
     plot_map
   }

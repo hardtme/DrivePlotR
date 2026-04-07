@@ -17,26 +17,36 @@ driveplot_map_color <- function(colorvarnumeric,
                                 quocolor,
                                 ogdata) {
   if (is.null(colorvarnumeric) &&
-        colorpalette %in% leaflet_color_palettes()) {
-    colorpal <- colorFactor(palette = viridis(n = 1, option = colorpalette),
-                            domain = NULL,
-                            na.color = "dimgray")
+    colorpalette %in% leaflet_color_palettes()) {
+    colorpal <- colorFactor(
+      palette = viridis(n = 1, option = colorpalette),
+      domain = NULL,
+      na.color = "dimgray"
+    )
   } else if (is.null(colorvarnumeric) &&
-               !(colorpalette %in% leaflet_color_palettes())) {
-    colorpal <- colorFactor(palette = colorpalette,
-                            domain = NULL,
-                            na.color = "dimgray")
+    !(colorpalette %in% leaflet_color_palettes())) {
+    colorpal <- colorFactor(
+      palette = colorpalette,
+      domain = NULL,
+      na.color = "dimgray"
+    )
   } else if (isTRUE(colorvarnumeric)) {
-    colorpal <- colorNumeric(palette = colorpalette,
-                             domain = eval_tidy(quocolor, data = ogdata),
-                             na.color = "dimgray")
+    colorpal <- colorNumeric(
+      palette = colorpalette,
+      domain = eval_tidy(quocolor, data = ogdata),
+      na.color = "dimgray"
+    )
   } else if (isFALSE(colorvarnumeric)) {
     ncolors <- eval_tidy(quocolor, data = ogdata) |>
       n_distinct(na.rm = TRUE)
-    colorpal <- colorFactor(palette = viridis(n = ncolors,
-                                              option = colorpalette),
-                            domain = eval_tidy(quocolor, data = ogdata),
-                            na.color = "dimgray")
+    colorpal <- colorFactor(
+      palette = viridis(
+        n = ncolors,
+        option = colorpalette
+      ),
+      domain = eval_tidy(quocolor, data = ogdata),
+      na.color = "dimgray"
+    )
   }
   colorpal
 }
