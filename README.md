@@ -70,10 +70,10 @@ You can also create a standalone companion graph as follows:
 
 ``` r
 driveplot_companion(
-  shareddata = shared_drive, 
-  x = time_cst, 
-  y = speed_mph, 
-  xlabel = "Time", 
+  shareddata = shared_drive,
+  x = time_cst,
+  y = speed_mph,
+  xlabel = "Time",
   ylabel = "Speed (MPH)"
 )
 ```
@@ -88,16 +88,16 @@ they occurred.
 
 ``` r
 driveplot(
-  shareddata = shared_drive, 
-  x = time_cst, 
+  shareddata = shared_drive,
+  x = time_cst,
   ys = c(speed_mph, gyro_heading, gps_pdop),
-  colorvar = gps_minute, 
-  maplabel = time_cst, 
-  colorpalette = "viridis", 
-  xlabel = "Time", 
+  colorvar = gps_minute,
+  maplabel = time_cst,
+  colorpalette = "viridis",
+  xlabel = "Time",
   ylabels = c("Speed (MPH)", "Gyro Heading", "GPS PDOP"),
-  showlegend = TRUE, 
-  legendtitle = "Minute", 
+  showlegend = TRUE,
+  legendtitle = "Minute",
   plottitle = "A Drive in Omaha, NE"
 )
 ```
@@ -112,19 +112,23 @@ W).
 
 ``` r
 driveplot(
-  shareddata = shared_drive, 
-  x = time_cst, 
-  ys = c(speed_mph * 1.60934, 
-         c("N", "E", "S", "W")[findInterval((gyro_heading + 45) %% 360, 
-                                            c(90, 180, 270)) + 1], 
-         gps_pdop),
-  colorvar = gps_minute, 
-  maplabel = time_cst, 
-  colorpalette = "viridis", 
-  xlabel = "Time", 
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(
+    speed_mph * 1.60934,
+    c("N", "E", "S", "W")[findInterval(
+      (gyro_heading + 45) %% 360,
+      c(90, 180, 270)
+    ) + 1],
+    gps_pdop
+  ),
+  colorvar = gps_minute,
+  maplabel = time_cst,
+  colorpalette = "viridis",
+  xlabel = "Time",
   ylabels = c("Speed (KPH)", "General Gyro Heading", "GPS PDOP"),
-  showlegend = TRUE, 
-  legendtitle = "Minute", 
+  showlegend = TRUE,
+  legendtitle = "Minute",
   plottitle = "A Drive in Omaha, NE"
 )
 ```
