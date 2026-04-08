@@ -17,3 +17,4 @@ Either \code{ylabels} or a list of NULL of length \code{ylength}.
 \description{
 Helper function for internal use only.
 }
+\keyword{internal}

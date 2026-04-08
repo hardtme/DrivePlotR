@@ -144,6 +144,7 @@ check_lnglat <- function(shareddata, lng, lat) {
 #' @param ylabels A vector or list of labels provided to the calling function.
 #' @param ylength The length of the ys argument from the calling function.
 #' @returns Either `ylabels` or a list of NULL of length `ylength`.
+#' @keywords internal
 check_ylabels <- function(ylabels, ylength) {
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
