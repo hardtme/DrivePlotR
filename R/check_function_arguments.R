@@ -120,18 +120,15 @@ check_lnglat <- function(shareddata, lng, lat) {
   }
 
   if (!lng_provided && !lat_provided) {
-    sfgeom <- attr(ogdata, "sf_column")
-    if (is.null(sfgeom)) {
-      stop(
-        "Can't find a geometry column and `lng` and `lat` not provided.",
-        call. = FALSE
-      )
-    }
     lnglat <- tryCatch(
       derivePoints(shareddata),
       error = function(e) {
-        stop("Geometry column must have type POINT.",
-             call. = FALSE)
+        stop(
+          "Unable to derive points for map. Likely causes:
+          couldn't infer latitude/longitude columns or
+          sf geometry column does not have type POINT.",
+          call. = FALSE
+        )
       }
     )
   } else{

@@ -65,7 +65,8 @@ test_that("check spelling of lng/lat", {
   )
 })
 
-test_that("missing geometry column throws error when lat/lng not provided", {
+test_that("missing sf geometry column throws error when
+          lat/lng not provided and not inferred", {
   drive1 <- nds_data |>
     dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
@@ -75,11 +76,27 @@ test_that("missing geometry column throws error when lat/lng not provided", {
       x = time_cst,
       ys = speed_mph
     ),
-    "Can't find a geometry column and `lng` and `lat` not provided."
+    "Unable to derive points for map. Likely causes:
+          couldn't infer latitude/longitude columns or
+          sf geometry column does not have type POINT."
   )
 })
 
-test_that("throw error when geometry type isn't POINT", {
+test_that("don't throw error when lat/lng can be inferred", {
+  drive1 <- nds_data |>
+    dplyr::filter(drive == 1) |>
+    dplyr::mutate(latitude = gps_lat,
+                  longitude = gps_long)
+  drive1shared <- crosstalk::SharedData$new(drive1)
+  expect_message(
+    driveplot(shareddata = drive1shared,
+              x = time_cst,
+              ys = speed_mph),
+  'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
+  )
+})
+
+test_that("throw error when sf column geometry type isn't POINT", {
   skip_if_not_installed("sf")
   drive7_ls <- drive7 |>
     sf::st_cast("LINESTRING")
@@ -90,7 +107,9 @@ test_that("throw error when geometry type isn't POINT", {
       x = time_cst,
       ys = speed_mph
     ),
-    "Geometry column must have type POINT."
+    "Unable to derive points for map. Likely causes:
+          couldn't infer latitude/longitude columns or
+          sf geometry column does not have type POINT."
   )
 })
 
