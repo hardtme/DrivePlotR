@@ -10,7 +10,7 @@ driveplot_map(
   lat = NULL,
   colorvar = NULL,
   label = NA,
-  colorpalette = "#03F",
+  colorpalette = NULL,
   fillopacity = 1,
   mapheight = "98vh"
 )
@@ -29,9 +29,13 @@ should be mapped.}
 
 \item{label}{An optional label for the map points.}
 
-\item{colorpalette}{The color palette for the map; either a single
+\item{colorpalette}{The color palette for the plot; either a single
 color (e.g., "red") or one of the viridis color palettes compatible
-with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
+with leaflet. Run \code{leaflet_color_palettes()} to see the available options
+for viridis color palettes. If \code{colorvar} and \code{colorpalette} are both not
+provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided but
+\code{colorpalette} is not, \code{colorpalette} defaults to the color palette
+"viridis".}
 
 \item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 

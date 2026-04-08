@@ -12,9 +12,13 @@
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
 #' @param maplabel An optional label for the map points.
-#' @param colorpalette The color palette for the plot map; either a single
+#' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
+#'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
+#'   `colorpalette` is not, `colorpalette` defaults to the color palette
+#'   "viridis".
 #' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
@@ -56,7 +60,7 @@ driveplot <- function(shareddata,
                       ys,
                       colorvar = NULL,
                       maplabel = NA,
-                      colorpalette = "#03F",
+                      colorpalette = NULL,
                       fillopacity = 1,
                       xlabel = NULL,
                       ylabels = NULL,

@@ -170,3 +170,29 @@ check_ylabels <- function(ylabels, ylength) {
 
   ylabels
 }
+
+#' Function to establish default behavior for colorpalette.
+#'
+#' Helper function for internal use only.
+#' @param shareddata The SharedData object provided to the calling function.
+#' @param colorvar The `colorvar` argument provided to the calling function.
+#' @param colorpalette The `colorpalette` argument provided to the calling
+#'   function.
+#' @returns The color palette to be used for the visualization.
+#' @importFrom rlang enquo quo_set_env global_env quo_is_null
+#' @keywords internal
+check_colorpalette <- function(shareddata,
+                               colorvar = NULL,
+                               colorpalette = NULL) {
+  quocolor <- enquo(colorvar)
+  quocolor <- quo_set_env(quocolor, global_env())
+
+  if (is.null(colorpalette)) {
+    if (missing(colorvar) || quo_is_null(quocolor)) {
+      colorpalette <- "#03F"
+    } else {
+      colorpalette <- "viridis"
+    }
+  }
+  colorpalette
+}

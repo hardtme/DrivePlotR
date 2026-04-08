@@ -1,4 +1,4 @@
-#' Make a single plotly scatter plot from shared drive data
+#' Make a single plotly scatter plot from shared drive data.
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param x The bare (unquoted) column from shareddata to be plotted
@@ -9,7 +9,11 @@
 #'   color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
+#'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
+#'   `colorpalette` is not, `colorpalette` defaults to the color palette
+#'   "viridis".
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabel The label for the variable on the vertical axis.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
@@ -50,7 +54,7 @@ driveplot_companion <- function(shareddata,
                                 x,
                                 y,
                                 colorvar = NULL,
-                                colorpalette = "#03F",
+                                colorpalette = NULL,
                                 xlabel = NULL,
                                 ylabel = NULL,
                                 showlegend = TRUE,
@@ -74,6 +78,10 @@ driveplot_companion <- function(shareddata,
 
   colorvarnumeric <- check_colorvar(shareddata = shareddata,
                                     colorvar = {{ quocolor }})
+
+  colorpalette <- check_colorpalette(shareddata = shareddata,
+                                     colorvar = {{ quocolor }},
+                                     colorpalette = colorpalette)
 
   if (is.null(colorvarnumeric) &&
     !(colorpalette %in% leaflet_color_palettes())) {

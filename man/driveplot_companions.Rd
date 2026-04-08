@@ -11,7 +11,7 @@ driveplot_companions(
   colorvar = NULL,
   xlabel = NULL,
   ylabels = NULL,
-  colorpalette = "#03F",
+  colorpalette = NULL,
   showlegend = TRUE,
   legendtitle = NULL,
   spacing = 0.05,
@@ -35,9 +35,13 @@ should be mapped.}
 \item{ylabels}{A vector or list of labels for the vertical axes
 of the companion graphs. If provided, it should be the same length as ys.}
 
-\item{colorpalette}{The color palette for the companion graphs; either a
-single color (e.g., "red") or one of the viridis color palettes compatible
-with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
+\item{colorpalette}{The color palette for the plot; either a single
+color (e.g., "red") or one of the viridis color palettes compatible
+with leaflet. Run \code{leaflet_color_palettes()} to see the available options
+for viridis color palettes. If \code{colorvar} and \code{colorpalette} are both not
+provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided but
+\code{colorpalette} is not, \code{colorpalette} defaults to the color palette
+"viridis".}
 
 \item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 

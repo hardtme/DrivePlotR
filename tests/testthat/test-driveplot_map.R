@@ -64,6 +64,17 @@ test_that("throw error when colorvar is misspecified", {
   )
 })
 
+test_that("default viridis palette takes over when colorvar is specified
+          without colorpalette", {
+            shared_drive <- crosstalk::SharedData$new(drive7)
+            expect_no_error(
+              driveplot_map(
+                shareddata = shared_drive,
+                colorvar = gps_pdop
+    )
+  )
+})
+
 test_that("missing sf geometry column throws error when
           lat/lng not provided and not inferred", {
   drive1 <- nds_data |>

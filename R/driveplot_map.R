@@ -8,9 +8,13 @@
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
 #' @param label An optional label for the map points.
-#' @param colorpalette The color palette for the map; either a single
+#' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
+#'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
+#'   `colorpalette` is not, `colorpalette` defaults to the color palette
+#'   "viridis".
 #' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param mapheight The height of the map in CSS units, e.g, "98vh".
 #' @returns A leaflet map.
@@ -38,7 +42,7 @@ driveplot_map <- function(shareddata,
                           lat = NULL,
                           colorvar = NULL,
                           label = NA,
-                          colorpalette = "#03F",
+                          colorpalette = NULL,
                           fillopacity = 1,
                           mapheight = "98vh") {
 
@@ -55,6 +59,10 @@ driveplot_map <- function(shareddata,
 
   colorvarnumeric <- check_colorvar(shareddata = shareddata,
                                     colorvar = {{ quocolor }})
+
+  colorpalette <- check_colorpalette(shareddata = shareddata,
+                                     colorvar = {{ quocolor }},
+                                     colorpalette = colorpalette)
 
   lnglat <- check_lnglat(shareddata = shareddata,
                          lng = {{ quolng }},

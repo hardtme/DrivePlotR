@@ -10,9 +10,13 @@
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
 #'   of the companion graphs. If provided, it should be the same length as ys.
-#' @param colorpalette The color palette for the companion graphs; either a
-#'   single color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options.
+#' @param colorpalette The color palette for the plot; either a single
+#'   color (e.g., "red") or one of the viridis color palettes compatible
+#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
+#'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
+#'   `colorpalette` is not, `colorpalette` defaults to the color palette
+#'   "viridis".
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param spacing A value between 0 and 1 for the space between the
@@ -50,7 +54,7 @@ driveplot_companions <- function(shareddata,
                                  colorvar = NULL,
                                  xlabel = NULL,
                                  ylabels = NULL,
-                                 colorpalette = "#03F",
+                                 colorpalette = NULL,
                                  showlegend = TRUE,
                                  legendtitle = NULL,
                                  spacing = 0.05,

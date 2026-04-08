@@ -2,14 +2,14 @@
 % Please edit documentation in R/driveplot_companion.R
 \name{driveplot_companion}
 \alias{driveplot_companion}
-\title{Make a single plotly scatter plot from shared drive data}
+\title{Make a single plotly scatter plot from shared drive data.}
 \usage{
 driveplot_companion(
   shareddata,
   x,
   y,
   colorvar = NULL,
-  colorpalette = "#03F",
+  colorpalette = NULL,
   xlabel = NULL,
   ylabel = NULL,
   showlegend = TRUE,
@@ -30,7 +30,11 @@ color should be mapped.}
 
 \item{colorpalette}{The color palette for the plot; either a single
 color (e.g., "red") or one of the viridis color palettes compatible
-with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
+with leaflet. Run \code{leaflet_color_palettes()} to see the available options
+for viridis color palettes. If \code{colorvar} and \code{colorpalette} are both not
+provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided but
+\code{colorpalette} is not, \code{colorpalette} defaults to the color palette
+"viridis".}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
@@ -44,7 +48,7 @@ with leaflet. Run \code{leaflet_color_palettes()} to see the available options.}
 A plotly scatterplot.
 }
 \description{
-Make a single plotly scatter plot from shared drive data
+Make a single plotly scatter plot from shared drive data.
 }
 \examples{
 library(crosstalk)
