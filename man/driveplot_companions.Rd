@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot_companions.R
 \name{driveplot_companions}
 \alias{driveplot_companions}
-\title{Make a stack of companion graphs from shared drive data}
+\title{Make a stack of companion graphs from shared drive data.}
 \usage{
 driveplot_companions(
   shareddata,
@@ -57,7 +57,7 @@ e.g, "98vh"}
 A stack of plotly scatterplots.
 }
 \description{
-Make a stack of companion graphs from shared drive data
+Make a stack of companion graphs from shared drive data.
 }
 \examples{
 library(crosstalk)

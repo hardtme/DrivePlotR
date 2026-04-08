@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot_map.R
 \name{driveplot_map}
 \alias{driveplot_map}
-\title{Create a standalone map}
+\title{Create a standalone map.}
 \usage{
 driveplot_map(
   shareddata,
@@ -45,7 +45,7 @@ provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided b
 A leaflet map.
 }
 \description{
-Create a standalone map
+Create a standalone map.
 }
 \examples{
 library(crosstalk)

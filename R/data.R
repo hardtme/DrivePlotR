@@ -1,4 +1,4 @@
-#' Blackbox-Driving Data for a number of drives
+#' Blackbox-Driving Data for a number of drives.
 #'
 #' This dataset contains 28 drives ranging in length
 #' from just over 2 hours to just 45 secs.
@@ -57,7 +57,7 @@
 #' }
 "nds_data"
 
-#' Blackbox-Driving Data for one drive
+#' Blackbox-Driving Data for one drive.
 #'
 #' This dataset contains drive 7 from the dataset nds_data.
 #' @format A tibble with 321 rows and 34 columns

@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot.R
 \name{driveplot}
 \alias{driveplot}
-\title{Create a vehicle trajectory plot map}
+\title{Create a vehicle trajectory plot map.}
 \usage{
 driveplot(
   shareddata,
@@ -70,7 +70,7 @@ companion graphs.}
 A linked plot map.
 }
 \description{
-Create a vehicle trajectory plot map
+Create a vehicle trajectory plot map.
 }
 \examples{
 library(crosstalk)
