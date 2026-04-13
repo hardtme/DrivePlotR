@@ -474,3 +474,15 @@ test_that("can modify function arguments", {
     )
   )
 })
+
+test_that("add a title to the plot map", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_no_error(
+    driveplot(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = list(speed_mph, gyro_heading),
+      plottitle = "Speed (MPH) and Gyro Heading for a Drive"
+    )
+  )
+})
