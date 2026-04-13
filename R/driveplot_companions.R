@@ -122,7 +122,7 @@ driveplot_companions <- function(shareddata,
       margin = spacing
     )
   }
-  if (isFALSE(colorvarnumeric) && isTRUE(showlegend)) {
+  if (isFALSE(colorvarnumeric) && isTRUE(showlegend) && ylength > 1) {
     plotlysubplot <- plotlysubplot |>
       style(showlegend = FALSE, traces = (ncolors + 1):(ncolors * ylength))
   }

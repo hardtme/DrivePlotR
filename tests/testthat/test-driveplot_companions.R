@@ -441,3 +441,27 @@ test_that("can modify function arguments", {
     )
   )
 })
+
+test_that("do not include legend", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # One y
+  expect_no_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph,
+      colorvar = gps_minute,
+      showlegend = FALSE
+    )
+  )
+  # Two ys
+  expect_no_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = c(speed_mph, gps_pdop),
+      colorvar = gps_minute,
+      showlegend = FALSE
+    )
+  )
+})
