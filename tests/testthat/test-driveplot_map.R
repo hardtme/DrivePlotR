@@ -75,6 +75,16 @@ test_that("default viridis palette takes over when colorvar is specified
   )
 })
 
+test_that("specify a viridis color palette without specifying colorvar", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorpalette = "magma"
+    )
+  )
+})
+
 test_that("missing sf geometry column throws error when
           lat/lng not provided and not inferred", {
   drive1 <- nds_data |>
