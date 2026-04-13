@@ -1,4 +1,4 @@
-#' Make a stack of companion graphs from shared drive data.
+#' Make a stack of companion graphs from shared drive data
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param x The bare (unquoted) column from shareddata to be plotted

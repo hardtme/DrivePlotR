@@ -1,5 +1,5 @@
 #' Check the arguments provided to `driveplot_companion()`, `driveplot_map()`,
-#'   and `driveplot_map()`.
+#'   and `driveplot_map()`
 
 #' Function to check the x and y arguments for `driveplot_companion()`.
 #'

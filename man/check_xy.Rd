@@ -3,7 +3,7 @@
 \name{check_xy}
 \alias{check_xy}
 \title{Check the arguments provided to \code{driveplot_companion()}, \code{driveplot_map()},
-and \code{driveplot_map()}.
+and \code{driveplot_map()}
 Function to check the x and y arguments for \code{driveplot_companion()}.}
 \usage{
 check_xy(shareddata, arg, argname)

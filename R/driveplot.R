@@ -1,4 +1,4 @@
-#' Create a vehicle trajectory plot map.
+#' Create a vehicle trajectory plot map
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param lng The bare (unquoted) column of shareddata containing longitude

@@ -1,4 +1,4 @@
-#' Create the color palette to be used in `driveplot_map()`.
+#' Create the color palette to be used in `driveplot_map()`
 #'
 #' Helper function for internal use only
 #' @param colorvarnumeric An indication of whether the color variable is

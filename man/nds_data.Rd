@@ -3,7 +3,7 @@
 \docType{data}
 \name{nds_data}
 \alias{nds_data}
-\title{Blackbox-Driving Data for a number of drives.}
+\title{Blackbox-Driving Data for a number of drives}
 \format{
 A tibble with 23187 rows and 37 columns
 \describe{

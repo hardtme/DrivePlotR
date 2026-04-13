@@ -1,4 +1,4 @@
-#' Blackbox-Driving Data for a number of drives.
+#' Blackbox-Driving Data for a number of drives
 #'
 #' This dataset contains 28 drives ranging in length
 #' from just over 2 hours to just 45 secs.

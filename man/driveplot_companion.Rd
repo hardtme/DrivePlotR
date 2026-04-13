@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot_companion.R
 \name{driveplot_companion}
 \alias{driveplot_companion}
-\title{Make a single plotly scatter plot from shared drive data.}
+\title{Make a single plotly scatter plot from shared drive data}
 \usage{
 driveplot_companion(
   shareddata,
@@ -48,7 +48,7 @@ provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided b
 A plotly scatterplot.
 }
 \description{
-Make a single plotly scatter plot from shared drive data.
+Make a single plotly scatter plot from shared drive data
 }
 \examples{
 library(crosstalk)

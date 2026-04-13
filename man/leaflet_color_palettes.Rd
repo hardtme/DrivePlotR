@@ -2,7 +2,7 @@
 % Please edit documentation in R/leaflet_color_palettes.R
 \name{leaflet_color_palettes}
 \alias{leaflet_color_palettes}
-\title{Vector of viridis color palettes supported by Leaflet.}
+\title{Vector of viridis color palettes supported by Leaflet}
 \usage{
 leaflet_color_palettes()
 }
@@ -13,5 +13,9 @@ Vector of viridis color palettes supported by Leaflet.
 Helper function
 }
 \details{
-The map uses the same color palette as the companion graphs.
+In a DrivePlotR plot map, the map uses the same color palette as
+the companion graphs.
+}
+\examples{
+leaflet_color_palettes()
 }

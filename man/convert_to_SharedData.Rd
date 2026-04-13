@@ -2,8 +2,8 @@
 % Please edit documentation in R/convert_to_SharedData.R
 \name{convert_to_SharedData}
 \alias{convert_to_SharedData}
-\title{Function to convert a data frame to a SharedData object and warn the user
-this was done.}
+\title{Convert a data frame to a SharedData object and warn the user
+this was done}
 \usage{
 convert_to_SharedData(df)
 }

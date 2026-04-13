@@ -1,4 +1,4 @@
-#' Create a standalone map.
+#' Create a standalone map
 #'
 #' @param shareddata A SharedData object containing observations to be plotted.
 #' @param lng The bare (unquoted) column of shareddata containing longitude

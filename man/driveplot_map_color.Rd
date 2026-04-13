@@ -2,7 +2,7 @@
 % Please edit documentation in R/driveplot_map_color.R
 \name{driveplot_map_color}
 \alias{driveplot_map_color}
-\title{Create the color palette to be used in \code{driveplot_map()}.}
+\title{Create the color palette to be used in \code{driveplot_map()}}
 \usage{
 driveplot_map_color(colorvarnumeric, colorpalette, quocolor, ogdata)
 }
