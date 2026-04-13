@@ -37,7 +37,7 @@ check_xy <- function(shareddata, arg, argname) {
       sprintf("Argument `%s` cannot be NA.", argname),
       call. = FALSE
     )
-   }
+  }
   tidy_arg
 }
 
@@ -131,7 +131,7 @@ check_lnglat <- function(shareddata, lng, lat) {
         )
       }
     )
-  } else{
+  } else {
     lnglat <- NULL
   }
 
@@ -148,19 +148,19 @@ check_lnglat <- function(shareddata, lng, lat) {
 check_ylabels <- function(ylabels, ylength) {
   if (ylength > 4) {
     warning("4+ columns were passed in `ys`, so graphs may be compressed.",
-            call. = FALSE
+      call. = FALSE
     )
   }
 
   if (any(is.na(ylabels))) {
     stop("`ylabels` cannot be NA.",
-         call. = FALSE
+      call. = FALSE
     )
   }
 
   if (!is.null(ylabels) && length(ylabels) != ylength) {
     stop("If providing `ylabels`, `ys` and `ylabels` must be the same length.",
-         call. = FALSE
+      call. = FALSE
     )
   }
 

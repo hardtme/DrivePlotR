@@ -9,7 +9,8 @@
 convert_to_SharedData <- function(df) {
   if (isFALSE(is.SharedData(df))) {
     warning("Converted `shareddata` to a SharedData object.",
-            call. = FALSE)
+      call. = FALSE
+    )
     df <- SharedData$new(df)
   }
   df
