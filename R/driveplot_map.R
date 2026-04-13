@@ -45,7 +45,6 @@ driveplot_map <- function(shareddata,
                           colorpalette = NULL,
                           fillopacity = 1,
                           mapheight = "98vh") {
-
   shareddata <- convert_to_SharedData(shareddata)
 
   # Get original data from shareddata so we can check the type of colorvar
@@ -57,16 +56,22 @@ driveplot_map <- function(shareddata,
   quocolor <- enquo(colorvar)
   quolabel <- enquo(label)
 
-  colorvarnumeric <- check_colorvar(shareddata = shareddata,
-                                    colorvar = {{ quocolor }})
+  colorvarnumeric <- check_colorvar(
+    shareddata = shareddata,
+    colorvar = {{ quocolor }}
+  )
 
-  colorpalette <- check_colorpalette(shareddata = shareddata,
-                                     colorvar = {{ quocolor }},
-                                     colorpalette = colorpalette)
+  colorpalette <- check_colorpalette(
+    shareddata = shareddata,
+    colorvar = {{ quocolor }},
+    colorpalette = colorpalette
+  )
 
-  lnglat <- check_lnglat(shareddata = shareddata,
-                         lng = {{ quolng }},
-                         lat = {{ quolat }})
+  lnglat <- check_lnglat(
+    shareddata = shareddata,
+    lng = {{ quolng }},
+    lat = {{ quolat }}
+  )
 
   if (isFALSE(grepl("vh", mapheight))) {
     stop("Must specify `mapheight` in CSS units, e.g., '98vh'")

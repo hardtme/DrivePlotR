@@ -67,21 +67,29 @@ driveplot_companion <- function(shareddata,
   quoy <- quo_set_env(quoy, global_env())
   quocolor <- enquo(colorvar)
 
-  check_x <- check_xy(shareddata = shareddata,
-                      arg = {{ quox }},
-                      argname = "x")
+  check_x <- check_xy(
+    shareddata = shareddata,
+    arg = {{ quox }},
+    argname = "x"
+  )
 
-  check_y <- check_xy(shareddata = shareddata,
-                      arg = {{ quoy }},
-                      argname = "y")
+  check_y <- check_xy(
+    shareddata = shareddata,
+    arg = {{ quoy }},
+    argname = "y"
+  )
   yname <- as_label(quoy)
 
-  colorvarnumeric <- check_colorvar(shareddata = shareddata,
-                                    colorvar = {{ quocolor }})
+  colorvarnumeric <- check_colorvar(
+    shareddata = shareddata,
+    colorvar = {{ quocolor }}
+  )
 
-  colorpalette <- check_colorpalette(shareddata = shareddata,
-                                     colorvar = {{ quocolor }},
-                                     colorpalette = colorpalette)
+  colorpalette <- check_colorpalette(
+    shareddata = shareddata,
+    colorvar = {{ quocolor }},
+    colorpalette = colorpalette
+  )
 
   if (is.null(colorvarnumeric) &&
     !(colorpalette %in% leaflet_color_palettes())) {
