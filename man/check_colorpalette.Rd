@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_colorpalette}
 \alias{check_colorpalette}
-\title{Function to establish default behavior for colorpalette.}
+\title{Establish the default behavior for colorpalette}
 \usage{
 check_colorpalette(shareddata, colorvar = NULL, colorpalette = NULL)
 }

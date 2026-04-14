@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_ylabels}
 \alias{check_ylabels}
-\title{Function to check the \code{ylabels} argument for \code{driveplot_companions()}.}
+\title{Check the \code{ylabels} argument for \code{driveplot_companions()}}
 \usage{
 check_ylabels(ylabels, ylength)
 }

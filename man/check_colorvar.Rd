@@ -2,8 +2,8 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_colorvar}
 \alias{check_colorvar}
-\title{Function to check the colorvar argument for \code{driveplot_companion()}
-and \code{driveplot_map()}.}
+\title{Check the colorvar argument for \code{driveplot_companion()}
+and \code{driveplot_map()}}
 \usage{
 check_colorvar(shareddata, colorvar)
 }

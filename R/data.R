@@ -57,7 +57,7 @@
 #' }
 "nds_data"
 
-#' Blackbox-Driving Data for one drive.
+#' Blackbox-Driving Data for one drive
 #'
 #' This dataset contains drive 7 from the dataset nds_data.
 #' @format A tibble with 321 rows and 34 columns

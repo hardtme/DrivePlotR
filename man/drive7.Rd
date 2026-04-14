@@ -3,7 +3,7 @@
 \docType{data}
 \name{drive7}
 \alias{drive7}
-\title{Blackbox-Driving Data for one drive.}
+\title{Blackbox-Driving Data for one drive}
 \format{
 A tibble with 321 rows and 34 columns
 \describe{

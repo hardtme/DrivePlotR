@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_lnglat}
 \alias{check_lnglat}
-\title{Function to check the latitude and longitude for \code{driveplot_map()}.}
+\title{Check the latitude and longitude for \code{driveplot_map()}}
 \usage{
 check_lnglat(shareddata, lng, lat)
 }
