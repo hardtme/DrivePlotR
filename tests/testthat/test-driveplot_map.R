@@ -88,25 +88,42 @@ test_that("specify a viridis color palette without specifying colorvar", {
 test_that("missing sf geometry column throws error when
           lat/lng not provided and not inferred", {
   drive1 <- nds_data |>
-    dplyr::filter(drive == 1)
+    dplyr::filter(drive == 1) |>
+    dplyr::select(!c("gps_lat", "gps_long"))
   drive1shared <- crosstalk::SharedData$new(drive1)
   expect_error(
     driveplot_map(shareddata = drive1shared),
-    "Unable to derive points for map. Likely causes:
-          couldn't infer latitude/longitude columns or
-          sf geometry column does not have type POINT."
+    "Couldn't infer longitude/latitude columns"
   )
 })
 
 test_that("don't throw error when lat/lng can be inferred", {
   drive1 <- nds_data |>
-    dplyr::filter(drive == 1) |>
-    dplyr::mutate(latitude = gps_lat,
-                  longitude = gps_long)
+    dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
   expect_message(
     driveplot_map(shareddata = drive1shared),
+    'Assuming "gps_long" and "gps_lat" are longitude and latitude, respectively'
+  )
+  drive1rename <- drive1 |>
+    dplyr::rename(latitude = gps_lat,
+                  longitude = gps_long)
+  drive1renameshared <- crosstalk::SharedData$new(drive1rename)
+  expect_message(
+    driveplot_map(shareddata = drive1renameshared),
   'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
+  )
+})
+
+test_that("throw error when there are multiple candidates for lat/lng", {
+  drive1mod <- nds_data |>
+    dplyr::filter(drive == 1) |>
+    dplyr::mutate(latitude = gps_lat,
+                  longitude = gps_long)
+  drive1modshared <- crosstalk::SharedData$new(drive1mod)
+  expect_error(
+    driveplot_map(shareddata = drive1modshared),
+    "Couldn't infer longitude/latitude columns"
   )
 })
 
@@ -116,10 +133,7 @@ test_that("throw error when sf column geometry type isn't POINT", {
     sf::st_cast("LINESTRING")
   drive7_ls_sd <- crosstalk::SharedData$new(drive7_ls)
   expect_error(
-    driveplot_map(shareddata = drive7_ls_sd),
-    "Unable to derive points for map. Likely causes:
-          couldn't infer latitude/longitude columns or
-          sf geometry column does not have type POINT."
+    driveplot_map(shareddata = drive7_ls_sd)
   )
 })
 

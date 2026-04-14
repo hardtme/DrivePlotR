@@ -65,31 +65,24 @@ test_that("check spelling of lng/lat", {
   )
 })
 
-test_that("missing sf geometry column throws error when
-          lat/lng not provided and not inferred", {
+test_that("don't throw error when lat/lng can be inferred", {
   drive1 <- nds_data |>
     dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
-  expect_error(
+  expect_message(
     driveplot(
       shareddata = drive1shared,
       x = time_cst,
       ys = speed_mph
     ),
-    "Unable to derive points for map. Likely causes:
-          couldn't infer latitude/longitude columns or
-          sf geometry column does not have type POINT."
+    'Assuming "gps_long" and "gps_lat" are longitude and latitude, respectively'
   )
-})
-
-test_that("don't throw error when lat/lng can be inferred", {
-  drive1 <- nds_data |>
-    dplyr::filter(drive == 1) |>
-    dplyr::mutate(latitude = gps_lat,
+  drive1rename <- drive1 |>
+    dplyr::rename(latitude = gps_lat,
                   longitude = gps_long)
-  drive1shared <- crosstalk::SharedData$new(drive1)
+  drive1renameshared <- crosstalk::SharedData$new(drive1rename)
   expect_message(
-    driveplot(shareddata = drive1shared,
+    driveplot(shareddata = drive1renameshared,
               x = time_cst,
               ys = speed_mph),
   'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
@@ -106,10 +99,7 @@ test_that("throw error when sf column geometry type isn't POINT", {
       shareddata = drive7_ls_sd,
       x = time_cst,
       ys = speed_mph
-    ),
-    "Unable to derive points for map. Likely causes:
-          couldn't infer latitude/longitude columns or
-          sf geometry column does not have type POINT."
+    )
   )
 })
 

@@ -95,21 +95,25 @@ driveplot_map <- function(shareddata,
     )
   }
 
+  sfgeom <- attr(ogdata, "sf_column")
+
   if (!is.null(lnglat)) {
-    lng <- lnglat$lng
-    lat <- lnglat$lat
+    quolng <- rlang::quo(!!rlang::sym(lnglat$lng))
+    quolat <- rlang::quo(!!rlang::sym(lnglat$lat))
+  }
+
+  if (!is.null(sfgeom)) {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addTiles() |>
         addCircleMarkers(
-          lat = lat, lng = lng, stroke = TRUE,
+          stroke = TRUE,
           weight = 2, color = "dimgray",
           label = ~ (!!quolabel),
           fillColor = ~ colorpal(!!quocolor),
           fillOpacity = fillopacity
         )
     })))
-    plot_map
   } else {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
@@ -122,6 +126,7 @@ driveplot_map <- function(shareddata,
           fillOpacity = fillopacity
         )
     })))
-    plot_map
   }
+    plot_map
+
 }

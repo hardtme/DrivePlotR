@@ -1,7 +1,7 @@
 #' Check the arguments provided to `driveplot_companion()`, `driveplot_map()`,
 #'   and `driveplot_map()`
 
-#' Function to check the x and y arguments for `driveplot_companion()`.
+#' Check the x and y arguments for `driveplot_companion()`
 #'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
@@ -41,8 +41,8 @@ check_xy <- function(shareddata, arg, argname) {
   tidy_arg
 }
 
-#' Function to check the colorvar argument for `driveplot_companion()`
-#'   and `driveplot_map()`.
+#' Check the colorvar argument for `driveplot_companion()`
+#'   and `driveplot_map()`
 #'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
@@ -77,7 +77,7 @@ check_colorvar <- function(shareddata, colorvar) {
   colorvarnumeric
 }
 
-#' Function to check the latitude and longitude for `driveplot_map()`.
+#' Check the latitude and longitude for `driveplot_map()`
 #'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
@@ -119,26 +119,49 @@ check_lnglat <- function(shareddata, lng, lat) {
     )
   }
 
-  if (!lng_provided && !lat_provided) {
-    lnglat <- tryCatch(
-      derivePoints(shareddata),
-      error = function(e) {
-        stop(
-          "Unable to derive points for map. Likely causes:
-          couldn't infer latitude/longitude columns or
-          sf geometry column does not have type POINT.",
-          call. = FALSE
-        )
-      }
-    )
+  if (!lng_provided && !lat_provided && is.null(attr(ogdata, "sf_column"))) {
+    lnglat <- guess_lat_long_cols(columns)
   } else {
     lnglat <- NULL
   }
-
   lnglat
 }
 
-#' Function to check the `ylabels` argument for `driveplot_companions()`.
+#' Guess latitude and longitude column names
+#'
+#' Adapted from the leaflet function `guessLatLongCols`. Rather than looking for
+#'   the exact variable names lat or latitude, the regular expression allows for
+#'   variables that start or end with lat/latitude for latitude; similarly for
+#'   longitude.
+#'
+#' Helper function for internal use only.
+#'
+#' @param names Vector of column names.
+#' @param stopOnFailure Should the function throw an error when it cannot
+#'   identify latitude and longitude columns in the data (TRUE) or not (FALSE)?
+#' @returns List with latitude and longitude column names.
+#' @keywords internal
+guess_lat_long_cols <- function (names, stopOnFailure = TRUE) {
+  lats <- names[grep("^(lat|latitude)|(lat|latitude)$",
+                     names, ignore.case = TRUE)]
+  lngs <- names[grep("^(lon|lng|long|longitude)|(lon|lng|long|longitude)$",
+                     names, ignore.case = TRUE)]
+  if (length(lats) == 1 && length(lngs) == 1) {
+    if (length(names) > 2) {
+      message("Assuming \"", lngs, "\" and \"", lats,
+              "\" are longitude and latitude, respectively")
+    }
+    return(list(lng = lngs, lat = lats))
+  }
+  if (stopOnFailure) {
+    stop("Couldn't infer longitude/latitude columns",
+         call. = FALSE)
+  }
+  list(lng = NA, lat = NA)
+}
+
+
+#' Check the `ylabels` argument for `driveplot_companions()`
 #'
 #' Helper function for internal use only.
 #' @param ylabels A vector or list of labels provided to the calling function.
@@ -171,7 +194,7 @@ check_ylabels <- function(ylabels, ylength) {
   ylabels
 }
 
-#' Function to establish default behavior for colorpalette.
+#' Establish the default behavior for colorpalette
 #'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
@@ -196,3 +219,4 @@ check_colorpalette <- function(shareddata,
   }
   colorpalette
 }
+
