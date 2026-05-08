@@ -50,8 +50,8 @@ provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided b
 \item{spacing}{A value between 0 and 1 for the space between the
 companion graphs.}
 
-\item{plotheight}{The height of the stack of companion graphs in CSS units,
-e.g, "98vh"}
+\item{plotheight}{The height of the stack of companion graphs in pixels,
+e.g, "400px".}
 }
 \value{
 A stack of plotly scatterplots.

@@ -19,7 +19,8 @@ driveplot(
   showlegend = TRUE,
   legendtitle = NULL,
   plottitle = NULL,
-  spacing = 0.05
+  spacing = 0.05,
+  height = "400px"
 )
 }
 \arguments{
@@ -65,6 +66,8 @@ of the companion graphs. If provided, it should be the same length as ys.}
 
 \item{spacing}{A value between 0 and 1 for the space between the
 companion graphs.}
+
+\item{height}{The height of the plot map in pixels, e.g., "400px".}
 }
 \value{
 A linked plot map.
@@ -91,6 +94,8 @@ driveplot(
     "GPS Heading (degrees)"
   ),
   showlegend = TRUE,
-  legendtitle = "Gyro Heading"
+  legendtitle = "Gyro Heading",
+  plottitle = "A drive with points colored by gyro heading",
+  height = "1200px"
 )
 }

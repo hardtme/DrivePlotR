@@ -12,7 +12,7 @@ driveplot_map(
   label = NA,
   colorpalette = NULL,
   fillopacity = 1,
-  mapheight = "98vh"
+  mapheight = "400px"
 )
 }
 \arguments{
@@ -39,7 +39,7 @@ provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided b
 
 \item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 
-\item{mapheight}{The height of the map in CSS units, e.g, "98vh".}
+\item{mapheight}{The height of the map in pixels, e.g, "400px".}
 }
 \value{
 A leaflet map.

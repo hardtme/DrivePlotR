@@ -28,9 +28,10 @@
 #' @param plottitle The title for the plot map.
 #' @param spacing A value between 0 and 1 for the space between the
 #'   companion graphs.
+#' @param height The height of the plot map in pixels, e.g., "400px".
 #' @returns A linked plot map.
 #' @importFrom crosstalk SharedData is.SharedData bscols
-#' @importFrom htmltools h1
+#' @importFrom htmltools tags browsable
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -51,7 +52,9 @@
 #'     "GPS Heading (degrees)"
 #'   ),
 #'   showlegend = TRUE,
-#'   legendtitle = "Gyro Heading"
+#'   legendtitle = "Gyro Heading",
+#'   plottitle = "A drive with points colored by gyro heading",
+#'   height = "1200px"
 #' )
 driveplot <- function(shareddata,
                       lng = NULL,
@@ -67,16 +70,22 @@ driveplot <- function(shareddata,
                       showlegend = TRUE,
                       legendtitle = NULL,
                       plottitle = NULL,
-                      spacing = 0.05) {
+                      spacing = 0.05,
+                      height = "400px") {
   shareddata <- convert_to_SharedData(shareddata)
 
   notitle <- is.null(plottitle)
 
   if (isTRUE(notitle)) {
-    height <- "98vh"
+    #height <- "98vh"
+    visualheight <- height
   } else {
     # Leave more space for the title
-    height <- "85vh"
+    #height <- "85vh"
+    totalheight <- as.numeric(gsub("[^0-9]", "", height))
+    # Use 10% of the available height for the title
+    titleheight <- 0.1 * totalheight
+    visualheight <- 0.9 * totalheight
   }
 
   plot_map <- driveplot_map(
@@ -87,7 +96,7 @@ driveplot <- function(shareddata,
     label = {{ maplabel }},
     colorpalette = colorpalette,
     fillopacity = fillopacity,
-    mapheight = height
+    mapheight = visualheight
   )
 
   plot_graphs <- driveplot_companions(
@@ -101,29 +110,54 @@ driveplot <- function(shareddata,
     showlegend = showlegend,
     legendtitle = legendtitle,
     spacing = spacing,
-    plotheight = height
+    plotheight = visualheight
   )
 
   if (isTRUE(notitle)) {
-    final_viz <- bscols(plot_map, plot_graphs, widths = c(6, 6))
+    final_plotmap <- bscols(plot_map, plot_graphs, widths = c(6, 6))
   } else {
     # suppressWarnings so we don't see bscols warn that
     # the sum of the widths is greater than 12
     # We need this behavior to put the title on its own line
-    final_viz <- suppressWarnings(
-      bscols(
-        h1(plottitle,
-          .noWS = c(
-            "before", "after", "outside",
-            "after-begin", "before-end"
-          ),
-          align = "center", style = "font-family: sans-serif; color:black"
-        ),
-        plot_map, plot_graphs,
-        widths = c(12, 6, 6)
+    # final_viz <- suppressWarnings(
+    #   bscols(
+    #     h1(plottitle,
+    #       .noWS = c(
+    #         "before", "after", "outside",
+    #         "after-begin", "before-end"
+    #       ),
+    #       align = "center", style = "font-family: sans-serif; color:black"
+    #     ),
+    #     plot_map, plot_graphs,
+    #     widths = c(12, 6, 6)
+    #   )
+    # )
+    plotmap_title <- tags$div(
+      style = paste0("text-align: center; height: ", titleheight),
+      tags$h1(plottitle,
+              style = "font-family: sans-serif; font-weight: bold;
+              margin: 0; color: black;")
+    )
+
+    plotmap_layout <- bscols(
+      widths = c(6, 6),
+      plot_map,
+      plot_graphs
+    )
+
+    final_plotmap <- browsable(
+      tags$div(
+        # margin: centers the div; max-width stops it from hitting the edges
+        style = "margin: auto; max-width: 95%; padding: 10px;",
+        plotmap_title,
+        tags$div(
+          # ensure bscols doesn't run out of room on the sides
+          style = "margin-left: 0; margin-right: 0;",
+          plotmap_layout
+        )
       )
     )
   }
 
-  final_viz
+  final_plotmap
 }
