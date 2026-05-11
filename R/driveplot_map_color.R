@@ -37,14 +37,18 @@ driveplot_map_color <- function(colorvarnumeric,
       na.color = "dimgray"
     )
   } else if (isFALSE(colorvarnumeric)) {
-    ncolors <- eval_tidy(quocolor, data = ogdata) |>
+    colorvals <- eval_tidy(quocolor, data = ogdata)
+    ncolors <- colorvals |>
       n_distinct(na.rm = TRUE)
+    if (is.factor(colorvals)) {
+      colorvals <- droplevels(colorvals)
+    }
     colorpal <- colorFactor(
       palette = viridis(
         n = ncolors,
         option = colorpalette
       ),
-      domain = eval_tidy(quocolor, data = ogdata),
+      domain = colorvals,
       na.color = "dimgray"
     )
   }
