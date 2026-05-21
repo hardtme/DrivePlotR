@@ -21,8 +21,8 @@
 #' @param legendtitle The title for the plot legend.
 #' @param spacing A value between 0 and 1 for the space between the
 #'   companion graphs.
-#' @param plotheight The height of the stack of companion graphs in pixels,
-#'   e.g, "400px".
+#' @param plotheight The height of the stack of companion graphs, e.g., "100vh"
+#'   or "400px".
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr

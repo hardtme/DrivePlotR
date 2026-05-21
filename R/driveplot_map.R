@@ -16,7 +16,7 @@
 #'   `colorpalette` is not, `colorpalette` defaults to the color palette
 #'   "viridis".
 #' @param fillopacity The opacity of the fill of the map points (0 to 1).
-#' @param mapheight The height of the map in pixels, e.g, "400px".
+#' @param mapheight The height of the map, e.g, "100vh" or 400px".
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom rlang enquo eval_tidy quo_squash quo
@@ -44,7 +44,7 @@ driveplot_map <- function(shareddata,
                           label = NA,
                           colorpalette = NULL,
                           fillopacity = 1,
-                          mapheight = "400px") {
+                          mapheight = "100vh") {
   shareddata <- convert_to_SharedData(shareddata)
 
   # Get original data from shareddata so we can check the type of colorvar
