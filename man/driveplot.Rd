@@ -68,9 +68,11 @@ of the companion graphs. If provided, it should be the same length as ys.}
 \item{spacing}{A value between 0 and 1 for the space between the
 companion graphs.}
 
-\item{width}{The width of the plot map, e.g. "100\%" or "400px"}
+\item{width}{The width of the plot map, provided as a string with one of the
+following units: \%, vh, vw, or px (e.g., "100\%" or "400px")}
 
-\item{height}{The height of the plot map, e.g., "100vh" or 400px".}
+\item{height}{The height of the plot map, provided as a string with one of
+the following units: \%, vh, vw, or px (e.g., "100\%" or "400px")}
 }
 \value{
 A linked plot map.

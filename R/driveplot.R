@@ -28,8 +28,10 @@
 #' @param plottitle The title for the plot map.
 #' @param spacing A value between 0 and 1 for the space between the
 #'   companion graphs.
-#' @param width The width of the plot map, e.g. "100%" or "400px"
-#' @param height The height of the plot map, e.g., "100vh" or 400px".
+#' @param width The width of the plot map, provided as a string with one of the
+#'   following units: %, vh, vw, or px (e.g., "100%" or "400px")
+#' @param height The height of the plot map, provided as a string with one of
+#'   the following units: %, vh, vw, or px (e.g., "100%" or "400px")
 #' @returns A linked plot map.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom htmltools tags HTML browsable
@@ -84,6 +86,21 @@ driveplot <- function(shareddata,
       style = "text-align: center; margin-top: 0px; margin-bottom: 20px;
       font-family: Arial, sans-serif; flex-shrink: 0;"
     )
+  }
+
+  if (is.numeric(width) || is.numeric(height)) {
+    stop(
+      'Arguments `width` and `height` must be provided as strings,
+      e.g., "100%" or "400px".',
+      call. = FALSE
+    )
+  }
+
+  if (isFALSE(grepl("%|vh|vw|px", width)) ||
+      isFALSE(grepl("%|vh|vw|px", height))) {
+    stop('Arguments `width` and `height` must be provided as strings
+          with one of the following units: %, vh, vw, or px.',
+         call. = FALSE)
   }
 
   plot_map <- driveplot_map(

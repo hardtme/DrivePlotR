@@ -151,6 +151,63 @@ test_that("provide geometry column but not x and ys", {
   )
 })
 
+test_that("width and height are not numeric", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Check width
+  expect_error(
+    driveplot(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph,
+      width = 100,
+      height = "100vh"
+    ),
+    'Arguments `width` and `height` must be provided as strings,
+      e.g., "100%" or "400px".'
+  )
+
+  # Check height
+  expect_error(
+    driveplot(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph,
+      width = "100%",
+      height = 100
+    ),
+    'Arguments `width` and `height` must be provided as strings,
+      e.g., "100%" or "400px".'
+  )
+})
+
+test_that("width and height use a correct unit", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  # Check width
+  expect_error(
+    driveplot(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph,
+      width = "100",
+      height = "100vh"
+    ),
+    "Arguments `width` and `height` must be provided as strings
+          with one of the following units: %, vh, vw, or px."
+  )
+  # Check height
+  expect_error(
+    driveplot(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph,
+      width = "100%",
+      height = "100p"
+    ),
+    "Arguments `width` and `height` must be provided as strings
+          with one of the following units: %, vh, vw, or px."
+  )
+})
+
 # Test calls to driveplot_companions() ----
 test_that("x not provided", {
   shared_drive <- crosstalk::SharedData$new(drive7)
