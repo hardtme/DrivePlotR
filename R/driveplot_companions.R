@@ -58,7 +58,7 @@ driveplot_companions <- function(shareddata,
                                  showlegend = TRUE,
                                  legendtitle = NULL,
                                  spacing = 0.05,
-                                 plotheight = "98vh") {
+                                 plotheight = "100vh") {
   shareddata <- convert_to_SharedData(shareddata)
 
   quoys <- enquo(ys)

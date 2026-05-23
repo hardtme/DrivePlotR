@@ -15,7 +15,7 @@ driveplot_companions(
   showlegend = TRUE,
   legendtitle = NULL,
   spacing = 0.05,
-  plotheight = "98vh"
+  plotheight = "100vh"
 )
 }
 \arguments{
