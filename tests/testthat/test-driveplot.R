@@ -78,14 +78,18 @@ test_that("don't throw error when lat/lng can be inferred", {
     'Assuming "gps_long" and "gps_lat" are longitude and latitude, respectively'
   )
   drive1rename <- drive1 |>
-    dplyr::rename(latitude = gps_lat,
-                  longitude = gps_long)
+    dplyr::rename(
+      latitude = gps_lat,
+      longitude = gps_long
+    )
   drive1renameshared <- crosstalk::SharedData$new(drive1rename)
   expect_message(
-    driveplot(shareddata = drive1renameshared,
-              x = time_cst,
-              ys = speed_mph),
-  'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
+    driveplot(
+      shareddata = drive1renameshared,
+      x = time_cst,
+      ys = speed_mph
+    ),
+    'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
   )
 })
 

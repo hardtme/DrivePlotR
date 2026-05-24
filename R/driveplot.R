@@ -97,10 +97,11 @@ driveplot <- function(shareddata,
   }
 
   if (isFALSE(grepl("%|vh|vw|px", width)) ||
-      isFALSE(grepl("%|vh|vw|px", height))) {
-    stop('Arguments `width` and `height` must be provided as strings
-          with one of the following units: %, vh, vw, or px.',
-         call. = FALSE)
+    isFALSE(grepl("%|vh|vw|px", height))) {
+    stop("Arguments `width` and `height` must be provided as strings
+          with one of the following units: %, vh, vw, or px.",
+      call. = FALSE
+    )
   }
 
   plot_map <- driveplot_map(

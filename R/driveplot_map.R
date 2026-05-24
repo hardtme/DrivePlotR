@@ -127,6 +127,5 @@ driveplot_map <- function(shareddata,
         )
     })))
   }
-    plot_map
-
+  plot_map
 }
