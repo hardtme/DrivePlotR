@@ -102,8 +102,6 @@ driveplot(
 )
 ```
 
-<!-- Delete?-->
-
 DrivePlotR provides users with a straightforward way to transform data
 columns right when they are specified. In the example below, speed in
 miles per hour (MPH) is converted to kilometers per hour (KPH), while
