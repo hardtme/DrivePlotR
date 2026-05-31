@@ -24,7 +24,7 @@
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #'   scale_fill_viridis_d ylab xlab labs aes
-#' @importFrom plotly ggplotly layout highlight hide_guides
+#' @importFrom plotly ggplotly layout highlight hide_guides config
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -200,6 +200,13 @@ driveplot_companion <- function(shareddata,
     scatterplotly <- scatterplotly |>
       hide_guides()
   }
+
+  scatterplotly <- scatterplotly |>
+    config(displaylogo = FALSE,
+           modeBarButtonsToRemove = c("toImage",
+                                      "hoverClosestCartesian",
+                                      "hoverCompareCartesian"
+                   ))
 
   scatterplotly
 }
