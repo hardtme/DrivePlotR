@@ -8,7 +8,6 @@
 #' @export
 #' @examples
 #' leaflet_color_palettes()
-
 leaflet_color_palettes <- function() {
   c("viridis", "magma", "inferno", "plasma")
 }

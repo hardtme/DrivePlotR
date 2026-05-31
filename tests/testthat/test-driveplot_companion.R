@@ -170,13 +170,13 @@ test_that("no error when colorpalette is specified without colorvar", {
 
 test_that("default viridis palette takes over when colorvar is specified
           without colorpalette", {
-            shared_drive <- crosstalk::SharedData$new(drive7)
-            expect_no_error(
-              driveplot_companion(
-                shareddata = shared_drive,
-                x = time_cst,
-                y = speed_mph,
-                colorvar = gps_pdop
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = gps_pdop
     )
   )
 })

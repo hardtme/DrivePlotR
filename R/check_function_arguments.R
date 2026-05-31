@@ -141,21 +141,28 @@ check_lnglat <- function(shareddata, lng, lat) {
 #'   identify latitude and longitude columns in the data (TRUE) or not (FALSE)?
 #' @returns List with latitude and longitude column names.
 #' @keywords internal
-guess_lat_long_cols <- function (names, stopOnFailure = TRUE) {
+guess_lat_long_cols <- function(names, stopOnFailure = TRUE) {
   lats <- names[grep("^(lat|latitude)|(lat|latitude)$",
-                     names, ignore.case = TRUE)]
+    names,
+    ignore.case = TRUE
+  )]
   lngs <- names[grep("^(lon|lng|long|longitude)|(lon|lng|long|longitude)$",
-                     names, ignore.case = TRUE)]
+    names,
+    ignore.case = TRUE
+  )]
   if (length(lats) == 1 && length(lngs) == 1) {
     if (length(names) > 2) {
-      message("Assuming \"", lngs, "\" and \"", lats,
-              "\" are longitude and latitude, respectively")
+      message(
+        "Assuming \"", lngs, "\" and \"", lats,
+        "\" are longitude and latitude, respectively"
+      )
     }
     return(list(lng = lngs, lat = lats))
   }
   if (stopOnFailure) {
     stop("Couldn't infer longitude/latitude columns",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
   list(lng = NA, lat = NA)
 }
@@ -219,4 +226,3 @@ check_colorpalette <- function(shareddata,
   }
   colorpalette
 }
-
