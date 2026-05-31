@@ -132,3 +132,25 @@ driveplot(
   plottitle = "A Drive in Omaha, NE"
 )
 ```
+
+To activate the selection box on the map, click the selection button
+below the +/- zoom buttons in the upper left corner of the map. A
+selection box will then appear on the map. You can move the selection
+box by clicking on the 9 dots in the upper left corner of the selection
+box and dragging the selection box to the desired location. Use the
+white squares in the corners of the selection box to resize the box. Any
+points that fall within the selection box on the map will also be
+selected on the companion graphs. To remove the selection box from the
+map, click on the X button below the +/- zoom buttons in the upper left
+corner of the map. To clear the corresponding selection on the companion
+graphs, double-click anywhere within the plotting area of one of the
+companion graphs.
+
+To see the interaction tools for the companion graphs, hover over the
+top of the first companion graph in the stack. A modebar with a
+selection of buttons will appear. From left to right, the buttons are:
+Zoom, Pan, Box Select, Lasso Select, Zoom in, Zoom out, Autoscale, and
+Reset axes. Click a button to interact with the plot map. Points you
+select on the companion graphs will also be selected on the map.
+Double-click anywhere within the plotting area of one of the companion
+graphs to reset the companion graphs.
