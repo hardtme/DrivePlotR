@@ -66,11 +66,11 @@ test_that("throw error when colorvar is misspecified", {
 
 test_that("default viridis palette takes over when colorvar is specified
           without colorpalette", {
-            shared_drive <- crosstalk::SharedData$new(drive7)
-            expect_no_error(
-              driveplot_map(
-                shareddata = shared_drive,
-                colorvar = gps_pdop
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorvar = gps_pdop
     )
   )
 })
@@ -106,8 +106,10 @@ test_that("don't throw error when lat/lng can be inferred", {
     'Assuming "gps_long" and "gps_lat" are longitude and latitude, respectively'
   )
   drive1rename <- drive1 |>
-    dplyr::rename(latitude = gps_lat,
-                  longitude = gps_long)
+    dplyr::rename(
+      latitude = gps_lat,
+      longitude = gps_long
+    )
   drive1renameshared <- crosstalk::SharedData$new(drive1rename)
   expect_message(
     driveplot_map(shareddata = drive1renameshared),
@@ -118,8 +120,10 @@ test_that("don't throw error when lat/lng can be inferred", {
 test_that("throw error when there are multiple candidates for lat/lng", {
   drive1mod <- nds_data |>
     dplyr::filter(drive == 1) |>
-    dplyr::mutate(latitude = gps_lat,
-                  longitude = gps_long)
+    dplyr::mutate(
+      latitude = gps_lat,
+      longitude = gps_long
+    )
   drive1modshared <- crosstalk::SharedData$new(drive1mod)
   expect_error(
     driveplot_map(shareddata = drive1modshared),
@@ -136,27 +140,3 @@ test_that("throw error when sf column geometry type isn't POINT", {
     driveplot_map(shareddata = drive7_ls_sd)
   )
 })
-
-# test_that("mapheight is in CSS units", {
-#   drive1 <- nds_data |>
-#     dplyr::filter(drive == 1)
-#   drive1shared <- crosstalk::SharedData$new(drive1)
-#   expect_error(
-#     driveplot_map(
-#       shareddata = drive1shared,
-#       lng = gps_long,
-#       lat = gps_lat,
-#       mapheight = "100"
-#     ),
-#     "Must specify `mapheight` in CSS units, e.g., '98vh'"
-#   )
-#   expect_error(
-#     driveplot_map(
-#       shareddata = drive1shared,
-#       lng = gps_long,
-#       lat = gps_lat,
-#       mapheight = 100
-#     ),
-#     "Must specify `mapheight` in CSS units, e.g., '98vh'"
-#   )
-# })
