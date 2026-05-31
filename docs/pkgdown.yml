@@ -1,9 +1,8 @@
-pandoc: 3.6.3
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles:
-  DrivePlotR: DrivePlotR.html
-last_built: 2026-05-21T21:22Z
+articles: {}
+last_built: 2026-05-31T16:12Z
 urls:
   reference: https://hardtme.github.io/DrivePlotR/reference
   article: https://hardtme.github.io/DrivePlotR/articles

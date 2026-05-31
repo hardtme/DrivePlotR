@@ -17,8 +17,7 @@ from just over 2 hours to just 45 secs."></head><body>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/DrivePlotR.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -47,7 +46,7 @@ from just over 2 hours to just 45 secs.</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A tibble with 23187 rows and 37 columns</p><dl><dt>drive</dt>
+    <p>A tibble with 23187 rows and 35 columns</p><dl><dt>drive</dt>
 <dd><p>integer, identifier for a drive; a drive is defined as the
 time between starting the car and turning it off again.</p></dd>
 
@@ -58,59 +57,74 @@ time between starting the car and turning it off again.</p></dd>
 <dd><p>POSIXct time stamp for each observation in Central time</p></dd>
 
 
-</dl><p>GPS based measurements for each observation:</p><dl><dt>gps_long</dt>
-<dd><p>numeric, geographic longitude</p></dd>
+</dl><p>GPS-based measurements for each observation:</p><dl><dt>gps_long</dt>
+<dd><p>numeric, geographic longitude in degrees with CRS WGS84</p></dd>
 
 <dt>gps_lat</dt>
-<dd><p>numeric, geographic latitude</p></dd>
+<dd><p>numeric, geographic latitude in degrees with CRS WGS84</p></dd>
 
 <dt>gps_elevation</dt>
 <dd><p>numeric, elevation above sea-level (in m)</p></dd>
 
 <dt>gps_heading</dt>
-<dd><p>numeric, direction of the car (in degrees)</p></dd>
+<dd><p>numeric, continuity-corrected direction of the car
+(in degrees with north at 0 degrees and increasing clockwise) as measured
+by GPS. The continuity correction takes the initial GPS heading and adds
+the cumulative sum of the changes in GPS heading for the subsequent
+observations.</p></dd>
 
 <dt>gps_fix</dt>
-<dd><p>numeric</p></dd>
+<dd><p>numeric, value specifying the adequacy of the GPS fix, where
+0 = no fix, 1 = time only, 2 = 2D fix, 3 = 3D fix. A gps_fix of 3 is
+needed for good GPS data.</p></dd>
 
 <dt>gps_sats</dt>
 <dd><p>integer, the number of satellites covering a position.</p></dd>
 
 <dt>gps_pdop</dt>
-<dd><p>numeric, total dilution of precision</p></dd>
+<dd><p>numeric, position dilution of precision, an overall GPS
+data quality measure (lower is better)</p></dd>
 
 <dt>gps_hdop</dt>
-<dd><p>numeric, horizontal dilution of precision</p></dd>
+<dd><p>numeric, horizontal dilution of precision, a GPS quality
+measure for latitude/longitude data (lower is better)</p></dd>
 
 <dt>gps_vdop</dt>
-<dd><p>numeric, vertical dilution of precision</p></dd>
+<dd><p>numeric, vertical dilution of precision, a GPS quality
+measure for elevation data (lower is better)</p></dd>
 
 <dt>speed_mph</dt>
 <dd><p>numeric, speed of the vehicle (in miles per hour)</p></dd>
 
 <dt>speed_source</dt>
-<dd><p>character, one of "gps" or "obd"</p></dd>
+<dd><p>character, the source of the reported speed, either
+"gps" or "obd"</p></dd>
 
 <dt>distance_miles</dt>
-<dd><p>numeric, distance travelled during a drive
+<dd><p>numeric, distance traveled during a drive
 (in miles)</p></dd>
 
 
 </dl><p>Measurements by the on-board gyroscope:</p><dl><dt>accel_x</dt>
-<dd><p>numeric, forward acceleration (in g)</p></dd>
+<dd><p>numeric, measure of vehicle acceleration along the
+front-back (longitudinal) axis (in g)</p></dd>
 
 <dt>accel_y</dt>
-<dd><p>numeric, sidewards acceleration (in g)</p></dd>
+<dd><p>numeric, measure of vehicle acceleration along the
+right-left (lateral) axis (in g)</p></dd>
 
 <dt>accel_z</dt>
-<dd><p>numeric, upwards acceleration (in g)</p></dd>
+<dd><p>numeric, measure of acceleration of the vehicle in the
+up-down plane (normal/yaw axis) (in g)</p></dd>
 
 <dt>accel_event</dt>
-<dd><p>binary, did an acceleration event occur? 0/1</p></dd>
+<dd><p>numeric, sequential (over time) variable marking when
+consecutive acceleration values (absolute value of accel_x/y) exceed a
+threshold of 0.35g for a minimum of 1 second</p></dd>
 
 <dt>accel_event_cat</dt>
-<dd><p>character, categorization of acceleration event
-in low, medium, and high</p></dd>
+<dd><p>character, severity categorization of acceleration event
+into low (0.35-0.44g), medium (0.45-0.59g), and high (&gt;0.6g)</p></dd>
 
 <dt>gyro_x</dt>
 <dd><p>numeric, angular rotation rate about the right-to-left
@@ -118,50 +132,61 @@ axis (in degrees/sec)</p></dd>
 
 <dt>gyro_y</dt>
 <dd><p>numeric, angular rotation rate about the
-forward-to-backward axis.</p></dd>
+forward-to-backward axis (in degrees/sec)</p></dd>
 
 <dt>gyro_z</dt>
-<dd><p>numeric, angular rotation rate about the up-to-down axis.</p></dd>
+<dd><p>numeric, angular rotation rate about the up-to-down axis (in
+degrees/sec)</p></dd>
 
 <dt>gyro_heading</dt>
 <dd><p>numeric, calculated heading utilizing compass data
-and gyro data (in degrees). Note that we use non-standard congruence
-classes for continuity of consecutive values.</p></dd>
+and gyro data (in degrees with north at 0 degrees and increasing
+clockwise). Note that we use non-standard congruence classes for continuity
+of consecutive values. Due to errors in the raw gyro heading, we use the
+initial GPS heading value as the initial heading value and then subtract
+the cumulative sum of gyro_z for the subsequent observations to calculate
+gyro_heading.</p></dd>
 
 <dt>grav_x</dt>
 <dd><p>numeric, lateral gravity (in g)</p></dd>
 
 <dt>grav_y</dt>
-<dd><p>numeric, longitudinal gravity</p></dd>
+<dd><p>numeric, longitudinal gravity (in g)</p></dd>
 
 <dt>grav_z</dt>
-<dd><p>numeric, gravity (up-down)</p></dd>
+<dd><p>numeric, gravity (up-down) (in g)</p></dd>
 
 <dt>roll</dt>
 <dd><p>numeric, angle about the forward-to-backward axis.
-0 = level, positive = tilted to the left</p></dd>
+0 = level, positive = tilted to the left (in degrees)</p></dd>
 
 <dt>pitch</dt>
-<dd><p>numeric, angle about the left-to-right axis.
-0 = level, positive = tilted downward (i.e., vehicle going downhill)</p></dd>
+<dd><p>numeric, angle about the left-to-right axis where
+0 = level, positive = tilted downward (i.e., vehicle going downhill) (in
+degrees)</p></dd>
 
 <dt>engine_rpm</dt>
 <dd><p>numeric, current engine revolutions per minute value</p></dd>
 
 <dt>engine_throttle</dt>
-<dd><p>numeric, percentage of engine throttle (0-100)</p></dd>
+<dd><p>numeric, engine throttle as a percentage (0-100%)</p></dd>
 
 <dt>cumulative_drive_dist_mi</dt>
-<dd><p>numeric</p></dd>
+<dd><p>numeric, the cumulative distance driven in
+miles at each observation</p></dd>
 
 <dt>gps_minute</dt>
-<dd><p>factor</p></dd>
+<dd><p>factor, the minute component of the timestamp for each
+observation (00 to 59)</p></dd>
 
-<dt>gps_heading_raw</dt>
-<dd><p>numeric, gps heading modulo 360</p></dd>
+
+</dl><p>Raw heading measurements:</p><dl><dt>gps_heading_raw</dt>
+<dd><p>numeric, raw GPS heading without continuity
+correction (in degrees)</p></dd>
 
 <dt>gyro_heading_raw</dt>
-<dd><p>numeric, gyro heading modulo 360</p></dd>
+<dd><p>numeric, raw gyro heading without continuity
+correction (in degrees)</p></dd>
 
 
 </dl></div>
