@@ -168,6 +168,7 @@ driveplot <- function(shareddata,
   )
 
   final_plotmap <- browsable(container)
+  class(final_plotmap) <- c(class(final_plotmap), "htmlwidget")
 
   final_plotmap
 }

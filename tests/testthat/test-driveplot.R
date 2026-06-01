@@ -537,3 +537,14 @@ test_that("add a title to the plot map", {
     )
   )
 })
+
+test_that("plot map has htmlwidget class", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  testplotmap <- driveplot(
+    shareddata = shared_drive,
+    x = time_cst,
+    ys = list(speed_mph, gyro_heading),
+    plottitle = "Speed (MPH) and Gyro Heading for a Drive"
+  )
+  expect_s3_class(testplotmap, class = "htmlwidget")
+})
