@@ -23,3 +23,4 @@ The leaflet color palette to be used in \code{driveplot_map()}.
 \description{
 Helper function for internal use only
 }
+\keyword{internal}

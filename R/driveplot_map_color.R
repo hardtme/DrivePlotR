@@ -12,6 +12,7 @@
 #' @importFrom viridisLite viridis
 #' @importFrom rlang eval_tidy
 #' @importFrom dplyr n_distinct
+#' @keywords internal
 driveplot_map_color <- function(colorvarnumeric,
                                 colorpalette,
                                 quocolor,
