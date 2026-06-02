@@ -89,7 +89,7 @@ test_that("don't throw error when lat/lng can be inferred", {
       x = time_cst,
       ys = speed_mph
     ),
-    'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
+  'Assuming "longitude" and "latitude" are longitude and latitude, respectively'
   )
 })
 
