@@ -17,7 +17,7 @@ Description: Create interactive, linked plot maps for multivariate
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: 
     leaflet,
     plotly (>= 4.10.4),
