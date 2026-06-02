@@ -202,11 +202,14 @@ driveplot_companion <- function(shareddata,
   }
 
   scatterplotly <- scatterplotly |>
-    config(displaylogo = FALSE,
-           modeBarButtonsToRemove = c("toImage",
-                                      "hoverClosestCartesian",
-                                      "hoverCompareCartesian"
-                   ))
+    config(
+      displaylogo = FALSE,
+      modeBarButtonsToRemove = c(
+        "toImage",
+        "hoverClosestCartesian",
+        "hoverCompareCartesian"
+      )
+    )
 
   scatterplotly
 }
