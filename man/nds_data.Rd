@@ -49,8 +49,8 @@ up-down plane (normal/yaw axis) (in g)}
 \item{accel_event}{numeric, sequential (over time) variable marking when
 consecutive acceleration values (absolute value of accel_x/y) exceed a
 threshold of 0.35g for a minimum of 1 second}
-\item{accel_event_cat}{character, severity categorization of acceleration event
-into low (0.35-0.44g), medium (0.45-0.59g), and high (>0.6g)}
+\item{accel_event_cat}{character, severity categorization of acceleration
+event into low (0.35-0.44g), medium (0.45-0.59g), and high (>0.6g)}
 \item{gyro_x}{numeric, angular rotation rate about the right-to-left
 axis (in degrees/sec)}
 \item{gyro_y}{numeric, angular rotation rate about the
