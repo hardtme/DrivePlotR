@@ -16,6 +16,12 @@ naturalistic driving studies and connected vehicles.
 
 ## Installation
 
+You can install DrivePlotR from CRAN with:
+
+``` r
+install.packages("DrivePlotR")
+```
+
 You can install the development version of DrivePlotR from
 [GitHub](https://github.com/hardtme/DrivePlotR) with:
 

@@ -25,6 +25,12 @@ The goal of DrivePlotR is to produce linked plot maps for multivariate high-reso
 
 ## Installation
 
+You can install DrivePlotR from CRAN with:
+
+``` r
+install.packages("DrivePlotR")
+```
+
 You can install the development version of DrivePlotR from [GitHub](https://github.com/hardtme/DrivePlotR) with:
 
 ``` r

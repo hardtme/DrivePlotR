@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">DrivePlotR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of DrivePlotR from <a href="https://github.com/hardtme/DrivePlotR" class="external-link">GitHub</a> with:</p>
+<p>You can install DrivePlotR from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"DrivePlotR"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of DrivePlotR from <a href="https://github.com/hardtme/DrivePlotR" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"hardtme/DrivePlotR"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -66,26 +69,26 @@
 <ol style="list-style-type: decimal">
 <li>Load DrivePlotR and make drive data available in the R session. We have made non-sensitive drives from a naturalistic driving study available as part of the DrivePlotR package, but any other data with both geographic and temporal components would also be suitable. Each row in the data must represent one observation from the vehicle trajectory.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hardtme.github.io/DrivePlotR/">DrivePlotR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"drive7"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Establish the geographic variables and projection. Setting the geographic projection to WGS84 ensures that data points are compatible with Leaflet maps. This is already done for the example dataset <code>drive7</code> included with the package.</p></li>
 <li><p>Convert the drive data into a shared data frame.</p></li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">shared_drive</span> <span class="op">&lt;-</span> <span class="fu">crosstalk</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">SharedData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">drive7</span><span class="op">)</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Create visualizations.</li>
 </ol>
 <p>Although the main purpose of DrivePlotR is to create linked visualizations with a map and one to four companion graphs, users can also create maps or companion graphs separately.</p>
 <p>You can create a basic standalone map with the following code:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot_map.html">driveplot_map</a></span><span class="op">(</span></span>
 <span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>You can also create a standalone companion graph as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot_companion.html">driveplot_companion</a></span><span class="op">(</span></span>
 <span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>,</span>
 <span>  x <span class="op">=</span> <span class="va">time_cst</span>,</span>
@@ -94,7 +97,7 @@
 <span>  ylabel <span class="op">=</span> <span class="st">"Speed (MPH)"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>DrivePlotR offers many options for customization. For example, the following code creates a more complex linked plot map. The companion graphs include speed, gyroscopic heading (the direction the vehicle is moving), and GPS position dilution of precision (PDOP,a measure of the quality of the GPS location data). The points on both the map and the companion graphs are colored by the minute of the drive during which they occurred.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot.html">driveplot</a></span><span class="op">(</span></span>
 <span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>,</span>
 <span>  x <span class="op">=</span> <span class="va">time_cst</span>,</span>
@@ -109,7 +112,7 @@
 <span>  plottitle <span class="op">=</span> <span class="st">"A Drive in Omaha, NE"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>DrivePlotR provides users with a straightforward way to transform data columns right when they are specified. In the example below, speed in miles per hour (MPH) is converted to kilometers per hour (KPH), while gyro heading numbers are translated into general directions (N, S, E, W).</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/driveplot.html">driveplot</a></span><span class="op">(</span></span>
 <span>  shareddata <span class="op">=</span> <span class="va">shared_drive</span>,</span>
 <span>  x <span class="op">=</span> <span class="va">time_cst</span>,</span>
