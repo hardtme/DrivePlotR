@@ -73,10 +73,6 @@ driveplot_map <- function(shareddata,
     lat = {{ quolat }}
   )
 
-  # if (isFALSE(grepl("vh", mapheight))) {
-  #   stop("Must specify `mapheight` in CSS units, e.g., '98vh'")
-  # }
-
   # Create color palettes
   if (is.null(colorvarnumeric)) {
     quocolor <- 0
