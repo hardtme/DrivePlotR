@@ -1,8 +1,7 @@
-#' Check the arguments provided to `driveplot_companion()`, `driveplot_map()`,
-#'   and `driveplot_map()`
+# Check the arguments provided to `driveplot_companion()`, `driveplot_map()`,
+# and `driveplot_map()`
 
 #' Check the x and y arguments for `driveplot_companion()`
-#'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
 #' @param arg The `x` or `y` argument provided to the calling function.
@@ -43,7 +42,6 @@ check_xy <- function(shareddata, arg, argname) {
 
 #' Check the colorvar argument for `driveplot_companion()`
 #'   and `driveplot_map()`
-#'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
 #' @param colorvar The `colorvar` argument provided to the calling function.
@@ -78,7 +76,6 @@ check_colorvar <- function(shareddata, colorvar) {
 }
 
 #' Check the latitude and longitude for `driveplot_map()`
-#'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
 #' @param lng The `lng` argument provided to the calling function.
@@ -128,14 +125,11 @@ check_lnglat <- function(shareddata, lng, lat) {
 }
 
 #' Guess latitude and longitude column names
-#'
+#' Helper function for internal use only.
 #' Adapted from the leaflet function `guessLatLongCols`. Rather than looking for
 #'   the exact variable names lat or latitude, the regular expression allows for
 #'   variables that start or end with lat/latitude for latitude; similarly for
 #'   longitude.
-#'
-#' Helper function for internal use only.
-#'
 #' @param names Vector of column names.
 #' @param stopOnFailure Should the function throw an error when it cannot
 #'   identify latitude and longitude columns in the data (TRUE) or not (FALSE)?
@@ -169,7 +163,6 @@ guess_lat_long_cols <- function(names, stopOnFailure = TRUE) {
 
 
 #' Check the `ylabels` argument for `driveplot_companions()`
-#'
 #' Helper function for internal use only.
 #' @param ylabels A vector or list of labels provided to the calling function.
 #' @param ylength The length of the ys argument from the calling function.
@@ -202,7 +195,6 @@ check_ylabels <- function(ylabels, ylength) {
 }
 
 #' Establish the default behavior for colorpalette
-#'
 #' Helper function for internal use only.
 #' @param shareddata The SharedData object provided to the calling function.
 #' @param colorvar The `colorvar` argument provided to the calling function.

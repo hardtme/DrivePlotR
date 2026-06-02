@@ -2,7 +2,8 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_lnglat}
 \alias{check_lnglat}
-\title{Check the latitude and longitude for \code{driveplot_map()}}
+\title{Check the latitude and longitude for \code{driveplot_map()}
+Helper function for internal use only.}
 \usage{
 check_lnglat(shareddata, lng, lat)
 }
@@ -19,6 +20,7 @@ geometry column is provided, return a dataframe of the points derived from
 the geometry column.
 }
 \description{
+Check the latitude and longitude for \code{driveplot_map()}
 Helper function for internal use only.
 }
 \keyword{internal}

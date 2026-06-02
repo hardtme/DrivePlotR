@@ -3,7 +3,8 @@
 \name{check_colorvar}
 \alias{check_colorvar}
 \title{Check the colorvar argument for \code{driveplot_companion()}
-and \code{driveplot_map()}}
+and \code{driveplot_map()}
+Helper function for internal use only.}
 \usage{
 check_colorvar(shareddata, colorvar)
 }
@@ -18,6 +19,8 @@ A value indicating whether colorvar is not a column in the data
 not a numeric column in the data (FALSE).
 }
 \description{
+Check the colorvar argument for \code{driveplot_companion()}
+and \code{driveplot_map()}
 Helper function for internal use only.
 }
 \keyword{internal}

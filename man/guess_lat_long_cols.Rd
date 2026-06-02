@@ -2,7 +2,12 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{guess_lat_long_cols}
 \alias{guess_lat_long_cols}
-\title{Guess latitude and longitude column names}
+\title{Guess latitude and longitude column names
+Helper function for internal use only.
+Adapted from the leaflet function \code{guessLatLongCols}. Rather than looking for
+the exact variable names lat or latitude, the regular expression allows for
+variables that start or end with lat/latitude for latitude; similarly for
+longitude.}
 \usage{
 guess_lat_long_cols(names, stopOnFailure = TRUE)
 }
@@ -16,12 +21,11 @@ identify latitude and longitude columns in the data (TRUE) or not (FALSE)?}
 List with latitude and longitude column names.
 }
 \description{
+Guess latitude and longitude column names
+Helper function for internal use only.
 Adapted from the leaflet function \code{guessLatLongCols}. Rather than looking for
 the exact variable names lat or latitude, the regular expression allows for
 variables that start or end with lat/latitude for latitude; similarly for
 longitude.
-}
-\details{
-Helper function for internal use only.
 }
 \keyword{internal}

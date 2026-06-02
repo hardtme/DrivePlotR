@@ -2,7 +2,8 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_colorpalette}
 \alias{check_colorpalette}
-\title{Establish the default behavior for colorpalette}
+\title{Establish the default behavior for colorpalette
+Helper function for internal use only.}
 \usage{
 check_colorpalette(shareddata, colorvar = NULL, colorpalette = NULL)
 }
@@ -18,6 +19,7 @@ function.}
 The color palette to be used for the visualization.
 }
 \description{
+Establish the default behavior for colorpalette
 Helper function for internal use only.
 }
 \keyword{internal}

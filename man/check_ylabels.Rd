@@ -2,7 +2,8 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_ylabels}
 \alias{check_ylabels}
-\title{Check the \code{ylabels} argument for \code{driveplot_companions()}}
+\title{Check the \code{ylabels} argument for \code{driveplot_companions()}
+Helper function for internal use only.}
 \usage{
 check_ylabels(ylabels, ylength)
 }
@@ -15,6 +16,7 @@ check_ylabels(ylabels, ylength)
 Either \code{ylabels} or a list of NULL of length \code{ylength}.
 }
 \description{
+Check the \code{ylabels} argument for \code{driveplot_companions()}
 Helper function for internal use only.
 }
 \keyword{internal}

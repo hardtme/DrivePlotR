@@ -2,9 +2,8 @@
 % Please edit documentation in R/check_function_arguments.R
 \name{check_xy}
 \alias{check_xy}
-\title{Check the arguments provided to \code{driveplot_companion()}, \code{driveplot_map()},
-and \code{driveplot_map()}
-Check the x and y arguments for \code{driveplot_companion()}}
+\title{Check the x and y arguments for \code{driveplot_companion()}
+Helper function for internal use only.}
 \usage{
 check_xy(shareddata, arg, argname)
 }
@@ -20,6 +19,7 @@ The result of the argument tidily evaluated in the environment
 of the original data from \code{shareddata}.
 }
 \description{
+Check the x and y arguments for \code{driveplot_companion()}
 Helper function for internal use only.
 }
 \keyword{internal}
