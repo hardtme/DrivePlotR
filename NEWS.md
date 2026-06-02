@@ -1,3 +1,3 @@
-# DrivePlotR (development version)
+# DrivePlotR 0.1.0
 
 * Initial CRAN submission.
