@@ -1,5 +1,5 @@
 Package: DrivePlotR
-Title: Linked Plot Maps for Multivariate High-Resolution Spatiotemporal Data
+Title: Linked Plot Maps for Multivariate High-Resolution Spatio-Temporal Data
 Version: 0.1.0
 Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu", 
            role = c("aut", "cre", "cph"),
@@ -11,7 +11,7 @@ Authors@R: c(person("Marie", "Hardt", email = "hardtme@iastate.edu",
            role = "ctb",
            comment = c(ORCID = "0000-0002-5205-2190")))
 Description: Create interactive, linked plot maps for multivariate 
-    high-resolution spatiotemporal data, such as vehicle trajectories. 
+    high-resolution spatio-temporal data, such as vehicle trajectories. 
     You can explore the spatial, temporal, and multivariate aspects 
     of the data simultaneously.
 License: MIT + file LICENSE
