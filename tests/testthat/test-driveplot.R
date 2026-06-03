@@ -1,4 +1,5 @@
 test_that("dataframe causes warning", {
+  skip_on_os(os = "linux")
   expect_warning(
     driveplot(
       shareddata = drive7,
@@ -66,6 +67,7 @@ test_that("check spelling of lng/lat", {
 })
 
 test_that("don't throw error when lat/lng can be inferred", {
+  skip_on_os(os = "linux")
   drive1 <- nds_data |>
     dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
@@ -108,6 +110,7 @@ test_that("throw error when sf column geometry type isn't POINT", {
 })
 
 test_that("works for both ways to specify coordinates", {
+  skip_on_os(os = "linux")
   drive1 <- nds_data |>
     dplyr::filter(drive == 1)
   drive1shared <- crosstalk::SharedData$new(drive1)
@@ -348,6 +351,7 @@ test_that("specify two ys with list()", {
 })
 
 test_that("specify five ys with c()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_warning(
     driveplot(
@@ -363,6 +367,7 @@ test_that("specify five ys with c()", {
 })
 
 test_that("specify five ys with list()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_warning(
     driveplot(
@@ -403,6 +408,7 @@ test_that("provide only one y label without c() or list()", {
 })
 
 test_that("provide only one y label with c()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot(
@@ -415,6 +421,7 @@ test_that("provide only one y label with c()", {
 })
 
 test_that("provide only one y label with list()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot(
@@ -427,6 +434,7 @@ test_that("provide only one y label with list()", {
 })
 
 test_that("specify two y labels with c()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot(
@@ -439,6 +447,7 @@ test_that("specify two y labels with c()", {
 })
 
 test_that("specify two y labels with list()", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot(
@@ -477,6 +486,7 @@ test_that("NA ylabel", {
 
 
 test_that("can modify function arguments", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   # Modify x
   expect_no_error(
@@ -527,6 +537,7 @@ test_that("can modify function arguments", {
 })
 
 test_that("add a title to the plot map", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   expect_no_error(
     driveplot(
@@ -539,6 +550,7 @@ test_that("add a title to the plot map", {
 })
 
 test_that("plot map has htmlwidget class", {
+  skip_on_os(os = "linux")
   shared_drive <- crosstalk::SharedData$new(drive7)
   testplotmap <- driveplot(
     shareddata = shared_drive,

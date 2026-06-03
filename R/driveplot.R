@@ -37,6 +37,8 @@
 #' @importFrom htmltools tags HTML browsable
 #' @export
 #' @examples
+#' ## Only run examples in interactive R sessions
+#' if (interactive()) {
 #' library(crosstalk)
 #' data(drive7)
 #' shared_drive <- SharedData$new(drive7)
@@ -59,6 +61,7 @@
 #'   plottitle = "A drive with points colored by gyro heading",
 #'   height = "500px"
 #' )
+#' }
 driveplot <- function(shareddata,
                       lng = NULL,
                       lat = NULL,
