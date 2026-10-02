@@ -12,7 +12,8 @@ driveplot_map(
   label = NA,
   colorpalette = NULL,
   fillopacity = 1,
-  mapheight = "100vh"
+  mapheight = "100vh",
+  tileprovider = "OpenStreetMap"
 )
 }
 \arguments{
@@ -40,6 +41,9 @@ provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided b
 \item{fillopacity}{The opacity of the fill of the map points (0 to 1).}
 
 \item{mapheight}{The height of the map, e.g, "100vh" or 400px".}
+
+\item{tileprovider}{The name of the provider for the basemap tiles. Options
+can be found by running \code{leaflet::providers}. Defaults to "OpenStreetMap".}
 }
 \value{
 A leaflet map.

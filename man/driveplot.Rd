@@ -21,7 +21,8 @@ driveplot(
   plottitle = NULL,
   spacing = 0.05,
   width = "100\%",
-  height = "100vh"
+  height = "100vh",
+  tileprovider = "OpenStreetMap"
 )
 }
 \arguments{
@@ -72,7 +73,10 @@ companion graphs.}
 following units: \%, vh, vw, or px (e.g., "100\%" or "400px")}
 
 \item{height}{The height of the plot map, provided as a string with one of
-the following units: \%, vh, vw, or px (e.g., "100\%" or "400px")}
+the following units: \%, vh, vw, or px (e.g., "100\%" or "400px").}
+
+\item{tileprovider}{The name of the provider for the basemap tiles. Options
+can be found by running \code{leaflet::providers}. Defaults to "OpenStreetMap".}
 }
 \value{
 A linked plot map.
@@ -81,6 +85,8 @@ A linked plot map.
 Create a vehicle trajectory plot map
 }
 \examples{
+## Only run examples in interactive R sessions
+if (interactive()) {
 library(crosstalk)
 data(drive7)
 shared_drive <- SharedData$new(drive7)
@@ -103,4 +109,5 @@ driveplot(
   plottitle = "A drive with points colored by gyro heading",
   height = "500px"
 )
+}
 }
