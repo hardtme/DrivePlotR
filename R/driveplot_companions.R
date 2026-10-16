@@ -25,7 +25,8 @@
 #'   or "400px".
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr
+#' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr is_call
+#'   quo_is_missing
 #' @importFrom plotly layout subplot style
 #' @export
 #' @examples
@@ -62,12 +63,24 @@ driveplot_companions <- function(shareddata,
   shareddata <- convert_to_SharedData(shareddata)
 
   quoys <- enquo(ys)
+  if(quo_is_missing(quoys)) {
+    stop("argument is missing, with no default",
+         call. = FALSE)
+  } else {
+    exprys <- quo_get_expr(quoys)
+  }
+  # Check for values of ys like c(y) * 2 or list(y) * 2
+  if (is_call(exprys) && is_call(exprys[[2]], name = c("c", "list"))) {
+    stop("Transformations must occur inside `c()` or `list()`,
+          e.g., `c(y * 2)` or `list(y * 2)`, not `c(y) * 2` or `list(y) * 2`.",
+         call. = FALSE)
+    }
   # Allow different syntax for a single y variable
   # E.g., ys = c(speed_mph) and ys = speed_mph both work
-  if (quo_is_call(quoys)) {
+  if (quo_is_call(quoys, name = c("c", "list"))) {
     yslist <- call_args(quoys)
   } else {
-    yslist <- as.list(quo_get_expr(quoys))
+    yslist <- list(exprys)
   }
 
   ogdata <- shareddata$origData()

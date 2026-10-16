@@ -404,7 +404,31 @@ test_that("can modify function arguments", {
       ys = c(speed_mph, gyro_heading)
     )
   )
-  # Modify one y
+  # Modify y
+  expect_no_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = speed_mph * 1.609
+    )
+  )
+  # Modify y outside c()
+  expect_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = c(speed_mph) * 1.609
+    )
+  )
+  # Modify y outside list()
+  expect_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = list(speed_mph) * 1.609
+    )
+  )
+  # Modify one y inside c()
   expect_no_error(
     driveplot_companions(
       shareddata = shared_drive,
@@ -412,12 +436,28 @@ test_that("can modify function arguments", {
       ys = c(speed_mph * 1.609, gyro_heading)
     )
   )
-  # Modify two ys
+  # Modify one y inside list()
+  expect_no_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = list(speed_mph * 1.609, gyro_heading)
+    )
+  )
+  # Modify two ys inside c()
   expect_no_error(
     driveplot_companions(
       shareddata = shared_drive,
       x = time_cst,
       ys = c(speed_mph * 1.609, gyro_heading %% 360)
+    )
+  )
+  # Modify two ys inside list()
+  expect_no_error(
+    driveplot_companions(
+      shareddata = shared_drive,
+      x = time_cst,
+      ys = list(speed_mph * 1.609, gyro_heading %% 360)
     )
   )
   # Modify colorvar
