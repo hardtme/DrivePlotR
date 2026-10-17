@@ -143,7 +143,7 @@ driveplot_companions <- function(shareddata,
       style(showlegend = FALSE, traces = (ncolors + 1):(ncolors * ylength))
   }
   plotlysubplot <- plotlysubplot |>
-    layout(font = list(family = "sans-serif"))
+    layout(font = list(family = "sans-serif"), hovermode = "x unified")
   plotlysubplot$sizingPolicy$defaultHeight <- plotheight
   plotlysubplot$sizingPolicy$defaultWidth <- "100%"
   plotlysubplot
