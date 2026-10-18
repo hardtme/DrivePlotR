@@ -9,5 +9,6 @@
 #' @examples
 #' leaflet_color_palettes()
 leaflet_color_palettes <- function() {
-  c("viridis", "magma", "inferno", "plasma")
+  c("viridis", "magma", "inferno", "plasma",
+    "cividis", "rocket", "mako", "turbo")
 }
