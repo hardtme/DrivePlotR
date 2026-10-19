@@ -101,7 +101,7 @@ test_that("throw error when x or y is NULL", {
 test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
   # Construct comparison error message
-  palettes <- leaflet_color_palettes()
+  palettes <- viridis_color_palettes()
   error_msg <- paste(
     paste(shQuote(palettes[-length(palettes)]),
       collapse = ", "

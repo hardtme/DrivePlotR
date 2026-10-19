@@ -9,7 +9,7 @@
 #'   color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   with leaflet. Run `viridis_color_palettes()` to see the available options
 #'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
 #'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
 #'   `colorpalette` is not, `colorpalette` defaults to the color palette
@@ -92,7 +92,7 @@ driveplot_companion <- function(shareddata,
   )
 
   if (is.null(colorvarnumeric) &&
-    !(colorpalette %in% leaflet_color_palettes())) {
+    !(colorpalette %in% viridis_color_palettes())) {
     # {{ colorvar }} isn't a column in the data and
     # viridis palette isn't specified
     gg <- ggplot(data = shareddata) +
@@ -105,11 +105,11 @@ driveplot_companion <- function(shareddata,
       ) +
       theme_bw()
   } else if (!is.null(colorvarnumeric) &&
-    !(colorpalette %in% leaflet_color_palettes())) {
+    !(colorpalette %in% viridis_color_palettes())) {
     # {{ colorvar }} is a column in the data and
     # a viridis palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
-    palettes <- leaflet_color_palettes()
+    palettes <- viridis_color_palettes()
     error_msg <- paste(
       paste(shQuote(palettes[-length(palettes)]),
         collapse = ", "
@@ -121,7 +121,7 @@ driveplot_companion <- function(shareddata,
       call. = FALSE
     )
   } else if (is.null(colorvarnumeric) &&
-    colorpalette %in% leaflet_color_palettes()) {
+    colorpalette %in% viridis_color_palettes()) {
     # {{ colorvar }} is not a column in the data and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
@@ -135,7 +135,7 @@ driveplot_companion <- function(shareddata,
       ) +
       theme_bw()
   } else if (isTRUE(colorvarnumeric) &&
-    colorpalette %in% leaflet_color_palettes()) {
+    colorpalette %in% viridis_color_palettes()) {
     # {{ colorvar }} is a numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +
@@ -148,7 +148,7 @@ driveplot_companion <- function(shareddata,
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
   } else if (isFALSE(colorvarnumeric) &&
-    colorpalette %in% leaflet_color_palettes()) {
+    colorpalette %in% viridis_color_palettes()) {
     # {{ colorvar }} is a non-numeric column in the data and
     # a viridis palette is specified
     gg <- ggplot(data = shareddata) +

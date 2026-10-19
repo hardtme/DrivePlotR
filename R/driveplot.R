@@ -14,7 +14,7 @@
 #' @param maplabel An optional label for the map points.
 #' @param colorpalette The color palette for the plot; either a single
 #'   color (e.g., "red") or one of the viridis color palettes compatible
-#'   with leaflet. Run `leaflet_color_palettes()` to see the available options
+#'   with leaflet. Run `viridis_color_palettes()` to see the available options
 #'   for viridis color palettes. If `colorvar` and `colorpalette` are both not
 #'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
 #'   `colorpalette` is not, `colorpalette` defaults to the color palette
