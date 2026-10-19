@@ -95,6 +95,64 @@ test_that("ColorBrewer palette works", {
   )
 })
 
+test_that("check custom colors from user", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  drive7mod <- drive7
+  drive7mod$accel_event_cat[200] <- "medium"
+  drive7mod$accel_event_cat[205] <- "high"
+  drive7mod$accel_event_cat_factor <- factor(
+    drive7mod$accel_event_cat,levels = c("low", "medium", "high")
+    )
+  shared_drivemod <- crosstalk::SharedData$new(drive7mod)
+  # colorvar is not specified
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorpalette = c("red", "black")
+    )
+  )
+  # numeric colorvar is specified with two colors
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorvar = gyro_heading,
+      colorpalette = c("red", "black")
+    )
+  )
+  # numeric colorvar is specified with four colors
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorvar = gyro_heading,
+      colorpalette = c("orange", "yellow", "green", "blue")
+    )
+  )
+  # character colorvar with the right number of colors
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drivemod,
+      colorvar = accel_event_cat_factor,
+      colorpalette = c("green", "yellow", "red")
+    )
+  )
+  # character colorvar with more colors than non-NA values
+  expect_no_error(
+    driveplot_map(
+      shareddata = shared_drive,
+      colorvar = accel_event_cat,
+      colorpalette = c("orange", "yellow", "green", "blue")
+    )
+  )
+  # character colorvar with fewer colors than non-NA values
+  expect_error(
+    driveplot_map(
+      shareddata = shared_drivemod,
+      colorvar = accel_event_cat,
+      colorpalette = c("orange", "blue")
+    )
+  )
+})
+
 test_that("missing sf geometry column throws error when
           lat/lng not provided and not inferred", {
   drive1 <- nds_data |>

@@ -24,7 +24,7 @@
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #'   scale_fill_viridis_d ylab xlab labs aes scale_fill_brewer
-#'   scale_fill_distiller
+#'   scale_fill_distiller scale_fill_manual scale_fill_gradientn
 #' @importFrom plotly ggplotly layout highlight hide_guides config
 #' @importFrom RColorBrewer brewer.pal
 #' @export
@@ -93,9 +93,45 @@ driveplot_companion <- function(shareddata,
     colorpalette = colorpalette
   )
 
+  palettelength <- length(colorpalette)
+
+  if (palettelength > 1){
+    if (is.null(colorvarnumeric)) {
+      gg <- ggplot(data = shareddata) +
+        geom_point(aes(x = !!quox, y = !!quoy),
+                   shape = 21,
+                   stroke = 0.05,
+                   fill = colorpalette[1],
+                   color = "dimgray",
+                   show.legend = showlegend
+        ) +
+        theme_bw()
+    } else if(isTRUE(colorvarnumeric)) {
+      gg <- ggplot(data = shareddata) +
+        geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+                   shape = 21,
+                   stroke = 0.05,
+                   color = "dimgray",
+                   show.legend = showlegend
+        ) +
+        scale_fill_gradientn(colors = colorpalette, na.value = "dimgray") +
+        theme_bw()
+    } else if(isFALSE(colorvarnumeric)) {
+      gg <- ggplot(data = shareddata) +
+        geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+                   shape = 21,
+                   stroke = 0.05,
+                   color = "dimgray",
+                   show.legend = showlegend
+        ) +
+        scale_fill_manual(values = colorpalette, na.value = "dimgray") +
+        theme_bw()
+    }
+  } else {
+  # Single color or viridis or ColorBrewer palette
   if (is.null(colorvarnumeric) &&
-    !(colorpalette %in% viridis_color_palettes()) &&
-    !(colorpalette %in% colorbrewer_color_palettes())) {
+      !(colorpalette %in% viridis_color_palettes()) &&
+      !(colorpalette %in% colorbrewer_color_palettes())) {
     # {{ colorvar }} isn't a column in the data and a viridis or
     # ColorBrewer palette isn't specified
     gg <- ggplot(data = shareddata) +
@@ -110,7 +146,7 @@ driveplot_companion <- function(shareddata,
   } else if (!is.null(colorvarnumeric) &&
     !(colorpalette %in% viridis_color_palettes()) &&
     !(colorpalette %in% colorbrewer_color_palettes())) {
-    # {{ colorvar }} is a column in the data and viridis or
+    # {{ colorvar }} is a column in the data and a viridis or
     # ColorBrewer palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
     stop(
@@ -187,6 +223,7 @@ driveplot_companion <- function(shareddata,
                           direction = 1) +
         theme_bw()
     }
+  }
   }
 
   # Remove the y-axis title because we will use a plotly annotation for it

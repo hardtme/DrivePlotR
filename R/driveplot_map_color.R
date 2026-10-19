@@ -17,25 +17,82 @@ driveplot_map_color <- function(colorvarnumeric,
                                 colorpalette,
                                 quocolor,
                                 ogdata) {
+
+  palettelength <- length(colorpalette)
+
+  if (palettelength > 1) {
+  if (is.null(colorvarnumeric)) {
+    colorpal <- colorFactor(
+      palette = colorpalette[1],
+      domain = NULL,
+      na.color = "dimgray"
+    )
+  } else if (isTRUE(colorvarnumeric)) {
+    colorpal <- colorNumeric(
+      palette = colorpalette,
+      domain = eval_tidy(quocolor, data = ogdata),
+      na.color = "dimgray"
+    )
+  } else if (isFALSE(colorvarnumeric)) {
+    colorvals <- eval_tidy(quocolor, data = ogdata)
+    ncolors <- colorvals |>
+      n_distinct(na.rm = TRUE)
+    if (is.factor(colorvals)) {
+      colorvals <- droplevels(colorvals)
+    }
+    if (palettelength == ncolors) {
+      # number of colors in palette = number of colors needed
+      colorpal <- colorFactor(
+        palette = colorpalette, # keep all colors
+        domain = colorvals,
+        na.color = "dimgray"
+      )
+    } else if (palettelength > ncolors) {
+      # number of colors in palette > number of colors needed
+      colorpal <- colorFactor(
+        palette = colorpalette[1:ncolors], # keep only necessary colors
+        domain = colorvals,
+        na.color = "dimgray"
+      )
+    } else {
+      # number of colors in palette < number of colors needed
+      stop(
+        paste0("Insufficient colors in manual scale. ", ncolors,
+               " needed but only ", palettelength, " provided."),
+        call. = FALSE
+      )
+    }
+  }
+  } else {
   if (is.null(colorvarnumeric) &&
+      !(colorpalette %in% viridis_color_palettes()) &&
+      !(colorpalette %in% colorbrewer_color_palettes())) {
+    colorpal <- colorFactor(
+      palette = colorpalette,
+      domain = NULL,
+      na.color = "dimgray"
+    )
+  } else if (is.null(colorvarnumeric) &&
     colorpalette %in% viridis_color_palettes()) {
     colorpal <- colorFactor(
       palette = viridis(n = 1, option = colorpalette),
       domain = NULL,
       na.color = "dimgray"
     )
+  } else if (!is.null(colorvarnumeric) &&
+             !(colorpalette %in% viridis_color_palettes()) &&
+             !(colorpalette %in% colorbrewer_color_palettes())) {
+      # {{ colorvar }} is a column in the data and a viridis or
+      # ColorBrewer palette isn't specified
+      # Throw an error if a color variable is specified, but not a color palette
+      stop(
+      "When specifying colorvar, please use a viridis or ColorBrewer palette.",
+      call. = FALSE
+      )
   } else if (is.null(colorvarnumeric) &&
              colorpalette %in% colorbrewer_color_palettes()) {
     colorpal <- colorFactor(
       palette = brewer.pal(n = 3, name = colorpalette)[1],
-      domain = NULL,
-      na.color = "dimgray"
-    )
-  } else if (is.null(colorvarnumeric) &&
-    !(colorpalette %in% viridis_color_palettes()) &&
-    !(colorpalette %in% colorbrewer_color_palettes())) {
-    colorpal <- colorFactor(
-      palette = colorpalette,
       domain = NULL,
       na.color = "dimgray"
     )
@@ -80,6 +137,7 @@ driveplot_map_color <- function(colorvarnumeric,
       domain = colorvals,
       na.color = "dimgray"
     )
+  }
   }
   colorpal
 }

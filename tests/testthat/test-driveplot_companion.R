@@ -101,7 +101,7 @@ test_that("throw error when x or y is NULL", {
 test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
 
-  # Specify a single color for colorpalette
+  # Specify a single color for colorpalette along with colorvar
   expect_error(
     driveplot_companion(
       shareddata = shared_drive,
@@ -166,6 +166,15 @@ test_that("no error when colorpalette is specified without colorvar", {
       colorpalette = "plasma"
     )
   )
+  # Specify a ColorBrewer color palette
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorpalette = "Set2"
+    )
+  )
 })
 
 test_that("default viridis palette takes over when colorvar is specified
@@ -177,6 +186,63 @@ test_that("default viridis palette takes over when colorvar is specified
       x = time_cst,
       y = speed_mph,
       colorvar = gps_pdop
+    )
+  )
+})
+
+test_that("check custom colors from user", {
+  shared_drive <- crosstalk::SharedData$new(drive7)
+  drive7mod <- drive7
+  drive7mod$accel_event_cat[200] <- "medium"
+  drive7mod$accel_event_cat[250] <- "high"
+  shared_drivemod <- crosstalk::SharedData$new(drive7mod)
+  # colorvar is not specified
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorpalette = c("black", "red")
+    )
+  )
+  # numeric colorvar is specified with two colors
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = gyro_heading,
+      colorpalette = c("black", "red")
+    )
+  )
+  # numeric colorvar is specified with four colors
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = gyro_heading,
+      colorpalette = c("orange", "yellow", "green", "blue")
+    )
+  )
+  # character colorvar with more colors than non-NA values
+  expect_no_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = accel_event_cat,
+      colorpalette = c("orange", "yellow", "green", "blue")
+    )
+  )
+  # character colorvar with fewer colors than non-NA values
+  expect_error(
+    driveplot_companion(
+      shareddata = shared_drivemod,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = accel_event_cat,
+      colorpalette = c("orange", "blue")
     )
   )
 })
