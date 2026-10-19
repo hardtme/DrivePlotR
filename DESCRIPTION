@@ -27,7 +27,8 @@ Imports:
     htmltools,
     rlang (>= 1.1.6),
     viridisLite,
-    rmarkdown
+    rmarkdown,
+    RColorBrewer
 Depends: 
     R (>= 4.1)
 LazyData: true

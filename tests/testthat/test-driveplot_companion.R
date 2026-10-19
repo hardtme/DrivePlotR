@@ -100,16 +100,6 @@ test_that("throw error when x or y is NULL", {
 
 test_that("throw error when colorvar is specified, but wrong colorpalette", {
   shared_drive <- crosstalk::SharedData$new(drive7)
-  # Construct comparison error message
-  palettes <- viridis_color_palettes()
-  error_msg <- paste(
-    paste(shQuote(palettes[-length(palettes)]),
-      collapse = ", "
-    ), "or",
-    shQuote(palettes[length(palettes)])
-  )
-  compare_msg <- paste0("When specifying colorvar, please use
-         colorpalette = ", error_msg)
 
   # Specify a single color for colorpalette
   expect_error(
@@ -120,18 +110,17 @@ test_that("throw error when colorvar is specified, but wrong colorpalette", {
       colorvar = gps_pdop,
       colorpalette = "black"
     ),
-    compare_msg
+    "When specifying colorvar, please use a viridis or ColorBrewer palette."
   )
-  # Specify a different color palette, such as a ColorBrewer palette
-  expect_error(
+  # Specify a ColorBrewer palette
+  expect_no_error(
     driveplot_companion(
       shareddata = shared_drive,
       x = time_cst,
       y = speed_mph,
       colorvar = gps_pdop,
       colorpalette = "Blues"
-    ),
-    compare_msg
+    )
   )
   # Misspell a viridis color palette
   expect_error(
@@ -142,7 +131,18 @@ test_that("throw error when colorvar is specified, but wrong colorpalette", {
       colorvar = gps_pdop,
       colorpalette = "mamga"
     ),
-    compare_msg
+    "When specifying colorvar, please use a viridis or ColorBrewer palette."
+  )
+  # Misspell a ColorBrewer color palette
+  expect_error(
+    driveplot_companion(
+      shareddata = shared_drive,
+      x = time_cst,
+      y = speed_mph,
+      colorvar = gps_pdop,
+      colorpalette = "Blus"
+    ),
+    "When specifying colorvar, please use a viridis or ColorBrewer palette."
   )
 })
 

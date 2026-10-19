@@ -23,8 +23,10 @@
 #' @importFrom rlang enquo quo_set_env global_env as_label
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#'   scale_fill_viridis_d ylab xlab labs aes
+#'   scale_fill_viridis_d ylab xlab labs aes scale_fill_brewer
+#'   scale_fill_distiller
 #' @importFrom plotly ggplotly layout highlight hide_guides config
+#' @importFrom RColorBrewer brewer.pal
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -92,9 +94,10 @@ driveplot_companion <- function(shareddata,
   )
 
   if (is.null(colorvarnumeric) &&
-    !(colorpalette %in% viridis_color_palettes())) {
-    # {{ colorvar }} isn't a column in the data and
-    # viridis palette isn't specified
+    !(colorpalette %in% viridis_color_palettes()) &&
+    !(colorpalette %in% colorbrewer_color_palettes())) {
+    # {{ colorvar }} isn't a column in the data and a viridis or
+    # ColorBrewer palette isn't specified
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy),
         shape = 21,
@@ -105,19 +108,13 @@ driveplot_companion <- function(shareddata,
       ) +
       theme_bw()
   } else if (!is.null(colorvarnumeric) &&
-    !(colorpalette %in% viridis_color_palettes())) {
-    # {{ colorvar }} is a column in the data and
-    # a viridis palette isn't specified
+    !(colorpalette %in% viridis_color_palettes()) &&
+    !(colorpalette %in% colorbrewer_color_palettes())) {
+    # {{ colorvar }} is a column in the data and viridis or
+    # ColorBrewer palette isn't specified
     # Throw an error if a color variable is specified, but not a color palette
-    palettes <- viridis_color_palettes()
-    error_msg <- paste(
-      paste(shQuote(palettes[-length(palettes)]),
-        collapse = ", "
-      ), "or",
-      shQuote(palettes[length(palettes)])
-    )
-    stop(paste0("When specifying colorvar, please use
-         colorpalette = ", error_msg),
+    stop(
+      "When specifying colorvar, please use a viridis or ColorBrewer palette.",
       call. = FALSE
     )
   } else if (is.null(colorvarnumeric) &&
@@ -134,6 +131,20 @@ driveplot_companion <- function(shareddata,
         show.legend = showlegend
       ) +
       theme_bw()
+  } else if (is.null(colorvarnumeric) &&
+             colorpalette %in% colorbrewer_color_palettes()) {
+    # {{ colorvar }} is not a column in the data and
+    # a ColorBrewer palette is specified
+    # Make plot using the first color from the specified ColorBrewer color scale
+    gg <- ggplot(data = shareddata) +
+      geom_point(aes(x = !!quox, y = !!quoy),
+                 shape = 21,
+                 stroke = 0.05,
+                 fill = brewer.pal(n = 3, name = colorpalette)[1],
+                 color = "dimgray",
+                 show.legend = showlegend
+      ) +
+      theme_bw()
   } else if (isTRUE(colorvarnumeric) &&
     colorpalette %in% viridis_color_palettes()) {
     # {{ colorvar }} is a numeric column in the data and
@@ -147,6 +158,19 @@ driveplot_companion <- function(shareddata,
       ) +
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
+  } else if (isTRUE(colorvarnumeric) &&
+             colorpalette %in% colorbrewer_color_palettes()) {
+    # {{ colorvar }} is a numeric column in the data and
+    # a ColorBrewer palette is specified
+    gg <- ggplot(data = shareddata) +
+      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+                 shape = 21,
+                 stroke = 0.05,
+                 color = "dimgray",
+                 show.legend = showlegend
+      ) +
+      scale_fill_distiller(palette = colorpalette, na.value = "dimgray") +
+      theme_bw()
   } else if (isFALSE(colorvarnumeric) &&
     colorpalette %in% viridis_color_palettes()) {
     # {{ colorvar }} is a non-numeric column in the data and
@@ -159,6 +183,19 @@ driveplot_companion <- function(shareddata,
         show.legend = showlegend
       ) +
       scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
+      theme_bw()
+  } else if (isFALSE(colorvarnumeric) &&
+             colorpalette %in% colorbrewer_color_palettes()) {
+    # {{ colorvar }} is a non-numeric column in the data and
+    # a ColorBrewer palette is specified
+    gg <- ggplot(data = shareddata) +
+      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+                 shape = 21,
+                 stroke = 0.05,
+                 color = "dimgray",
+                 show.legend = showlegend
+      ) +
+      scale_fill_brewer(palette = colorpalette, na.value = "dimgray") +
       theme_bw()
   }
 
