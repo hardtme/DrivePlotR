@@ -145,58 +145,48 @@ driveplot_companion <- function(shareddata,
                  show.legend = showlegend
       ) +
       theme_bw()
-  } else if (isTRUE(colorvarnumeric) &&
-    colorpalette %in% viridis_color_palettes()) {
-    # {{ colorvar }} is a numeric column in the data and
-    # a viridis palette is specified
+  } else if (isTRUE(colorvarnumeric)) {
+    # {{ colorvar }} is a numeric column in the data
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
         color = "dimgray",
         show.legend = showlegend
-      ) +
+      )
+    if (colorpalette %in% viridis_color_palettes()){
+      # Use a viridis palette
+      gg <- gg +
       scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
       theme_bw()
-  } else if (isTRUE(colorvarnumeric) &&
-             colorpalette %in% colorbrewer_color_palettes()) {
-    # {{ colorvar }} is a numeric column in the data and
-    # a ColorBrewer palette is specified
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
-                 shape = 21,
-                 stroke = 0.05,
-                 color = "dimgray",
-                 show.legend = showlegend
-      ) +
-      scale_fill_distiller(palette = colorpalette, na.value = "dimgray") +
-      theme_bw()
-  } else if (isFALSE(colorvarnumeric) &&
-    colorpalette %in% viridis_color_palettes()) {
-    # {{ colorvar }} is a non-numeric column in the data and
-    # a viridis palette is specified
+    } else {
+      # Use a ColorBrewer palette
+      gg <- gg +
+        scale_fill_distiller(palette = colorpalette, na.value = "dimgray",
+                             direction = 1) +
+        theme_bw()
+    }
+  } else if (isFALSE(colorvarnumeric)) {
+    # {{ colorvar }} is a non-numeric column in the data
     gg <- ggplot(data = shareddata) +
       geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
         color = "dimgray",
         show.legend = showlegend
-      ) +
-      scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
-      theme_bw()
-  } else if (isFALSE(colorvarnumeric) &&
-             colorpalette %in% colorbrewer_color_palettes()) {
-    # {{ colorvar }} is a non-numeric column in the data and
-    # a ColorBrewer palette is specified
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
-                 shape = 21,
-                 stroke = 0.05,
-                 color = "dimgray",
-                 show.legend = showlegend
-      ) +
-      scale_fill_brewer(palette = colorpalette, na.value = "dimgray") +
-      theme_bw()
+      )
+    if (colorpalette %in% viridis_color_palettes()){
+      # Use a viridis palette
+      gg <- gg +
+        scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
+        theme_bw()
+    } else {
+      # Use a ColorBrewer palette
+      gg <- gg +
+        scale_fill_brewer(palette = colorpalette, na.value = "dimgray",
+                          direction = 1) +
+        theme_bw()
+    }
   }
 
   # Remove the y-axis title because we will use a plotly annotation for it
