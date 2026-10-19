@@ -25,7 +25,15 @@ driveplot_map_color <- function(colorvarnumeric,
       na.color = "dimgray"
     )
   } else if (is.null(colorvarnumeric) &&
-    !(colorpalette %in% viridis_color_palettes())) {
+             colorpalette %in% colorbrewer_color_palettes()) {
+    colorpal <- colorFactor(
+      palette = brewer.pal(n = 3, name = colorpalette)[1],
+      domain = NULL,
+      na.color = "dimgray"
+    )
+  } else if (is.null(colorvarnumeric) &&
+    !(colorpalette %in% viridis_color_palettes()) &&
+    !(colorpalette %in% colorbrewer_color_palettes())) {
     colorpal <- colorFactor(
       palette = colorpalette,
       domain = NULL,
@@ -37,7 +45,8 @@ driveplot_map_color <- function(colorvarnumeric,
       domain = eval_tidy(quocolor, data = ogdata),
       na.color = "dimgray"
     )
-  } else if (isFALSE(colorvarnumeric)) {
+  } else if (isFALSE(colorvarnumeric) &&
+             colorpalette %in% viridis_color_palettes()) {
     colorvals <- eval_tidy(quocolor, data = ogdata)
     ncolors <- colorvals |>
       n_distinct(na.rm = TRUE)
@@ -49,6 +58,19 @@ driveplot_map_color <- function(colorvarnumeric,
         n = ncolors,
         option = colorpalette
       ),
+      domain = colorvals,
+      na.color = "dimgray"
+    )
+  } else if (isFALSE(colorvarnumeric) &&
+             colorpalette %in% colorbrewer_color_palettes()) {
+    colorvals <- eval_tidy(quocolor, data = ogdata)
+    ncolors <- colorvals |>
+      n_distinct(na.rm = TRUE)
+    if (is.factor(colorvals)) {
+      colorvals <- droplevels(colorvals)
+    }
+    colorpal <- colorFactor(
+      palette = brewer.pal(n = ncolors, name = colorpalette),
       domain = colorvals,
       na.color = "dimgray"
     )
