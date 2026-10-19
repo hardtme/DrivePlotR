@@ -69,8 +69,14 @@ driveplot_map_color <- function(colorvarnumeric,
     if (is.factor(colorvals)) {
       colorvals <- droplevels(colorvals)
     }
+    brewercols <- suppressWarnings(
+      brewer.pal(n = ncolors, name = colorpalette)
+    )
+    if (ncolors < 3) {
+      brewercols <- brewercols[1:ncolors]
+    }
     colorpal <- colorFactor(
-      palette = brewer.pal(n = ncolors, name = colorpalette),
+      palette = brewercols,
       domain = colorvals,
       na.color = "dimgray"
     )
