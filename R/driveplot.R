@@ -9,6 +9,8 @@
 #'   on the horizontal axis.
 #' @param ys A vector or list of bare (unquoted) columns from shareddata to be
 #'   plotted on the vertical axes of the companion graphs.
+#' @param group The bare (unquoted) column from shareddata for the grouping
+#'   variable.
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
 #' @param maplabel An optional label for the map points.
@@ -69,6 +71,7 @@ driveplot <- function(shareddata,
                       lat = NULL,
                       x,
                       ys,
+                      group = NULL,
                       colorvar = NULL,
                       maplabel = NA,
                       colorpalette = NULL,
@@ -125,6 +128,7 @@ driveplot <- function(shareddata,
     shareddata = shareddata,
     x = {{ x }},
     ys = {{ ys }},
+    group = {{ group }},
     colorvar = {{ colorvar }},
     xlabel = xlabel,
     ylabels = ylabels,

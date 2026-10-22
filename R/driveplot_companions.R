@@ -7,6 +7,8 @@
 #'   plotted on the vertical axes of the companion graphs.
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
+#' @param group The bare (unquoted) column from shareddata for the grouping
+#'   variable.
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabels A vector or list of labels for the vertical axes
 #'   of the companion graphs. If provided, it should be the same length as ys.
@@ -53,6 +55,7 @@ driveplot_companions <- function(shareddata,
                                  x,
                                  ys,
                                  colorvar = NULL,
+                                 group = NULL,
                                  xlabel = NULL,
                                  ylabels = NULL,
                                  colorpalette = NULL,
@@ -107,6 +110,7 @@ driveplot_companions <- function(shareddata,
         shareddata = shareddata,
         x = {{ x }},
         y = {{ var }},
+        group = {{ group }},
         colorvar = {{ colorvar }},
         colorpalette = colorpalette,
         xlabel = xlabel,

@@ -10,6 +10,7 @@ driveplot(
   lat = NULL,
   x,
   ys,
+  group = NULL,
   colorvar = NULL,
   maplabel = NA,
   colorpalette = NULL,
@@ -39,6 +40,9 @@ on the horizontal axis.}
 
 \item{ys}{A vector or list of bare (unquoted) columns from shareddata to be
 plotted on the vertical axes of the companion graphs.}
+
+\item{group}{The bare (unquoted) column from shareddata for the grouping
+variable.}
 
 \item{colorvar}{The bare (unquoted) column in shareddata to which color
 should be mapped.}

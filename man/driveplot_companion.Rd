@@ -8,6 +8,7 @@ driveplot_companion(
   shareddata,
   x,
   y,
+  group = NULL,
   colorvar = NULL,
   colorpalette = NULL,
   xlabel = NULL,
@@ -24,6 +25,9 @@ on the horizontal axis.}
 
 \item{y}{The bare (unquoted) column from shareddata to be plotted
 on the vertical axis.}
+
+\item{group}{The bare (unquoted) column from shareddata for the grouping
+variable.}
 
 \item{colorvar}{The bare (unquoted) column in shareddata to which
 color should be mapped.}

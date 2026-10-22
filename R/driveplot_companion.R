@@ -5,6 +5,8 @@
 #'   on the horizontal axis.
 #' @param y The bare (unquoted) column from shareddata to be plotted
 #'   on the vertical axis.
+#' @param group The bare (unquoted) column from shareddata for the grouping
+#'   variable.
 #' @param colorvar The bare (unquoted) column in shareddata to which
 #'   color should be mapped.
 #' @param colorpalette The color palette for the plot; either a single
@@ -20,11 +22,11 @@
 #' @param legendtitle The title for the plot legend.
 #' @returns A plotly scatterplot.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom rlang enquo quo_set_env global_env as_label
+#' @importFrom rlang enquo quo_set_env global_env as_label quo_is_null
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
 #'   scale_fill_viridis_d ylab xlab labs aes scale_fill_brewer
-#'   scale_fill_distiller scale_fill_manual scale_fill_gradientn
+#'   scale_fill_distiller scale_fill_manual scale_fill_gradientn geom_line
 #' @importFrom plotly ggplotly layout highlight hide_guides config
 #' @importFrom RColorBrewer brewer.pal
 #' @export
@@ -55,6 +57,7 @@
 driveplot_companion <- function(shareddata,
                                 x,
                                 y,
+                                group = NULL,
                                 colorvar = NULL,
                                 colorpalette = NULL,
                                 xlabel = NULL,
@@ -67,6 +70,7 @@ driveplot_companion <- function(shareddata,
   quox <- quo_set_env(quox, global_env())
   quoy <- enquo(y)
   quoy <- quo_set_env(quoy, global_env())
+  quogroup <- enquo(group)
   quocolor <- enquo(colorvar)
 
   check_x <- check_xy(
@@ -95,10 +99,23 @@ driveplot_companion <- function(shareddata,
 
   palettelength <- length(colorpalette)
 
+  gg <- ggplot(data = shareddata,
+               mapping = aes(x = !!quox, y = !!quoy))
+
+  # Add the grouping variable, if provided
+  if (quo_is_null(quogroup)) {
+    # No grouping variable provided
+    gg <- gg + aes(group = 1)
+  } else {
+    # Grouping variable provided
+    gg <- gg + aes(group = !!quogroup)
+  }
+
   if (palettelength > 1){
     if (is.null(colorvarnumeric)) {
-      gg <- ggplot(data = shareddata) +
-        geom_point(aes(x = !!quox, y = !!quoy),
+      gg <- gg +
+        geom_line(color = "dimgray") +
+        geom_point(
                    shape = 21,
                    stroke = 0.05,
                    fill = colorpalette[1],
@@ -107,8 +124,9 @@ driveplot_companion <- function(shareddata,
         ) +
         theme_bw()
     } else if(isTRUE(colorvarnumeric)) {
-      gg <- ggplot(data = shareddata) +
-        geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+      gg <- gg +
+        geom_line(color = "dimgray") +
+        geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
                    color = "dimgray",
@@ -117,8 +135,9 @@ driveplot_companion <- function(shareddata,
         scale_fill_gradientn(colors = colorpalette, na.value = "dimgray") +
         theme_bw()
     } else if(isFALSE(colorvarnumeric)) {
-      gg <- ggplot(data = shareddata) +
-        geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+      gg <- gg +
+        geom_line(color = "dimgray") +
+        geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
                    color = "dimgray",
@@ -134,8 +153,9 @@ driveplot_companion <- function(shareddata,
       !(colorpalette %in% colorbrewer_color_palettes())) {
     # {{ colorvar }} isn't a column in the data and a viridis or
     # ColorBrewer palette isn't specified
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy),
+    gg <- gg +
+      geom_line(color = "dimgray") +
+      geom_point(
         shape = 21,
         stroke = 0.05,
         fill = colorpalette,
@@ -158,8 +178,9 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} is not a column in the data and
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy),
+    gg <- gg +
+      geom_line(color = "dimgray") +
+      geom_point(
         shape = 21,
         stroke = 0.05,
         fill = viridis(n = 1, option = colorpalette),
@@ -172,8 +193,9 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} is not a column in the data and
     # a ColorBrewer palette is specified
     # Make plot using the first color from the specified ColorBrewer color scale
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy),
+    gg <- gg +
+      geom_line(color = "dimgray") +
+      geom_point(
                  shape = 21,
                  stroke = 0.05,
                  fill = brewer.pal(n = 3, name = colorpalette)[1],
@@ -183,8 +205,9 @@ driveplot_companion <- function(shareddata,
       theme_bw()
   } else if (isTRUE(colorvarnumeric)) {
     # {{ colorvar }} is a numeric column in the data
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+    gg <- gg +
+      geom_line(color = "dimgray") +
+      geom_point(aes(fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
         color = "dimgray",
@@ -204,8 +227,9 @@ driveplot_companion <- function(shareddata,
     }
   } else if (isFALSE(colorvarnumeric)) {
     # {{ colorvar }} is a non-numeric column in the data
-    gg <- ggplot(data = shareddata) +
-      geom_point(aes(x = !!quox, y = !!quoy, fill = !!quocolor),
+    gg <- gg +
+      geom_line(color = "dimgray") +
+      geom_point(aes(fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
         color = "dimgray",

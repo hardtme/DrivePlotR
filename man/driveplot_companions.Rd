@@ -9,6 +9,7 @@ driveplot_companions(
   x,
   ys,
   colorvar = NULL,
+  group = NULL,
   xlabel = NULL,
   ylabels = NULL,
   colorpalette = NULL,
@@ -29,6 +30,9 @@ plotted on the vertical axes of the companion graphs.}
 
 \item{colorvar}{The bare (unquoted) column in shareddata to which color
 should be mapped.}
+
+\item{group}{The bare (unquoted) column from shareddata for the grouping
+variable.}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 
