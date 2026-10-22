@@ -143,8 +143,10 @@ driveplot_companions <- function(shareddata,
     if (any(is.na(tidy_color))) {
       ncolors <- ncolors + 1
     }
+    tracesperplot <- 1 + ncolors # (line + colors)
     plotlysubplot <- plotlysubplot |>
-      style(showlegend = FALSE, traces = (ncolors + 1):(ncolors * ylength))
+      style(showlegend = FALSE,
+            traces = c(1, (tracesperplot + 1):(tracesperplot * ylength)))
   }
   plotlysubplot <- plotlysubplot |>
     layout(font = list(family = "sans-serif"), hovermode = "x unified")
