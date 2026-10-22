@@ -28,13 +28,13 @@ Imports:
     rlang (>= 1.1.6),
     viridisLite,
     rmarkdown,
-    RColorBrewer
+    RColorBrewer,
+    sf
 Depends: 
     R (>= 4.1)
 LazyData: true
 URL: https://hardtme.github.io/DrivePlotR/, https://github.com/hardtme/DrivePlotR
 Suggests: 
-    testthat (>= 3.0.0),
-    sf
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 BugReports: https://github.com/hardtme/DrivePlotR/issues

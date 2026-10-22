@@ -8,6 +8,7 @@ driveplot_map(
   shareddata,
   lng = NULL,
   lat = NULL,
+  group = NULL,
   colorvar = NULL,
   label = NA,
   colorpalette = NULL,
@@ -24,6 +25,9 @@ driveplot_map(
 
 \item{lat}{The bare (unquoted) column of shareddata containing latitude
 (only required if shareddata does not have a geometry column).}
+
+\item{group}{The bare (unquoted) column from shareddata for the grouping
+variable.}
 
 \item{colorvar}{The bare (unquoted) column in shareddata to which color
 should be mapped.}

@@ -5,6 +5,8 @@
 #'   (only required if shareddata does not have a geometry column).
 #' @param lat The bare (unquoted) column of shareddata containing latitude
 #'   (only required if shareddata does not have a geometry column).
+#' @param group The bare (unquoted) column from shareddata for the grouping
+#'   variable.
 #' @param colorvar The bare (unquoted) column in shareddata to which color
 #'   should be mapped.
 #' @param label An optional label for the map points.
@@ -23,6 +25,8 @@
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet leaflet addProviderTiles addCircleMarkers
+#'   addPolylines
+#' @importFrom sf st_crs
 #' @export
 #' @examples
 #' library(crosstalk)
@@ -42,6 +46,7 @@
 driveplot_map <- function(shareddata,
                           lng = NULL,
                           lat = NULL,
+                          group = NULL,
                           colorvar = NULL,
                           label = NA,
                           colorpalette = NULL,
@@ -56,6 +61,7 @@ driveplot_map <- function(shareddata,
   ogdata <- shareddata$origData()
   quolng <- enquo(lng)
   quolat <- enquo(lat)
+  quogroup <- enquo(group)
   quocolor <- enquo(colorvar)
   quolabel <- enquo(label)
 
@@ -102,9 +108,26 @@ driveplot_map <- function(shareddata,
   }
 
   if (!is.null(sfgeom)) {
+    crs <- st_crs(ogdata)
+  } else {
+    crs <- 4326
+  }
+
+  linestrings <- points_to_linestring(
+    df = ogdata,
+    group = {{ quogroup }},
+    lng = {{ quolng }},
+    lat = {{ quolat }},
+    crs = crs
+  )
+
+  if (!is.null(sfgeom)) {
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addProviderTiles(provider = tileprovider) |>
+        addPolylines(data = linestrings,
+                     color = "dimgray",
+                     opacity = fillopacity * 0.5) |>
         addCircleMarkers(
           stroke = TRUE,
           weight = 2, color = "dimgray",
@@ -117,6 +140,9 @@ driveplot_map <- function(shareddata,
     plot_map <- eval_tidy(quo_squash(quo({
       leaflet(data = shareddata, height = mapheight, width = "100%") |>
         addProviderTiles(provider = tileprovider) |>
+        addPolylines(data = linestrings,
+                     color = "dimgray",
+                     opacity = fillopacity * 0.5) |>
         addCircleMarkers(
           lat = ~ (!!quolat), lng = ~ (!!quolng),
           stroke = TRUE, weight = 2, color = "dimgray",
