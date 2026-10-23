@@ -39,14 +39,14 @@ points_to_linestring <- function(df,
       st_as_sf(coords = c(lng_name, lat_name), crs = crs)
   }
 
-  if (quo_is_null(group)) {
+  if (quo_is_null(quogroup)) {
     df_ls <- df |>
       summarize(do_union = FALSE, .groups = "drop") |>
       st_cast("LINESTRING")
   } else {
   # Group and create linestrings
   df_ls <- df |>
-    group_by({{ group }}) |>
+    group_by({{ quogroup }}) |>
     summarize(do_union = FALSE, .groups = "keep") |>
     st_cast("LINESTRING")
   }
