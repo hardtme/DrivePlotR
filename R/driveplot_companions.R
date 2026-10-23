@@ -139,6 +139,7 @@ driveplot_companions <- function(shareddata,
       margin = spacing
     )
   }
+
   if (isFALSE(colorvarnumeric) && isTRUE(showlegend) && ylength > 1) {
     if (any(is.na(tidy_color))) {
       ncolors <- ncolors + 1
@@ -148,8 +149,20 @@ driveplot_companions <- function(shareddata,
       style(showlegend = FALSE,
             traces = c(1, (tracesperplot + 1):(tracesperplot * ylength)))
   }
+  # Identify the traces that are not points
+  non_point_traces <- which(sapply(plotlysubplot$x$data, function(trace) {
+    is.null(trace$mode) || !grepl("markers", trace$mode)
+  }))
+  # Keep non-point traces out of the hover box
+  if (length(non_point_traces > 0)){
   plotlysubplot <- plotlysubplot |>
-    layout(font = list(family = "sans-serif"), hovermode = "x unified")
+    style(hoverinfo = "skip", traces = non_point_traces)
+  }
+
+  plotlysubplot <- plotlysubplot |>
+    layout(font = list(family = "sans-serif"),
+           hovermode = "x unified"
+           )
   plotlysubplot$sizingPolicy$defaultHeight <- plotheight
   plotlysubplot$sizingPolicy$defaultWidth <- "100%"
   plotlysubplot
