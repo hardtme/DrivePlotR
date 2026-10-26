@@ -280,7 +280,7 @@ driveplot_companion <- function(shareddata,
   )
 
   scatterplotly <- gg |>
-    ggplotly(dynamicTicks = TRUE) |>
+    ggplotly(dynamicTicks = TRUE, tooltip = c("x", "y")) |>
     layout(annotations = plot_annotations) |>
     highlight(on = "plotly_selected", off = "plotly_deselect", dynamic = FALSE)
 
