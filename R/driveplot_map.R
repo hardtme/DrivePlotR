@@ -128,10 +128,11 @@ driveplot_map <- function(shareddata,
         addProviderTiles(provider = tileprovider) |>
         addPolylines(data = linestrings,
                      color = "dimgray",
-                     opacity = fillopacity * 0.5) |>
+                     opacity = fillopacity * 0.5,
+                     weight = 2) |>
         addCircleMarkers(
           stroke = TRUE,
-          weight = 2, color = "dimgray",
+          weight = 0.5, color = "dimgray",
           label = ~ (!!quolabel),
           fillColor = ~ colorpal(!!quocolor),
           fillOpacity = fillopacity
@@ -143,10 +144,11 @@ driveplot_map <- function(shareddata,
         addProviderTiles(provider = tileprovider) |>
         addPolylines(data = linestrings,
                      color = "dimgray",
-                     opacity = fillopacity * 0.5) |>
+                     opacity = fillopacity * 0.5,
+                     weight = 2) |>
         addCircleMarkers(
           lat = ~ (!!quolat), lng = ~ (!!quolng),
-          stroke = TRUE, weight = 2, color = "dimgray",
+          stroke = TRUE, weight = 0.5, color = "dimgray",
           label = ~ (!!quolabel),
           fillColor = ~ colorpal(!!quocolor),
           fillOpacity = fillopacity
