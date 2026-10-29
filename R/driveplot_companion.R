@@ -132,7 +132,7 @@ driveplot_companion <- function(shareddata,
                    color = "dimgray",
                    show.legend = showlegend
         ) +
-        scale_fill_gradientn(colors = colorpalette, na.value = "dimgray") +
+        scale_fill_gradientn(colors = colorpalette, na.value = "#00000000") +
         theme_bw()
     } else if(isFALSE(colorvarnumeric)) {
       gg <- gg +
@@ -143,7 +143,7 @@ driveplot_companion <- function(shareddata,
                    color = "dimgray",
                    show.legend = showlegend
         ) +
-        scale_fill_manual(values = colorpalette, na.value = "dimgray") +
+        scale_fill_manual(values = colorpalette, na.value = "#00000000") +
         theme_bw()
     }
   } else {
@@ -216,12 +216,12 @@ driveplot_companion <- function(shareddata,
     if (colorpalette %in% viridis_color_palettes()){
       # Use a viridis palette
       gg <- gg +
-      scale_fill_viridis_c(option = colorpalette, na.value = "dimgray") +
+      scale_fill_viridis_c(option = colorpalette, na.value = "#00000000") +
       theme_bw()
     } else {
       # Use a ColorBrewer palette
       gg <- gg +
-        scale_fill_distiller(palette = colorpalette, na.value = "dimgray",
+        scale_fill_distiller(palette = colorpalette, na.value = "#00000000",
                              direction = 1) +
         theme_bw()
     }
@@ -238,12 +238,12 @@ driveplot_companion <- function(shareddata,
     if (colorpalette %in% viridis_color_palettes()){
       # Use a viridis palette
       gg <- gg +
-        scale_fill_viridis_d(option = colorpalette, na.value = "dimgray") +
+        scale_fill_viridis_d(option = colorpalette, na.value = "#00000000") +
         theme_bw()
     } else {
       # Use a ColorBrewer palette
       gg <- gg +
-        scale_fill_brewer(palette = colorpalette, na.value = "dimgray",
+        scale_fill_brewer(palette = colorpalette, na.value = "#00000000",
                           direction = 1) +
         theme_bw()
     }
