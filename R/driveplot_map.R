@@ -20,7 +20,8 @@
 #' @param fillopacity The opacity of the fill of the map points (0 to 1).
 #' @param mapheight The height of the map, e.g, "100vh" or 400px".
 #' @param tileprovider The name of the provider for the basemap tiles. Options
-#'   can be found by running `leaflet::providers`. Defaults to "OpenStreetMap".
+#'   can be found by running `leaflet::providers`. Defaults to
+#'   "Esri.WorldStreetMap".
 #' @returns A leaflet map.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom rlang enquo eval_tidy quo_squash quo
@@ -52,7 +53,7 @@ driveplot_map <- function(shareddata,
                           colorpalette = NULL,
                           fillopacity = 1,
                           mapheight = "100vh",
-                          tileprovider = "OpenStreetMap") {
+                          tileprovider = "Esri.WorldStreetMap") {
   shareddata <- convert_to_SharedData(shareddata)
 
   # Get original data from shareddata so we can check the type of colorvar
