@@ -27,8 +27,8 @@
 #'   or "400px".
 #' @returns A stack of plotly scatterplots.
 #' @importFrom crosstalk SharedData is.SharedData
-#' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr is_call
-#'   quo_is_missing
+#' @importFrom rlang enquo as_label quo_is_call call_args quo_get_expr
+#' @importFrom rlang is_call quo_is_missing
 #' @importFrom plotly layout subplot style
 #' @export
 #' @examples

@@ -25,7 +25,7 @@
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom rlang enquo eval_tidy quo_squash quo
 #' @importFrom leaflet leaflet addProviderTiles addCircleMarkers
-#'   addPolylines
+#' @importFrom leaflet addPolylines
 #' @importFrom sf st_crs
 #' @export
 #' @examples

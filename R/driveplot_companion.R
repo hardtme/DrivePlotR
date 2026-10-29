@@ -25,8 +25,9 @@
 #' @importFrom rlang enquo quo_set_env global_env as_label quo_is_null
 #' @importFrom viridisLite viridis
 #' @importFrom ggplot2 ggplot geom_point theme_bw scale_fill_viridis_c
-#'   scale_fill_viridis_d ylab xlab labs aes scale_fill_brewer
-#'   scale_fill_distiller scale_fill_manual scale_fill_gradientn geom_line
+#' @importFrom ggplot2 scale_fill_viridis_d ylab xlab labs aes
+#' @importFrom ggplot2 scale_fill_brewer scale_fill_distiller
+#' @importFrom ggplot2 scale_fill_manual scale_fill_gradientn geom_line
 #' @importFrom plotly ggplotly layout highlight hide_guides config
 #' @importFrom RColorBrewer brewer.pal
 #' @export
