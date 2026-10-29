@@ -16,6 +16,7 @@
 #'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
 #'   `colorpalette` is not, `colorpalette` defaults to the color palette
 #'   "viridis".
+#' @param fillopacity The opacity of the fill of the points (0 to 1).
 #' @param xlabel The label for the variable on the horizontal axis.
 #' @param ylabel The label for the variable on the vertical axis.
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
@@ -60,6 +61,7 @@ driveplot_companion <- function(shareddata,
                                 group = NULL,
                                 colorvar = NULL,
                                 colorpalette = NULL,
+                                fillopacity = 1,
                                 xlabel = NULL,
                                 ylabel = NULL,
                                 showlegend = TRUE,
@@ -114,33 +116,36 @@ driveplot_companion <- function(shareddata,
   if (palettelength > 1){
     if (is.null(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray", linewidth = 0.25) +
+        geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
         geom_point(
                    shape = 21,
                    stroke = 0.05,
                    fill = colorpalette[1],
                    color = "dimgray",
+                   alpha = fillopacity,
                    show.legend = showlegend
         ) +
         theme_bw()
     } else if(isTRUE(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray", linewidth = 0.25) +
+        geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
         geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
                    color = "dimgray",
+                   alpha = fillopacity,
                    show.legend = showlegend
         ) +
         scale_fill_gradientn(colors = colorpalette, na.value = "#00000000") +
         theme_bw()
     } else if(isFALSE(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray", linewidth = 0.25) +
+        geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
         geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
                    color = "dimgray",
+                   alpha = fillopacity,
                    show.legend = showlegend
         ) +
         scale_fill_manual(values = colorpalette, na.value = "#00000000") +
@@ -154,12 +159,13 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} isn't a column in the data and a viridis or
     # ColorBrewer palette isn't specified
     gg <- gg +
-      geom_line(color = "dimgray", linewidth = 0.25) +
+      geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
       geom_point(
         shape = 21,
         stroke = 0.05,
         fill = colorpalette,
         color = "dimgray",
+        alpha = fillopacity,
         show.legend = showlegend
       ) +
       theme_bw()
@@ -179,12 +185,13 @@ driveplot_companion <- function(shareddata,
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- gg +
-      geom_line(color = "dimgray", linewidth = 0.25) +
+      geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
       geom_point(
         shape = 21,
         stroke = 0.05,
         fill = viridis(n = 1, option = colorpalette),
         color = "dimgray",
+        alpha = fillopacity,
         show.legend = showlegend
       ) +
       theme_bw()
@@ -194,12 +201,13 @@ driveplot_companion <- function(shareddata,
     # a ColorBrewer palette is specified
     # Make plot using the first color from the specified ColorBrewer color scale
     gg <- gg +
-      geom_line(color = "dimgray", linewidth = 0.25) +
+      geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
       geom_point(
                  shape = 21,
                  stroke = 0.05,
                  fill = brewer.pal(n = 3, name = colorpalette)[1],
                  color = "dimgray",
+                 alpha = fillopacity,
                  show.legend = showlegend
       ) +
       theme_bw()
@@ -211,6 +219,7 @@ driveplot_companion <- function(shareddata,
         shape = 21,
         stroke = 0.05,
         color = "dimgray",
+        alpha = fillopacity,
         show.legend = showlegend
       )
     if (colorpalette %in% viridis_color_palettes()){
@@ -228,11 +237,12 @@ driveplot_companion <- function(shareddata,
   } else if (isFALSE(colorvarnumeric)) {
     # {{ colorvar }} is a non-numeric column in the data
     gg <- gg +
-      geom_line(color = "dimgray", linewidth = 0.25) +
+      geom_line(color = "dimgray", linewidth = 0.25, alpha = fillopacity/2) +
       geom_point(aes(fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
         color = "dimgray",
+        alpha = fillopacity,
         show.legend = showlegend
       )
     if (colorpalette %in% viridis_color_palettes()){

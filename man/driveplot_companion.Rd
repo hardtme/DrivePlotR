@@ -11,6 +11,7 @@ driveplot_companion(
   group = NULL,
   colorvar = NULL,
   colorpalette = NULL,
+  fillopacity = 1,
   xlabel = NULL,
   ylabel = NULL,
   showlegend = TRUE,
@@ -39,6 +40,8 @@ for viridis color palettes. If \code{colorvar} and \code{colorpalette} are both 
 provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided but
 \code{colorpalette} is not, \code{colorpalette} defaults to the color palette
 "viridis".}
+
+\item{fillopacity}{The opacity of the fill of the points (0 to 1).}
 
 \item{xlabel}{The label for the variable on the horizontal axis.}
 

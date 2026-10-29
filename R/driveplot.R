@@ -135,6 +135,7 @@ driveplot <- function(shareddata,
     xlabel = xlabel,
     ylabels = ylabels,
     colorpalette = colorpalette,
+    fillopacity = fillopacity,
     showlegend = showlegend,
     legendtitle = legendtitle,
     spacing = spacing

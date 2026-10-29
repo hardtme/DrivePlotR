@@ -13,6 +13,7 @@ driveplot_companions(
   xlabel = NULL,
   ylabels = NULL,
   colorpalette = NULL,
+  fillopacity = 1,
   showlegend = TRUE,
   legendtitle = NULL,
   spacing = 0.05,
@@ -46,6 +47,8 @@ for viridis color palettes. If \code{colorvar} and \code{colorpalette} are both 
 provided, \code{colorpalette} defaults to blue. If \code{colorvar} is provided but
 \code{colorpalette} is not, \code{colorpalette} defaults to the color palette
 "viridis".}
+
+\item{fillopacity}{The opacity of the fill of the points (0 to 1).}
 
 \item{showlegend}{Show the plot legend (TRUE) or not (FALSE).}
 
