@@ -23,7 +23,7 @@ driveplot(
   spacing = 0.05,
   width = "100\%",
   height = "100vh",
-  tileprovider = "OpenStreetMap"
+  tileprovider = "Esri.WorldStreetMap"
 )
 }
 \arguments{
@@ -80,7 +80,8 @@ following units: \%, vh, vw, or px (e.g., "100\%" or "400px")}
 the following units: \%, vh, vw, or px (e.g., "100\%" or "400px").}
 
 \item{tileprovider}{The name of the provider for the basemap tiles. Options
-can be found by running \code{leaflet::providers}. Defaults to "OpenStreetMap".}
+can be found by running \code{leaflet::providers}. Defaults to
+"Esri.WorldStreetMap".}
 }
 \value{
 A linked plot map.

@@ -35,7 +35,8 @@
 #' @param height The height of the plot map, provided as a string with one of
 #'   the following units: %, vh, vw, or px (e.g., "100%" or "400px").
 #' @param tileprovider The name of the provider for the basemap tiles. Options
-#'   can be found by running `leaflet::providers`. Defaults to "OpenStreetMap".
+#'   can be found by running `leaflet::providers`. Defaults to
+#'   "Esri.WorldStreetMap".
 #' @returns A linked plot map.
 #' @importFrom crosstalk SharedData is.SharedData
 #' @importFrom htmltools tags HTML browsable
@@ -84,7 +85,7 @@ driveplot <- function(shareddata,
                       spacing = 0.05,
                       width = "100%",
                       height = "100vh",
-                      tileprovider = "OpenStreetMap") {
+                      tileprovider = "Esri.WorldStreetMap") {
   shareddata <- convert_to_SharedData(shareddata)
 
   if (is.null(plottitle)) {
@@ -134,6 +135,7 @@ driveplot <- function(shareddata,
     xlabel = xlabel,
     ylabels = ylabels,
     colorpalette = colorpalette,
+    fillopacity = fillopacity,
     showlegend = showlegend,
     legendtitle = legendtitle,
     spacing = spacing

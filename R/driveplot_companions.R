@@ -19,6 +19,7 @@
 #'   provided, `colorpalette` defaults to blue. If `colorvar` is provided but
 #'   `colorpalette` is not, `colorpalette` defaults to the color palette
 #'   "viridis".
+#' @param fillopacity The opacity of the fill of the points (0 to 1).
 #' @param showlegend Show the plot legend (TRUE) or not (FALSE).
 #' @param legendtitle The title for the plot legend.
 #' @param spacing A value between 0 and 1 for the space between the
@@ -59,6 +60,7 @@ driveplot_companions <- function(shareddata,
                                  xlabel = NULL,
                                  ylabels = NULL,
                                  colorpalette = NULL,
+                                 fillopacity = 1,
                                  showlegend = TRUE,
                                  legendtitle = NULL,
                                  spacing = 0.05,
@@ -113,6 +115,7 @@ driveplot_companions <- function(shareddata,
         group = {{ group }},
         colorvar = {{ colorvar }},
         colorpalette = colorpalette,
+        fillopacity = fillopacity,
         xlabel = xlabel,
         ylabel = label,
         showlegend = showlegend,
@@ -163,7 +166,7 @@ driveplot_companions <- function(shareddata,
     layout(font = list(family = "sans-serif"),
            hovermode = "x unified",
            hoverlabel = list(
-             bgcolor = 'rgba(255, 255, 255, 0.75)',
+             bgcolor = 'rgba(255, 255, 255, 0.5)',
              bordercolor = "black"))
   plotlysubplot$sizingPolicy$defaultHeight <- plotheight
   plotlysubplot$sizingPolicy$defaultWidth <- "100%"
