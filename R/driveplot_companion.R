@@ -114,7 +114,7 @@ driveplot_companion <- function(shareddata,
   if (palettelength > 1){
     if (is.null(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray") +
+        geom_line(color = "dimgray", linewidth = 0.25) +
         geom_point(
                    shape = 21,
                    stroke = 0.05,
@@ -125,7 +125,7 @@ driveplot_companion <- function(shareddata,
         theme_bw()
     } else if(isTRUE(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray") +
+        geom_line(color = "dimgray", linewidth = 0.25) +
         geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
@@ -136,7 +136,7 @@ driveplot_companion <- function(shareddata,
         theme_bw()
     } else if(isFALSE(colorvarnumeric)) {
       gg <- gg +
-        geom_line(color = "dimgray") +
+        geom_line(color = "dimgray", linewidth = 0.25) +
         geom_point(aes(fill = !!quocolor),
                    shape = 21,
                    stroke = 0.05,
@@ -154,7 +154,7 @@ driveplot_companion <- function(shareddata,
     # {{ colorvar }} isn't a column in the data and a viridis or
     # ColorBrewer palette isn't specified
     gg <- gg +
-      geom_line(color = "dimgray") +
+      geom_line(color = "dimgray", linewidth = 0.25) +
       geom_point(
         shape = 21,
         stroke = 0.05,
@@ -179,7 +179,7 @@ driveplot_companion <- function(shareddata,
     # a viridis palette is specified
     # Make plot using the first color from the specified viridis color scale
     gg <- gg +
-      geom_line(color = "dimgray") +
+      geom_line(color = "dimgray", linewidth = 0.25) +
       geom_point(
         shape = 21,
         stroke = 0.05,
@@ -194,7 +194,7 @@ driveplot_companion <- function(shareddata,
     # a ColorBrewer palette is specified
     # Make plot using the first color from the specified ColorBrewer color scale
     gg <- gg +
-      geom_line(color = "dimgray") +
+      geom_line(color = "dimgray", linewidth = 0.25) +
       geom_point(
                  shape = 21,
                  stroke = 0.05,
@@ -206,7 +206,7 @@ driveplot_companion <- function(shareddata,
   } else if (isTRUE(colorvarnumeric)) {
     # {{ colorvar }} is a numeric column in the data
     gg <- gg +
-      geom_line(color = "dimgray") +
+      geom_line(color = "dimgray", linewidth = 0.25) +
       geom_point(aes(fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
@@ -228,7 +228,7 @@ driveplot_companion <- function(shareddata,
   } else if (isFALSE(colorvarnumeric)) {
     # {{ colorvar }} is a non-numeric column in the data
     gg <- gg +
-      geom_line(color = "dimgray") +
+      geom_line(color = "dimgray", linewidth = 0.25) +
       geom_point(aes(fill = !!quocolor),
         shape = 21,
         stroke = 0.05,
