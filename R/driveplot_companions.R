@@ -163,7 +163,7 @@ driveplot_companions <- function(shareddata,
     layout(font = list(family = "sans-serif"),
            hovermode = "x unified",
            hoverlabel = list(
-             bgcolor = 'rgba(255, 255, 255, 0.75)',
+             bgcolor = 'rgba(255, 255, 255, 0.5)',
              bordercolor = "black"))
   plotlysubplot$sizingPolicy$defaultHeight <- plotheight
   plotlysubplot$sizingPolicy$defaultWidth <- "100%"
