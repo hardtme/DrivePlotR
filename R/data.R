@@ -178,20 +178,26 @@
 #' Loops around the block
 #'
 #' This dataset contains 3 drives around Hardin Hall, the building of the former
-#' Statistics Department at the University of Lincoln-Nebraska.
+#' Statistics Department at the University of Nebraska-Lincoln.
 #' All measurements are based on GPS recordings at 2 second intervals:
-#' @format A tibble with 270 rows and 9 columns
+#' @format A tibble with 270 rows and 10 columns
 #' \describe{
+#'   \item{loop}{integer variable between 1 and 3}
 #'   \item{lat}{numeric, geographic latitude in degrees with CRS WGS84}
 #'   \item{lon}{numeric, geographic longitude in degrees with CRS WGS84}
 #'   \item{ele}{numeric, elevation above sea-level (in m)}
 #'   \item{time}{dttm, timestamp of the recorded observation}
-#'   \item{loop}{integer variable between 1 and 3}
-#'   \item{heading}{numeric, NOT continuity-corrected direction of the car
+#'   \item{heading}{numeric, continuity-corrected direction of the car
 #'   (in degrees with north at 0 degrees and increasing clockwise) as measured
-#'   by GPS.}
+#'   by GPS. The continuity correction takes the initial heading and adds the
+#'   cumulative sum of the changes in heading for the subsequent
+#'   observations.}
 #'   \item{speed}{numeric, speed of the vehicle (in miles per hour)}
 #'   \item{start_loop}{dttm, the timestamp of the start of the current loop}
-#'   \item{loop_seconds}{numeric, number of seconds since the start of the current loop}
+#'   \item{loop_seconds}{numeric, number of seconds since the start of the
+#'   current loop}
+#'   \item{heading_raw}{numeric, raw, NOT continuity-corrected direction of the
+#'   car (in degrees with north at 0 degrees and increasing clockwise) as
+#'   calculated from the GPS point to GPS point.}
 #'   }
 "loops"
