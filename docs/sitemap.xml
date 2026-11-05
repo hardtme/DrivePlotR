@@ -13,6 +13,7 @@
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/check_lnglat.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/check_xy.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/check_ylabels.html</loc></url>
+<url><loc>https://hardtme.github.io/DrivePlotR/reference/colorbrewer_color_palettes.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/convert_to_SharedData.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/drive7.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/driveplot.html</loc></url>
@@ -23,6 +24,10 @@
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/guess_lat_long_cols.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/index.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/leaflet_color_palettes.html</loc></url>
+<url><loc>https://hardtme.github.io/DrivePlotR/reference/loops.html</loc></url>
 <url><loc>https://hardtme.github.io/DrivePlotR/reference/nds_data.html</loc></url>
+<url><loc>https://hardtme.github.io/DrivePlotR/reference/points_to_linestring.html</loc></url>
+<url><loc>https://hardtme.github.io/DrivePlotR/reference/save_plotmap.html</loc></url>
+<url><loc>https://hardtme.github.io/DrivePlotR/reference/viridis_color_palettes.html</loc></url>
 </urlset>
 
