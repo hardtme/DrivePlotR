@@ -178,8 +178,10 @@
 #' Loops around the block
 #'
 #' This dataset contains 3 drives around Hardin Hall, the building of the former
-#' Statistics Department at the University of Nebraska-Lincoln.
-#' All measurements are based on GPS recordings at 2 second intervals:
+#' Statistics Department at the University of Nebraska-Lincoln. The drives were
+#' recorded using Open GPX Tracker version 1.10.1 on an iPhone 13 Pro running
+#' iOS 26.6.2.
+#' All measurements are based on GPS recordings at 1-2 second intervals:
 #' @format A tibble with 270 rows and 10 columns
 #' \describe{
 #'   \item{loop}{integer variable between 1 and 3}
