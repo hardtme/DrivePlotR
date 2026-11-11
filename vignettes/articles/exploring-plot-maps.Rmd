@@ -1,10 +1,6 @@
 ---
 title: "Exploring Plot Maps"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Exploring Plot Maps}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
 ```{r, include = FALSE}
@@ -21,9 +17,9 @@ library(crosstalk)
 
 ## Introduction
 
-This vignette explains how to explore the interactive features of `DrivePlotR` plot maps.
+This article explains how to explore the interactive features of `DrivePlotR` plot maps.
 
-```{r plot-map, echo = TRUE, eval = FALSE}
+```{r plot-map, echo = TRUE, eval = TRUE}
 data("drive7")
 shared_drive <- SharedData$new(drive7)
 driveplot(

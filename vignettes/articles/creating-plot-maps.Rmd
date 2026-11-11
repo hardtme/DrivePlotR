@@ -1,10 +1,6 @@
 ---
 title: "Creating Plot Maps"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Creating Plot Maps}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
 ```{r, include = FALSE}
@@ -46,7 +42,7 @@ shared_drive <- SharedData$new(drive7)
 
 Below is code to create an example plot map. The companion graphs include speed (MPH), gyroscopic heading (degrees) and GPS PDOP (a unitless measure of GPS data quality; lower is better) plotted against time. The points on both the map and the companion graphs are colored by the minute of the drive to emphasize the temporal component.
 
-```{r teaser-code, eval = FALSE}
+```{r teaser-code, eval = TRUE}
 driveplot(
   shareddata = shared_drive,
   x = time_cst,
@@ -64,7 +60,7 @@ driveplot(
 
 `DrivePlotR` allows you to transform arguments within the function call. The example plot map below is a transformed version of the one above. The transformed graph includes speed in miles per hour (MPH) converted to kilometers per hour (KPH) and gyroscopic heading values translated into general directions (N, S, E, W). GPS PDOP remains unchanged.
 
-```{r transform-plotmap-code, echo=TRUE, eval = FALSE}
+```{r transform-plotmap-code, echo=TRUE, eval = TRUE}
 driveplot(
   shareddata = shared_drive,
   x = time_cst,
@@ -83,7 +79,7 @@ driveplot(
   ylabels = c("Speed (KPH)", "General Gyro Heading", "GPS PDOP"),
   showlegend = TRUE,
   legendtitle = "Minute",
-  plottitle = "A Drive in Omaha, NE",
+  plottitle = "A Drive in Omaha, NE, with Transformed Variables",
   height = "50vh"
 )
 ```
@@ -128,8 +124,8 @@ shared_loops <- SharedData$new(loops)
 
 4. Create your plot map. Because the `loops` dataset contains multiple drives, we need to use the `group` argument to distinguish them, as shown below. 
 
-```{r loop-plot-map, eval = FALSE}
-driveplot(
+```{r loop-plot-map, eval = TRUE}
+loop_plotmap <- driveplot(
   shareddata = shared_loops,
   lng = lon,
   lat = lat,
@@ -144,6 +140,7 @@ driveplot(
   legendtitle = "Drive",
   height = "50vh"
 )
+loop_plotmap
 ```
 
 Although it is often convenient for the `group` and `colorvar` arguments to be the same, this is not required. For example, you can color the points by speed while still utilizing the `group` argument.
@@ -169,21 +166,9 @@ driveplot(
 5. Save and share your plot map. You can use the `save_plotmap` function as shown below. Other options are to include your plot map in an RMarkdown document knitted to a self-contained HTML file or a Quarto document rendered to HTML with embedded resources or to save your plot map manually from the RStudio Viewer window.
 
 ```{r save-plotmap-loops, echo = TRUE, eval = FALSE}
-loop_plotmap <- driveplot(
-  shareddata = shared_loops,
-  lng = lon,
-  lat = lat,
-  x = loop_seconds,
-  ys = c(speed, heading_raw, heading),
-  group = loop,
-  colorvar = loop,
-  colorpalette = "Dark2",
-  fillopacity = 0.5,
-  xlabel = "Seconds Since Start of Drive",
-  ylabels = c("Speed (MPH)", "Raw Heading", "Continuity-Corrected Heading"),
-  legendtitle = "Drive",
-  height = "50vh"
-)
 save_plotmap(plotmap = loop_plotmap, filepath = "loop_plotmap.html")
 ```
+
+
+
 
