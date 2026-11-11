@@ -34,8 +34,10 @@ Depends:
 LazyData: true
 URL: https://hardtme.github.io/DrivePlotR/, https://github.com/hardtme/DrivePlotR
 Suggests: 
+    knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 BugReports: https://github.com/hardtme/DrivePlotR/issues
 Config/roxygen2/version: 8.0.0
 RoxygenNote: 7.3.3
+VignetteBuilder: knitr

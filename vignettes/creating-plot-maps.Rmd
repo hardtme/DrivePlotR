@@ -1,0 +1,189 @@
+---
+title: "Creating Plot Maps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Creating Plot Maps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message = FALSE}
+library(DrivePlotR)
+library(crosstalk)
+library(dplyr)
+```
+
+## Introduction
+
+`DrivePlotR` is an R package designed to help you visualize both the geospatial and temporal aspects of vehicle trajectory data in low-dimensional displays and render their multivariate relationships simultaneously while being able to interact with the display. The vehicle trajectory is mapped on the left side of the plot map while companion graphs on the right show different aspects of the drive (e.g., speed, heading, GPS data quality, etc.) plotted against a shared horizontal axis (usually time). You can select points and zoom in and out on the plot map to explore the data. Below, we show how to create plot maps for one vehicle trajectory and multiple vehicle trajectories.
+
+## Creating a plot map with one trajectory
+
+1. Make the vehicle trajectory data available in the R session. `DrivePlotR` expects one row for each observation in the data. Geographic information can be provided in columns containing latitude and longitude coordinates or in an `sf` geometry column of type POINT. The LINESTRING geometry type is not compatible with `DrivePlotR`.
+
+In this example, we use a non-sensitive drive from a naturalistic driving study that is included in `DrivePlotR`.
+
+```{r load-data}
+data("drive7")
+```
+
+2. Establish the geographic variables and projection for the data. Setting the coordinate reference system (CRS) to WGS84 is necessary to ensure that points are compatible with maps in Leaflet. The dataset `drive7` we are using for this example already has its CRS set to WGS84 and includes an `sf` geometry column with type POINT.
+
+3. Convert the data into a shared data frame using `crosstalk`. (If you do not pass a shared data frame into a `DrivePlotR` function, the conversion is made as part of the function call and you are warned about the conversion.)
+
+```{r shared-data}
+shared_drive <- SharedData$new(drive7)
+```
+
+4. Create your plot map.
+
+Below is code to create an example plot map. The companion graphs include speed (MPH), gyroscopic heading (degrees) and GPS PDOP (a unitless measure of GPS data quality; lower is better) plotted against time. The points on both the map and the companion graphs are colored by the minute of the drive to emphasize the temporal component.
+
+```{r teaser-code, eval = FALSE}
+driveplot(
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(speed_mph, gyro_heading, gps_pdop),
+  colorvar = gps_minute, maplabel = time_cst,
+  colorpalette = "viridis",
+  xlabel = "Time",
+  ylabels = c("Speed (MPH)", "Gyro Heading", "GPS PDOP"),
+  showlegend = TRUE,
+  legendtitle = "Minute",
+  plottitle = "A Drive in Omaha, NE",
+  height = "50vh"
+)
+```
+
+`DrivePlotR` allows you to transform arguments within the function call. The example plot map below is a transformed version of the one above. The transformed graph includes speed in miles per hour (MPH) converted to kilometers per hour (KPH) and gyroscopic heading values translated into general directions (N, S, E, W). GPS PDOP remains unchanged.
+
+```{r transform-plotmap-code, echo=TRUE, eval = FALSE}
+driveplot(
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(
+    speed_mph * 1.60934,
+    c("N", "E", "S", "W")[findInterval(
+      (gyro_heading + 45) %% 360,
+      c(90, 180, 270)
+    ) + 1],
+    gps_pdop
+  ),
+  colorvar = gps_minute,
+  maplabel = time_cst,
+  colorpalette = "viridis",
+  xlabel = "Time",
+  ylabels = c("Speed (KPH)", "General Gyro Heading", "GPS PDOP"),
+  showlegend = TRUE,
+  legendtitle = "Minute",
+  plottitle = "A Drive in Omaha, NE",
+  height = "50vh"
+)
+```
+
+5. Save and share your plot map. 
+
+You can save your `DrivePlotR` plot map as a standalone HTML file using the `save_plotmap` function, as shown in the example code below. 
+
+```{r save-plotmap, echo = TRUE, eval = FALSE}
+myplotmap <- driveplot(
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(speed_mph, gyro_heading, gps_pdop),
+  plottitle = "A Drive in Omaha, NE"
+)
+save_plotmap(plotmap = myplotmap, filepath = "myplotmap.html")
+```
+
+You can also save `DrivePlotR` plot maps by including them in an RMarkdown document knitted to a self-contained HTML file or a Quarto document rendered to HTML with embedded resources. When using RMarkdown or Quarto, we recommend explicitly setting the width and height of the plot map in the `width` and `height` arguments to the `driveplot` function to prevent the visualization from stretching and occupying more space than desired. Acceptable units include %, vh, vw, and px.  You can also manually save your plot map as a web page from the RStudio Viewer pane. 
+
+## Creating a plot map with multiple trajectories
+
+The process for creating a plot map with multiple trajectories is very similar to the process for creating a plot map with one trajectory. The main difference is in step 4, where you will need to use the `group` argument in the `driveplot` function to distinguish the different trajectories. For this example, we use the `loops` dataset from `DrivePlotR`, which contains non-sensitive drives collected using Open GPX Tracker version 1.10.1 on an iPhone 13 Pro running iOS 26.6.2.
+
+1. Make the vehicle trajectory data available in the R session. We will also transform some of the variables in the loops dataset. Namely, we will ensure the group identifier is a character variable and convert `loop_seconds`, the number of seconds from the start of the drive, to an integer variable.
+
+```{r load-loops}
+data("loops")
+
+loops <- loops |> 
+  mutate(loop = as.character(loop),
+         loop_seconds = as.integer(loop_seconds))
+```
+
+2. Establish the geographic variables and projection for the data. The `loops` dataset contains latitude and longitude coordinates in the `lat` and `lon` columns, respectively. The dataset already uses the WGS84 CRS, so the we do not need to establish the projection.
+
+3. Convert the data into a shared data frame using `crosstalk`.
+
+```{r shared-data-loops}
+shared_loops <- SharedData$new(loops)
+```
+
+4. Create your plot map. Because the `loops` dataset contains multiple drives, we need to use the `group` argument to distinguish them, as shown below. 
+
+```{r loop-plot-map, eval = FALSE}
+driveplot(
+  shareddata = shared_loops,
+  lng = lon,
+  lat = lat,
+  x = loop_seconds,
+  ys = c(speed, heading_raw, heading),
+  group = loop,
+  colorvar = loop,
+  colorpalette = "Dark2",
+  fillopacity = 0.5,
+  xlabel = "Seconds Since Start of Drive",
+  ylabels = c("Speed (MPH)", "Raw Heading", "Continuity-Corrected Heading"),
+  legendtitle = "Drive",
+  height = "50vh"
+)
+```
+
+Although it is often convenient for the `group` and `colorvar` arguments to be the same, this is not required. For example, you can color the points by speed while still utilizing the `group` argument.
+
+```{r, eval = FALSE}
+driveplot(
+  shareddata = shared_loops,
+  lng = lon,
+  lat = lat,
+  x = loop_seconds,
+  ys = c(speed, heading_raw, heading),
+  group = loop,
+  colorvar = speed,
+  colorpalette = "plasma",
+  fillopacity = 0.5,
+  xlabel = "Seconds Since Start of Drive",
+  ylabels = c("Speed (MPH)", "Raw Heading", "Continuity-Corrected Heading"),
+  legendtitle = "Drive",
+  height = "50vh"
+)
+```
+
+5. Save and share your plot map. You can use the `save_plotmap` function as shown below. Other options are to include your plot map in an RMarkdown document knitted to a self-contained HTML file or a Quarto document rendered to HTML with embedded resources or to save your plot map manually from the RStudio Viewer window.
+
+```{r save-plotmap-loops, echo = TRUE, eval = FALSE}
+loop_plotmap <- driveplot(
+  shareddata = shared_loops,
+  lng = lon,
+  lat = lat,
+  x = loop_seconds,
+  ys = c(speed, heading_raw, heading),
+  group = loop,
+  colorvar = loop,
+  colorpalette = "Dark2",
+  fillopacity = 0.5,
+  xlabel = "Seconds Since Start of Drive",
+  ylabels = c("Speed (MPH)", "Raw Heading", "Continuity-Corrected Heading"),
+  legendtitle = "Drive",
+  height = "50vh"
+)
+save_plotmap(plotmap = loop_plotmap, filepath = "loop_plotmap.html")
+```
+

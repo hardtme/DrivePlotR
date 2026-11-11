@@ -1,0 +1,71 @@
+---
+title: "Exploring Plot Maps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exploring Plot Maps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(DrivePlotR)
+library(crosstalk)
+```
+
+## Introduction
+
+This vignette explains how to explore the interactive features of `DrivePlotR` plot maps.
+
+```{r plot-map, echo = TRUE, eval = FALSE}
+data("drive7")
+shared_drive <- SharedData$new(drive7)
+driveplot(
+  shareddata = shared_drive,
+  x = time_cst,
+  ys = c(speed_mph, gyro_heading, gps_pdop),
+  colorvar = gps_minute, maplabel = time_cst,
+  colorpalette = "viridis",
+  xlabel = "Time",
+  ylabels = c("Speed (MPH)", "Gyro Heading", "GPS PDOP"),
+  showlegend = TRUE,
+  legendtitle = "Minute",
+  plottitle = "A Drive in Omaha, NE",
+  height = "50vh",
+  width = "75%"
+)
+```
+
+## Controls on the map
+
+The map component of a `DrivePlotR` plot map has three interactive features: panning, zooming, and selecting. 
+
+* Pan: click and drag on the map.
+
+* Zoom: use the +/- zoom buttons in the upper left corner of the map. You can also zoom using the mouse wheel or pinching on a trackpad.
+
+* Selection: Click the selection button below the +/- zoom buttons in the upper left corner of the map. A selection box will then appear on the map. You can move the selection box by clicking on the 9 dots in the upper left corner of the selection box and dragging the selection box to the desired location. You can resize the selection box using the white squares in the corners of the selection box. Any points that fall within the selection box on the map will also be selected on the companion graphs. To remove the selection box from the map, click on the X button below the +/- zoom buttons in the upper left corner of the map. To clear the corresponding selection on the companion graphs, double-click anywhere within the plotting area of one of the companion graphs.
+
+## Controls on the companion graphs
+
+To see the interaction tools for the companion graphs, hover over the top of the first companion graph in the stack. A modebar with a selection of buttons will appear. From left to right, the buttons are: Zoom, Pan, Box Select, Lasso Select, Zoom in, Zoom out, Autoscale, and Reset axes. Clicking a button allows users to interact with the plot map using that tool. Points selected on the companion graphs will also be selected on the map. After interacting with the plot map, double-clicking anywhere within the plotting area of one of the companion graphs resets the companion graphs.
+
+* Zoom: click and drag to highlight the area where you want to zoom. Double-click on the companion graph to reset the zoom.
+
+* Pan: click and drag across the companion graph. Double-click to reset the view.
+
+* Box Select/Lasso Select: click and drag to select points. Selected points will be highlighted on both the companion graphs and the map. Double-click to remove the selection.
+
+* Zoom in/Zoom out: click the buttons to zoom in and out.
+
+* Autoscale: reset the companion graph autoscaling.
+
+* Reset axes: restore original zoom and autoscale state for the companion graphs.
+
+
