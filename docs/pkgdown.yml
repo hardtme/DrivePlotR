@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/creating-plot-maps: creating-plot-maps.html
   articles/exploring-plot-maps: exploring-plot-maps.html
-last_built: 2026-11-11T17:42Z
+last_built: 2026-11-11T18:02Z
 urls:
   reference: https://hardtme.github.io/DrivePlotR/reference
   article: https://hardtme.github.io/DrivePlotR/articles
