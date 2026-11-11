@@ -42,13 +42,13 @@ points_to_linestring <- function(df,
   if (quo_is_null(quogroup)) {
     df_ls <- df |>
       summarize(do_union = FALSE, .groups = "drop") |>
-      st_cast("LINESTRING")
+      st_cast("LINESTRING", warn = FALSE)
   } else {
   # Group and create linestrings
   df_ls <- df |>
     group_by({{ quogroup }}) |>
     summarize(do_union = FALSE, .groups = "keep") |>
-    st_cast("LINESTRING")
+    st_cast("LINESTRING", warn = FALSE)
   }
   df_ls
 }

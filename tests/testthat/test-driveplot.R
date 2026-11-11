@@ -96,9 +96,8 @@ test_that("don't throw error when lat/lng can be inferred", {
 })
 
 test_that("throw error when sf column geometry type isn't POINT", {
-  skip_if_not_installed("sf")
   drive7_ls <- drive7 |>
-    sf::st_cast("LINESTRING")
+    sf::st_cast("LINESTRING", warn = FALSE)
   drive7_ls_sd <- crosstalk::SharedData$new(drive7_ls)
   expect_error(
     driveplot(
