@@ -14,6 +14,8 @@ functions to prevent problems with the map tiles not rendering properly.
 `driveplot_companion`, `driveplot_companions`, `driveplot_map` and `driveplot`
 function.
 
+* Expanded color palettes to include ColorBrewer palettes and custom colors.
+
 * Plot maps now show a subtle gray line beneath the points to better distinguish
 groups.
 
